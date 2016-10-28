@@ -1,7 +1,1 @@
-A simple starter package for react/redux applications
-
-To install dependencies, run npm update --save and --save-dev
-
-Don't forget to initialize a git repo!
-
-Need to write separate build for enterprise deployment
+Super buggy right now. Current issue is getting the index.html to load with the bundle.js.  Issue is it's trying to connect to the webpack-dev-server at localhost:8080 for some reason, and having some react-router bug.
