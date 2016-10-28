@@ -7,6 +7,7 @@ const http       = require('http')
 const bodyParser = require('body-parser')
 const morgan     = require('morgan')
 const passport   = require('passport')
+const path       = require("path")
 const cors       = require('cors')
 
 const router = require('./router')
@@ -25,6 +26,7 @@ app.use(morgan('combined')) //logger
 app.use(cors()) //allow access from any origin
 app.use(bodyParser.json({type: '*/*'})) //parses incoming requests into JSON
 router(app)
+app.use(express.static(path.join(__dirname,'public')));
 
 //Server Setup
 const port = process.env.PORT || 3090

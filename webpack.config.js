@@ -1,5 +1,7 @@
 var webpack = require('webpack')
 var path    = require('path')
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 require('dotenv').config()
 
 //XXX: Will need a separate build for production
@@ -16,7 +18,7 @@ if (!isProduction) {
     ],
     output: {
       path: __dirname,
-      publicPath: '/',
+      publicPath: 'http://localhost:8080/assets/',
       filename: 'bundle.js'
     },
     module: {
@@ -54,7 +56,7 @@ if (!isProduction) {
       './frontend/src/index.js',
     ],
     output: {
-      path: path.join(__dirname, 'build'),
+      path: path.join(__dirname,'ApiServer', 'public/js'),
       publicPath: '/',
       filename: 'bundle.js'
     },
@@ -65,13 +67,14 @@ if (!isProduction) {
       }, {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loaders: ['style', 'css', 'sass']
+        loader: ExtractTextPlugin.extract('style-loader',['css', 'sass'].join('!'))
       }]
     },
     resolve: {
       extensions: ['', '.react.js', '.js', '.jsx', '.scss']
     },
     plugins: [
+      new ExtractTextPlugin("../css/style.css"),
       new webpack.optimize.UglifyJsPlugin({
         compressor: {
           warnings: false,

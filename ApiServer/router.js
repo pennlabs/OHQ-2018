@@ -10,7 +10,7 @@ const requireSignin = passport.authenticate('local', {session: false})
 
 function router(app) {
 	app.get('/', (req, res, next) => {
-		res.send({ message: 'this will send over the bundled resources' })
+		res.sendFile(__dirname+'/index.html');
 	})
 	//any incoming request must pass requireAuth - acts as middleware to 'intercept'
 	app.post('/signin', requireSignin, auth.signin)
