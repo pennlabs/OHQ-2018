@@ -1,10 +1,9 @@
 var webpack = require('webpack')
-var path = require('path')
-
-const isProduction = process.env.NODE_ENV === 'production'
+var path    = require('path')
+require('dotenv').config()
 
 //XXX: Will need a separate build for production
-
+const isProduction = process.env.NODE_ENV === 'production'
 //Compile css separately, set env vars, etc.
 if (!isProduction) {
   module.exports = {
@@ -43,12 +42,6 @@ if (!isProduction) {
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      // new webpack.optimize.UglifyJsPlugin({
-      //   compressor: {
-      //     warnings: false,
-      //   }
-      // }),
-      // new webpack.optimize.OccurrenceOrderPlugin()
     ]
   }
 } else {

@@ -3,6 +3,7 @@ ApiServer/data
 ApiServer/config.js
 ApiServer/npm-debug.log
 .DS_Store
+data
 
 # IntelliJ
 *.iml
