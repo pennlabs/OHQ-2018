@@ -4,6 +4,7 @@ require('dotenv').config()
 
 //XXX: Will need a separate build for production
 const isProduction = process.env.NODE_ENV === 'production'
+
 //Compile css separately, set env vars, etc.
 if (!isProduction) {
   module.exports = {
@@ -53,7 +54,7 @@ if (!isProduction) {
       './frontend/src/index.js',
     ],
     output: {
-      path: __dirname,
+      path: path.join(__dirname, 'build'),
       publicPath: '/',
       filename: 'bundle.js'
     },

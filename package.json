@@ -6,7 +6,7 @@
   "repository": "none",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "webpack -p",
+    "build": "NODE_ENV=production webpack -p",
     "server": "nodemon ./ApiServer/index.js",
     "test": "mocha --compilers js:babel-core/register --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
     "test:watch": "npm run test -- --watch"
