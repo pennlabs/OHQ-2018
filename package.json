@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css",
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "npm run clean && NODE_ENV=production webpack -p",
+    "build": "npm run clean && NODE_ENV=production webpack --progress --display-reasons --display-modules",
     "server": "nodemon ./ApiServer/index.js",
     "test": "mocha --compilers js:babel-core/register --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
     "test:watch": "npm run test -- --watch"
@@ -30,6 +30,7 @@
     "jsdom": "^9.4.1",
     "mocha": "^2.5.3",
     "node-sass": "^3.8.0",
+    "nodemon": "^1.10.2",
     "react-addons-test-utils": "^15.2.1",
     "react-hot-loader": "^1.3.0",
     "rimraf": "^2.5.4",
@@ -52,7 +53,6 @@
     "lodash": "^4.13.1",
     "mongoose": "^4.6.1",
     "morgan": "^1.7.0",
-    "nodemon": "^1.10.2",
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0",
     "passport-local": "^1.0.0",

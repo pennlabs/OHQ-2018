@@ -2,12 +2,10 @@ var webpack = require('webpack')
 var path    = require('path')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-require('dotenv').config()
+// require('dotenv').config()
 
-//XXX: Will need a separate build for production
 const isProduction = process.env.NODE_ENV === 'production'
 
-//Compile css separately, set env vars, etc.
 if (!isProduction) {
   module.exports = {
     entry: [
@@ -75,12 +73,13 @@ if (!isProduction) {
     },
     plugins: [
       new ExtractTextPlugin("../css/style.css"),
+      new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compressor: {
           warnings: false,
         }
       }),
-      new webpack.optimize.OccurrenceOrderPlugin()
+      new webpack.optimize.OccurrenceOrderPlugin(),
     ]
   }
 }
