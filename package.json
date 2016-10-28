@@ -5,7 +5,7 @@
   "main": "frontend/index.js",
   "repository": "none",
   "scripts": {
-    "clean": "rimraf ApiServer/public/js",
+    "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css",
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "build": "npm run clean && NODE_ENV=production webpack -p",
     "server": "nodemon ./ApiServer/index.js",

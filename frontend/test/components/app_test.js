@@ -11,7 +11,7 @@ describe('App.react.js', () => {
 
   //create an instance of app
   //use it to test a single attribute of a target
-  it('shows a comment box', () => {
-    expect(component.find('.comment-box')).to.exist
-  })
+  // it('shows a comment box', () => {
+  //   expect(component.find('.comment-box')).to.exist
+  // })
 })
