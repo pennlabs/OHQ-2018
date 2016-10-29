@@ -9,7 +9,8 @@
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "build": "npm run clean && NODE_ENV=production webpack --progress --display-reasons --display-modules",
     "server": "nodemon ./ApiServer/index.js",
-    "test": "mocha --compilers js:babel-core/register --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
+    "lint": "eslint **/",
+    "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
     "test:watch": "npm run test -- --watch"
   },
   "author": "Aaron Michaels",
