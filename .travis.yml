@@ -1,8 +1,11 @@
 language: node_js
 node_js:
   - "7"
-after_success:
-  - npm run build
+after-success:
+  skip_cleanup: true
+  script: npm run build
+  on:
+    branch: master
   # - eval "$(ssh-agent -s)" #start the ssh agent
   # - chmod 600 .travis/deploy_key.pem # this key should have push access
   # - ssh-add .travis/deploy_key.pem
