@@ -1,9 +1,13 @@
 {
-  "name": "app_starter",
+  "name": "OHQ",
   "version": "1.0.0",
-  "description": "App starter package",
+  "description": "Office Hours Queue for Penn",
   "main": "frontend/index.js",
-  "repository": "none",
+  "repository": "https://github.com/pennlabs/OHQ.git",
+  "homepage": "https://github.com/pennlabs/OHQ",
+  "bugs": {
+    "url": "https://github.com/pennlabs/OHQ/issues"
+  },
   "scripts": {
     "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css",
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
@@ -13,8 +17,8 @@
     "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
     "test:watch": "npm run test -- --watch"
   },
-  "author": "Aaron Michaels",
-  "license": "ISC",
+  "author": "Penn Labs",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-eslint": "^6.1.2",
