@@ -1,6 +1,5 @@
 node_modules
 ApiServer/data
-ApiServer/config.js
 ApiServer/npm-debug.log
 .DS_Store
 data

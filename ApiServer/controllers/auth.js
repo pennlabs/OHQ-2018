@@ -1,13 +1,13 @@
 const jwt = require('jwt-simple')
 
-const SecretString = require('./../config').JWT_SECRET
+const SecretString = process.env.JWT_SECRET || require('./../config').JWT_SECRET
 const User = require('../DataModels/UserModel')
 
 function generateToken(user) {
 	const timestamp = new Date().getTime()
 	//encoding id because every user has a unique, unchanging ID
 	return jwt.encode({ sub: user.id, iat: timestamp }, SecretString) //sub stands for subject; who token belongs to
-																																	  // iat stands for 'issued at time'
+																																		// iat stands for 'issued at time'
 }
 
 //passed in parameters from the router
