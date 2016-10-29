@@ -12,4 +12,4 @@ Then, also from the root directory of this project run `npm run server` in the t
 
 Finally, run `npm start` in the terminal from the root directory of this project.
 
-TODO: add backend tests
+TODO: add backend tests.
