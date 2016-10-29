@@ -11,7 +11,9 @@
   "scripts": {
     "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css",
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "npm run clean && NODE_ENV=production webpack --progress --display-reasons --display-modules",
+    "build": "npm run clean && npm run postinstall",
+    "postinstall": "NODE_ENV=production webpack --progress --display-reasons --display-modules",
+    "prod": "node ./ApiServer/index.js",
     "server": "nodemon ./ApiServer/index.js",
     "lint": "eslint **/",
     "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
