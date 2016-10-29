@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pennlabs/OHQ.svg?branch=testbranch)](https://travis-ci.org/pennlabs/OHQ)
+
 Office-hours-queue.  Currently making the baseline.
 
 To run, make sure you have [NodeJS](https://nodejs.org/en/) and [MongoDB](https://docs.mongodb.com/manual/installation/?jmp=footer) installed.  
