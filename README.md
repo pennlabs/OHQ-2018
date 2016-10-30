@@ -2,7 +2,7 @@
 
 Office-hours-queue.  Currently making the baseline.
 
-To run, make sure you have [NodeJS](https://nodejs.org/en/) and [MongoDB](https://docs.mongodb.com/manual/installation/?jmp=footer) installed.  
+To run, make sure you have [NodeJS](https://nodejs.org/en/) and [MongoDB](https://docs.mongodb.com/manual/installation/?jmp=footer) installed.  Use node 6 for now, because there is a conflict issue with node-sass and node 7.
 
 First start MongoDB by running `mongod` in the terminal.
 
