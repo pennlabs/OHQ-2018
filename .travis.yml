@@ -1,9 +1,12 @@
 language: node_js
 node_js:
-  - "7"
+  - "6"
+install:
+  - npm install -g yarn
+  - yarn install
 after-success:
   skip_cleanup: true
-  script: npm run build
+  # script: npm run build
   on:
     branch: master
   # - eval "$(ssh-agent -s)" #start the ssh agent
