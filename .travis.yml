@@ -7,6 +7,8 @@ before_install:
 install:
   - npm install -g yarn
   - yarn install
+addons:
+  ssh_known_hosts: apps.pennlabs.org
 deploy:
   provider: script
   script: deploy/deploy.sh
