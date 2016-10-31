@@ -3,6 +3,8 @@ ApiServer/data
 ApiServer/public
 data
 bundle.js
+# Deploy private key
+deploy/deploy_key
 
 # MacOS
 .DS_Store
