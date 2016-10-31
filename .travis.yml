@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "6"
 before_install:
-  - openssl aes-256-cbc -K $encrypted_68b39119197e_key -iv $encrypted_68b39119197e_iv
+- openssl aes-256-cbc -K $encrypted_68b39119197e_key -iv $encrypted_68b39119197e_iv
   -in deploy/deploy_key.enc -out deploy/deploy_key -d
 install:
   - npm install -g yarn
