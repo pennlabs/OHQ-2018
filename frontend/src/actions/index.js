@@ -4,8 +4,9 @@ import Promise from 'bluebird'
 import { browserHistory } from 'react-router'
 
 import { AUTH_USER, AUTH_ERROR } from './ActionTypes'
+import { ROOT_URL } from './../../constants'
 
-const ROOT_URL = process.env.ROOT_URL || 'http://localhost:3090'
+const rootUrl = process.env.ROOT_URL || ROOT_URL
 
 export function authError(error) {
   return {
@@ -22,7 +23,7 @@ export function signinUser({email, password}) {
   return function(dispatch) {
 
     //submit email/pass to server (cast es6 promise to bluebird promise)
-    Promise.resolve(axios.post(`${ROOT_URL}/signin`, {email, password}))
+    Promise.resolve(axios.post(`${rootUrl}/signin`, {email, password}))
     .then(res => {
       //if request is good, update state to indicate user is auth'd
       dispatch({ type: AUTH_USER })
