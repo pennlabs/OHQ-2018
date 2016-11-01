@@ -23,7 +23,7 @@ class CommentBox extends React.Component {
     })
   }
 
-  render () {
+  render() {
     return (
       <form
         onSubmit={this.handleSubmit}

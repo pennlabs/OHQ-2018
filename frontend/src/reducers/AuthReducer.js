@@ -6,15 +6,15 @@ const defaultState = {error: null, authenticated: false}
 
 
 //should really just need one boolean
-export default function (state = defaultState, action) {
-	switch (action.type) {
-		case AUTH_USER:
-			return {...state, authenticated: true}
-		case UNAUTH_USER:
-			return {...state, authenticated: false}
-		case AUTH_ERROR:
-			return {...state, error: action.payload}
-		default:
-			return state
-	}
+export default function(state = defaultState, action) {
+  switch (action.type) {
+    case AUTH_USER:
+      return {...state, authenticated: true}
+    case UNAUTH_USER:
+      return {...state, authenticated: false}
+    case AUTH_ERROR:
+      return {...state, error: action.payload}
+    default:
+      return state
+  }
 }

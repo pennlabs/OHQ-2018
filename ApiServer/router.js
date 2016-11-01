@@ -1,4 +1,5 @@
 const passport = require('passport')
+const path = require('path')
 
 const auth            = require('./controllers/auth')
 const passportService = require('./services/passport') //passport.use gets called at the end of this file
@@ -9,18 +10,18 @@ const requireAuth   = passport.authenticate('jwt', {session: false})
 const requireSignin = passport.authenticate('local', {session: false})
 
 function router(app) {
-	app.get('/', (req, res, next) => {
-		res.sendFile(__dirname+'/index.html')
-	})
-	app.get('/:route', (req, res, next) => {
-		res.sendFile(__dirname+'/index.html')
-	})
-	//any incoming request must pass requireAuth - acts as middleware to 'intercept'
-	app.post('/signin', requireSignin, auth.signin)
-	app.post('/tester', requireAuth, (req, res) => {
-		res.send(`you've accessed a protected resource!`)
-	})
-	app.post('/signup', auth.signup)
+  app.get('/', (req, res, next) => {
+    res.sendFile(path.join(__dirname, '/index.html'))
+  })
+  app.get('/:route', (req, res, next) => {
+    res.sendFile(path.join(__dirname, '/index.html'))
+  })
+  //any incoming request must pass requireAuth - acts as middleware to 'intercept'
+  app.post('/signin', requireSignin, auth.signin)
+  app.post('/tester', requireAuth, (req, res) => {
+    res.send(`you've accessed a protected resource!`)
+  })
+  app.post('/signup', auth.signup)
 }
 
 module.exports = router
