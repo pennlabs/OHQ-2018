@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router'
 
 import { AUTH_USER, AUTH_ERROR } from './ActionTypes'
 
-const ROOT_URL = 'http://localhost:3090'
+const ROOT_URL = process.env.ROOT_URL || 'http://localhost:3090'
 
 export function authError(error) {
   return {
@@ -36,7 +36,7 @@ export function signinUser({email, password}) {
     .catch(err => {
       //if request is bad
       //show the user an error
-      dispatch(authError('Bad login info'))
+      dispatch(authError('Bad login info' + err))
     })
   }
 }
