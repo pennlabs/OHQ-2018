@@ -1,6 +1,6 @@
-var webpack = require('webpack')
-var path    = require('path')
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack')
+const path    = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // require('dotenv').config()
 
@@ -72,7 +72,12 @@ if (!isProduction) {
       extensions: ['', '.react.js', '.js', '.jsx', '.scss']
     },
     plugins: [
-      new ExtractTextPlugin("../css/style.css"),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('production')
+        }
+      }),
+      new ExtractTextPlugin('../css/style.css'),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compressor: {
