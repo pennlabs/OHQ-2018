@@ -1,6 +1,6 @@
 const jwt = require('jwt-simple')
 
-const SecretString = process.env.JWT_SECRET || require('./../config').JWT_SECRET
+const SecretString = process.env.JWT_SECRET || require('./../constants').JWT_SECRET
 const User = require('../DataModels/UserModel')
 
 function generateToken(user) {
