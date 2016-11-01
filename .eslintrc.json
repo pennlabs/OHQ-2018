@@ -1,5 +1,5 @@
 {
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "standard"],
   "parser": "babel-eslint",
   "plugins": [
     "react"
@@ -20,9 +20,15 @@
   },
   "rules": {
     "comma-dangle": 0,
-    "no-unused-vars": 1,
     "no-console": 0,
+    "no-multi-spaces": 0,
+    "no-multiple-empty-lines": 0,
+    "no-tabs": 0,
+    "no-unused-vars": 1,
+    "padded-blocks": 0,
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "space-before-function-paren": ["error", "never"],
+    "spaced-comment": 0
   }
 }
