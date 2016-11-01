@@ -8,7 +8,7 @@ const ExtractJwt    = require('passport-jwt').ExtractJwt
 const LocalStrategy = require('passport-local')
 
 const User         = require('./../DataModels/UserModel')
-const SecretString = require('./../config').JWT_SECRET
+const SecretString = require('./../constants').JWT_SECRET
 
 const localOptions = {usernameField: 'email'}
 
