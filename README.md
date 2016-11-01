@@ -1,4 +1,11 @@
-[![Build Status](https://travis-ci.org/pennlabs/OHQ.svg?branch=testbranch)](https://travis-ci.org/pennlabs/OHQ)
+<h2 align="center">
+  <img src="https://avatars2.githubusercontent.com/u/1159028?v=3&s=400" width="150">
+  <br>
+  Office Hours Queue
+	<br>
+	<br>
+	<a href="https://travis-ci.org/pennlabs/OHQ"><img src="https://travis-ci.org/pennlabs/OHQ.svg?branch=master" alt="Travis"></a>
+</h1>
 
 Office-hours-queue.  Currently making the baseline.
 
