@@ -11,13 +11,15 @@ const path       = require('path')
 const cors       = require('cors')
 
 const router = require('./router')
+const MONGO_URI = require('./constants').MONGO_URI
+const PORT = require('./constants').PORT
 
 //Initialize express app
 const app = express()
 
 
 //DB Setup
-const dbUri = process.env.MONGODB_URI || 'mongodb://localhost:apiserver/apiserver'
+const dbUri = process.env.MONGODB_URI || MONGO_URI
 mongoose.connect(dbUri)
 
 
@@ -29,7 +31,7 @@ router(app)
 app.use(express.static(path.join(__dirname, 'public')))
 
 //Server Setup
-const port = process.env.PORT || 3090
+const port = process.env.PORT || PORT
 //app handles http requests coming in from server
 const server = http.createServer(app)
 server.listen(port)
