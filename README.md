@@ -6,7 +6,7 @@
 	<br>
 	<a href="https://travis-ci.org/pennlabs/OHQ"><img src="https://travis-ci.org/pennlabs/OHQ.svg?branch=master" alt="Travis"></a>
 	<a href="http://standardjs.com/"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="StandardJS"></a>
-</h1>
+</h2>
 
 Office-hours-queue.  Currently making the baseline.
 
