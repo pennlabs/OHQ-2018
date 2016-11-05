@@ -5,6 +5,9 @@
   "main": "frontend/index.js",
   "repository": "https://github.com/pennlabs/OHQ.git",
   "homepage": "https://github.com/pennlabs/OHQ",
+  "engines": {
+    "node": "6.9.1"
+  },
   "bugs": {
     "url": "https://github.com/pennlabs/OHQ/issues"
   },
