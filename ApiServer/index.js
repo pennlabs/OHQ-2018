@@ -11,8 +11,7 @@ const path       = require('path')
 const cors       = require('cors')
 
 const router = require('./router')
-const PORT = require('./constants').PORT
-const MONGO_URI = require('./constants').MONGO_URI
+const { PORT, MONGO_URI } = require('./constants')
 
 //Initialize express app
 const app = express()
