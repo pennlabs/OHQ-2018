@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const path    = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // require('dotenv').config()
 
@@ -54,7 +54,7 @@ if (!isProduction) {
       './frontend/src/index.js',
     ],
     output: {
-      path: path.join(__dirname,'ApiServer', 'public/js'),
+      path: path.join(__dirname, 'ApiServer', 'public/js'),
       publicPath: '/',
       filename: 'bundle.js'
     },
@@ -65,7 +65,7 @@ if (!isProduction) {
       }, {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader',['css', 'sass'].join('!'))
+        loader: ExtractTextPlugin.extract('style-loader', ['css', 'sass'].join('!'))
       }]
     },
     resolve: {
