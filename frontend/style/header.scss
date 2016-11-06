@@ -1,0 +1,12 @@
+:local .header {
+	background-color: red;
+	height: 50px;
+}
+
+:local .headerLinks {
+	height: inherit;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
