@@ -1,52 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import styles from './../../style/header.scss'
 
 class Header extends Component {
+  renderSigninLink() {
+    if (this.props.authenticated) {
+      return 'Hello, user!'
+    }
+    return 'Log in'
+  }
 
   render() {
 
     return (
-      <div>
-        <nav className='navbar navbar-light'>
-          <ul className='nav navbar-nav'>
-            <li className='nav-item'>
-              {this.props.authenticated}
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <nav className={styles.header}>
+        <div className={styles.headerLinks}>
+          This is my header!
+          <div>Link 1</div>
+          <div>Link 2</div>
+          <div>{this.renderSigninLink()}</div>
+        </div>
+      </nav>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {authenticated: state.auth.authenticated}
+  return { authenticated: state.auth.authenticated }
 }
 export default connect(mapStateToProps)(Header)
-
-
-
-//
-// import React, { Component } from 'react'
-//
-// class Header extends Component {
-//
-//   render() {
-//
-//     return (
-//       <div>
-//         <nav className='navbar navbar-light'>
-//           <ul className='nav navbar-nav'>
-//             <li className='nav-item'>
-//               Sign in
-//             </li>
-//           </ul>
-//         </nav>
-//       </div>
-//     )
-//   }
-// }
-//
-//
-// export default Header
