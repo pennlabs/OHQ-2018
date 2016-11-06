@@ -7,13 +7,12 @@ import Header from './Header.react'
 export default class App extends Component {
   render() {
     (async () => {
-      await console.log('es7!')
+      await console.log('es8!')
     })()
     return (
       <div>
-      Hello, world!
-      <Link to='/signin'>Test Link</Link>
         <Header />
+        <Link to='/signin'>Test Link</Link>
         {this.props.children}
       </div>
     )
