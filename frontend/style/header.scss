@@ -1,12 +1,18 @@
 :local .header {
-	background-color: red;
-	height: 50px;
+  background-color: orange;
+  height: 50px;
 }
 
 :local .headerLinks {
-	height: inherit;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	align-items: center;
+  height: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  :local .header {
+    background-color: blue;
+  }
 }
