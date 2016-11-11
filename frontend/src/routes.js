@@ -5,8 +5,8 @@ import App from './components/app.react'
 import Signin from './components/auth/Signin.react'
 
 export default (
-	<Route path='/' component={App}>
-		<Route path='/signin' component={Signin}>
-		</Route>
-	</Route>
+  <Route path='/' component={App}>
+    <Route path='/signin' component={Signin}>
+    </Route>
+  </Route>
 )
