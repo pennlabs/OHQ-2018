@@ -1,0 +1,14 @@
+:local .container {
+	display: flex;
+	flex-direction: row;
+	background-color: grey;
+}
+
+:local .content{
+	display: flex;
+	flex-direction: column;;
+	align-items: center;
+	justify-content: center;
+	background-color: teal;
+	width: 100%;
+}
