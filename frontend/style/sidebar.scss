@@ -1,0 +1,14 @@
+:local .sidebar {
+  background-color: #A0D267;
+  height: 100vh;
+  width: 100px;
+  min-width: 100px;
+}
+
+:local .sidebarLinks {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
