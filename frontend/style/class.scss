@@ -1,0 +1,18 @@
+:local .class {
+  background-color: orange;
+  height: 50px;
+}
+
+:local .classInfo{
+  height: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  :local .class {
+    background-color: blue;
+  }
+}
