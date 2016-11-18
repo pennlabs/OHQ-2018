@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 // import { Link, Router } from 'react-router'
 import { connect } from 'react-redux'
 
-<<<<<<< HEAD
-import CommentBox from './CommentBox.react'
+
 import Header from './Header.react'
-=======
 // import CommentBox from './CommentBox.react'
 import SplashPage from './SplashPage.react'
 import Main from './Main.react'
@@ -18,7 +16,6 @@ class App extends Component {
     }
     return <Main>{this.props.children}</Main>
   }
->>>>>>> 16c1dcd2dab8db735d953977273e9588db1c90b8
 
   render() {
     (async () => {
