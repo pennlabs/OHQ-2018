@@ -1,0 +1,18 @@
+:local .container {
+	width: 100%;
+	padding-left: 40px;
+	padding-top: 30px;
+}
+
+
+@media (max-width: 400px) {
+	:local .container {
+		padding-left: 10px;
+	}
+}
+
+@media (max-height: 500px) {
+	:local .container {
+		padding-top: 10px;
+	}
+}
