@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 import styles from './../../style/main.scss'
 import SideBar from './SideBar.react'
+import ClassPage from './ClassPage.react'
 
 class Main extends Component {
 
@@ -11,11 +12,7 @@ class Main extends Component {
     return (
       <div className={styles.container}>
 				<SideBar />
-				<div className={styles.content}>
-					<div>Hello, world!</div>
-          <Link to='/signin'>Sign in</Link>
-          {this.props.children}
-        </div>
+        <ClassPage />
       </div>
     )
   }
