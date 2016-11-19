@@ -12,7 +12,6 @@ class SplashPage extends Component {
       <div className={styles.splashpage}>
         <img className={styles.logo} src={'https://cdn.zeplin.io/5827a5a8096f25bc1a22dab7/assets/1062CC45-9B56-46DA-BA4F-3B35C0AB32CE.png'} />
         <Link className={styles.button} to=''>Log In with PennKey</Link>
-        
          <div
            className={styles.labs}>
            <span>Developed by<br/></span>
