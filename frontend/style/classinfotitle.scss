@@ -1,0 +1,32 @@
+:local .container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 180px;
+	height: 100px;
+	// background-color: red;
+	margin-bottom: 30px;
+}
+
+:local .classCode {
+	font-family: Roboto;
+	font-size: 30px;
+	letter-spacing: -0.9px;
+	color: #737373;
+	margin-bottom: auto
+}
+
+:local .teacher {
+	font-family: Roboto;
+	font-size: 25px;
+	letter-spacing: -0.7px;
+	color: #9b9b9b;
+}
+
+:local .location {
+	font-family: Roboto;
+	font-size: 25px;
+	letter-spacing: -0.7px;
+	color: #9b9b9b;
+}
