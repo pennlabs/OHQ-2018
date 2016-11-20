@@ -1,0 +1,16 @@
+:local .horizontalBar {
+  height: 25%;
+  width: inherit;
+  border-radius: 10%;
+  position: relative;
+  top: 38%;
+}
+
+:local .verticalBar {
+  width: 25%;
+  height: inherit;
+  border-radius: 10%;
+  position: relative;
+  left: 38%;
+  bottom: 25%;
+}
