@@ -1,0 +1,31 @@
+:local .greenBox {
+  width: 125px;
+  height: 75px;
+  background-color: #a0d468;
+  box-shadow: 2px 2px 11px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #b3e082
+  }
+}
+
+:local .crossContainer {
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 500px) {
+  :local .greenBox {
+    width: calc(100% - 10px);
+    height: 40px;
+  }
+  :local .crossContainer {
+    width: 22px;
+    height: 22px;
+  }
+}
