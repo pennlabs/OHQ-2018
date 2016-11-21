@@ -6,11 +6,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   cursor: pointer;
 
   &:hover {
-    background-color: #b3e082
+    background-color: #b3e082;
+  }
+  &:active {
+    background-color: #8cc152;
   }
 }
 
