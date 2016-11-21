@@ -1,21 +1,21 @@
 :local .box {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	height: 47px;
-	// width: calc(100% - 5px); //put a gap between queue and scrollbar?
-	background-color: #dedede;
-	color: white;
-	margin: 5px 0;
-	&.isFirst {
-		background-color: #9b9b9b;
-		margin-top: 0px;
-	}
-	&.isUser {
-		background-color: #a0d468;
-		box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
-	}
-	&.isLast {
-		margin-bottom: 0px;
-	}
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 47px;
+  // width: calc(100% - 5px); //put a gap between queue and scrollbar?
+  background-color: #dedede;
+  color: white;
+  margin: 5px 0;
+  &.isFirst {
+    background-color: #9b9b9b;
+    margin-top: 0px;
+  }
+  &.isUser {
+    background-color: #a0d468;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+  }
+  &.isLast {
+    margin-bottom: 0px;
+  }
 }

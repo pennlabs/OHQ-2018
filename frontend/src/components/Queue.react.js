@@ -13,7 +13,7 @@ class Queue extends Component {
   renderPositionTitle() {
     const pos = this.getPosition()
     if (!pos) return 'You are not in queue'
-    return `You are position ${this.getPosition()}/${this.props.line.length}`
+    return `You are position ${pos}/${this.props.line.length}`
   }
 
   renderQueue() {

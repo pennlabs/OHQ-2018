@@ -1,54 +1,55 @@
 :local .container {
-	// margin-top: 300px;
-	// margin-left: 200px;
-	display: flex;
-	width: 180px;
-	justify-content: center;
-	flex-direction: column;
+  display: flex;
+  width: 200px;
+  justify-content: center;
+  flex-direction: column;
 }
 
 :local .queue {
-	max-height: calc(52px * 4);
-	overflow-y: scroll;
-	overflow-x: hidden;
+  max-height: calc(52px * 5);
+  overflow-y: scroll;
+  overflow-x: hidden;
 
-	//Custom scrollbar for chrome
-	//NOTE: this is not cross browser compatible;
-	//to do a true custom scrollbar would require JS
-	//and is not worth the effort at this stage.
-	//(autoprefixer does not work because this is
-	//vendor specific)
-	&::-webkit-scrollbar {
-	  width:10px; //scrollbar width
-	}
-	&::-webkit-scrollbar * {
-		background:transparent; //scrollbar background
-	}
-	&::-webkit-scrollbar-thumb {
-	  background: #d8d8d8; //scrollbar thumb background
-		border-radius: 5px;
-	}
+  //Custom scrollbar for chrome
+  //NOTE: this is not cross browser compatible;
+  //to do a true custom scrollbar would require JS
+  //and is not worth the effort at this stage.
+  //(autoprefixer does not work because this is
+  //vendor specific)
+  &::-webkit-scrollbar {
+    width:10px; //scrollbar width
+  }
+  &::-webkit-scrollbar * {
+    background:transparent; //scrollbar background
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #d8d8d8; //scrollbar thumb background
+    border-radius: 5px;
+  }
 }
 
 :local .positionTitle {
-	margin-left: -3px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 7px;
+  margin-left: -3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 7px;
 
-	font-family: Roboto;
-	font-size: 22px;
+  font-family: Roboto;
+  font-size: 22px;
 
-	letter-spacing: -0.6px;
-	color: #9b9b9b;
+  letter-spacing: -0.6px;
+  color: #9b9b9b;
 }
 
-@media (max-width: 400px) {
-	:local .container {
-		width: 100px;
-	}
-	:local .positionTitle {
-		font-size: 14px;
+@media (max-width: 500px) {
+  :local .container {
+    width: 100%;
+  }
+  :local .positionTitle {
+    font-size: 18px;
+  }
+	:local .queue {
+		max-height: calc(52px * 3);
 	}
 }

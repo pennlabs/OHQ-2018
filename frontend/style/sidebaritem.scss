@@ -1,5 +1,5 @@
 :local .sidebarItem {
-	// Font styles
+  // Font styles
   font-family: Roboto;
   font-size: 20px;
   font-weight: normal;
@@ -8,22 +8,22 @@
   letter-spacing: -0.7px;
   color: #8cc152;
 
-	//alignment
-	height: 8vh;
-	width: 100%;
-	min-height: 40px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-	&:hover {
-		background-color: blue;
-		cursor: pointer;
-	}
-	&.isSelected {
-		background-color: #8cc152;
-	}
-	&.isActive {
-		color: white;
-	}
+  //alignment
+  height: 8vh;
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  &:hover {
+    background-color: blue;
+    cursor: pointer;
+  }
+  &.isSelected {
+    background-color: #8cc152;
+  }
+  &.isActive {
+    color: white;
+  }
 }

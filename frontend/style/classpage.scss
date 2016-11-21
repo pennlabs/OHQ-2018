@@ -1,18 +1,22 @@
 :local .container {
-	width: 100%;
-	padding-left: 40px;
-	padding-top: 30px;
+  width: 100%;
+  padding-left: 45px;
+  padding-top: 30px;
+}
+
+:local .topRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 
-@media (max-width: 400px) {
-	:local .container {
-		padding-left: 10px;
-	}
-}
-
-@media (max-height: 500px) {
-	:local .container {
-		padding-top: 10px;
-	}
+@media (max-width: 500px) {
+  :local .topRow {
+    flex-direction: column-reverse;
+  }
+  :local .container {
+    padding-top: 10px;
+    padding-left: 10px;
+  }
 }

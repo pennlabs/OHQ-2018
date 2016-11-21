@@ -1,32 +1,54 @@
 :local .container {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: flex-start;
-	width: 180px;
-	height: 100px;
-	// background-color: red;
-	margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 180px;
+  height: 100px;
+  // background-color: red;
+  margin-bottom: 30px;
 }
 
 :local .classCode {
-	font-family: Roboto;
-	font-size: 30px;
-	letter-spacing: -0.9px;
-	color: #737373;
-	margin-bottom: auto
+  font-family: Roboto;
+  font-size: 30px;
+  letter-spacing: -0.9px;
+  color: #737373;
+  margin-bottom: auto
 }
 
 :local .teacher {
-	font-family: Roboto;
-	font-size: 25px;
-	letter-spacing: -0.7px;
-	color: #9b9b9b;
+  font-family: Roboto;
+  font-size: 25px;
+  letter-spacing: -0.7px;
+  color: #9b9b9b;
 }
 
 :local .location {
-	font-family: Roboto;
-	font-size: 25px;
-	letter-spacing: -0.7px;
-	color: #9b9b9b;
+  font-family: Roboto;
+  font-size: 25px;
+  letter-spacing: -0.7px;
+  color: #9b9b9b;
+}
+
+@media (max-width: 500px) {
+  :local .container {
+    width: 100%;
+    height: 65px;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+  :local .location {
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+  :local .teacher {
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+  :local .classCode {
+    font-size: 18px;
+    letter-spacing: 0;
+  }
 }
