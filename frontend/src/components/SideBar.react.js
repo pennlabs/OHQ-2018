@@ -2,11 +2,24 @@ import React, { Component } from 'react'
 
 import styles from './../../style/sidebar.scss'
 import SidebarItem from './SidebarItem.react'
+import CustomCross from './CustomCross.react'
 
 class SideBar extends Component {
 
   renderLinks() {
+    const sidebarLinks = this.props.classes
+    ? this.props.classes.map(data => <SidebarItem {...data} key={data.title}/>)
+    : <p className={styles.noClassText}>No Classes</p>
 
+    const className = this.props.classes
+    ? styles.sidebarLinks
+    : `${styles.sidebarLinks} ${styles.noLinks}`
+
+    return (
+      <div className={className}>
+        {sidebarLinks}
+      </div>
+    )
   }
 
   render() {
@@ -15,16 +28,11 @@ class SideBar extends Component {
         <div className={styles.sidebarTitle}>
           OHQ
         </div>
-        <div className={styles.sidebarLinks}>
-          <SidebarItem title='link 1'/>
-          <SidebarItem title='link 2' isActive isSelected/>
-          <SidebarItem title='link 3' isActive/>
-          <SidebarItem title='link 4'/>
-          <SidebarItem title='link 5'/>
-          <SidebarItem title='link 6'/>
-        </div>
+        {this.renderLinks()}
         <div className={styles.sidebarFooter}>
-          <span className={styles.plus}>+</span> Add classes
+          <CustomCross color='white' height='20px' width='20px'/>
+          <div className={styles.footerSpace} />
+          <p className={styles.footerText}>Add Courses</p>
         </div>
       </nav>
     )

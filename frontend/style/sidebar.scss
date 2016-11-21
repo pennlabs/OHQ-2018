@@ -13,6 +13,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  &.noLinks {
+    justify-content: center;
+  }
 }
 
 :local .sidebarTitle {
@@ -25,7 +28,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: orange;
+  // background-color: orange;
   align-items: center;
   height: 10vh;
 }
@@ -34,7 +37,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: orange;
+  // background-color: orange;
   justify-content: center;
   height: 10vh;
 
@@ -44,17 +47,22 @@
   color: white;
 }
 
-:local .plus {
-  margin: 0 10px;
+:local .noClassText {
+  font-size: 25px;
+  letter-spacing: -0.7px;
   color: white;
-  font-size: 45px;
-  position: relative;
-  top: -3px;
-  // left: -10px;
-  border-radius: 3px;
 }
 
-@media (max-height: 400px) {
+:local .footerSpace {
+  width: 3%
+}
+
+:local .footerText {
+	font-size: 21px;
+	letter-spacing: -0.6px;
+}
+
+@media (max-width: 500px) {
   :local .sidebarFooter {
     display: none;
     height: 0px;
@@ -64,7 +72,10 @@
     height: 0px;
   }
   :local .sidebarLinks {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 100vh;
+  }
+  :local .noClassText {
+    font-size: 20px;
   }
 }
