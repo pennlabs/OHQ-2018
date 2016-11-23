@@ -6,6 +6,7 @@ import styles from './../../style/queue.scss'
 class Queue extends Component {
 
   getPosition() {
+    if (!this.props.line) return null
     const pos = this.props.line.findIndex(student => student.isUser)
     return pos < 0 ? null : pos + 1
   }
