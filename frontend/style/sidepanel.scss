@@ -1,0 +1,59 @@
+:local .containerMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+
+  animation-duration: 0.5s;
+  animation-name: fadein;
+}
+
+:local .sidePanel {
+  z-index: 2;
+  width: 25vw;
+  height: 100vh;
+  background-color: orange;
+
+  animation-duration: 0.5s;
+  animation-name: slidein;
+
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+@keyframes :local(fadein) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes :local(slidein) {
+  from {
+    opacity: 1;
+    right: -25vw;
+  }
+  to {
+    opacity: 1;
+    right: 0%;
+  }
+}
+
+@media (max-width: 500px) {
+
+  :local .mask {
+    display: none;
+  }
+
+  :local .sidePanel {
+    width: 100vw;
+    height: 100vh;
+    animation: none;
+  }
+}
