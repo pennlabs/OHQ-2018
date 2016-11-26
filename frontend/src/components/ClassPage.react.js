@@ -4,9 +4,20 @@ import Queue from './Queue.react'
 import ClassInfoTitle from './ClassInfoTitle.react'
 import styles from './../../style/classpage.scss'
 import JoinQueueButton from './JoinQueueButton.react'
-// import SidePanel from './SidePanel.react'
+import SidePanel from './SidePanel.react'
 
 class ClassPage extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSidePanelOpen: true,
+    }
+  }
+
+  toggleSidePanel = () => {
+    this.setState({isSidePanelOpen: !this.state.isSidePanelOpen})
+  }
 
   render() {
     return (
@@ -17,7 +28,10 @@ class ClassPage extends Component {
             classCode='CIS 110'
             location='Moore 001'
           />
-          <JoinQueueButton />
+          <JoinQueueButton
+            isSidePanelOpen={this.state.isSidePanelOpen}
+            toggleSidePanel={this.toggleSidePanel}
+          />
         </div>
         <Queue //TODO: the props will be handled by node and redux
           line={[
@@ -30,7 +44,10 @@ class ClassPage extends Component {
             {name: 'bar'},
           ]}
         />
-        {/* <SidePanel /> */}
+        <SidePanel
+          isOpen={this.state.isSidePanelOpen}
+          toggleSidePanel={this.toggleSidePanel}
+        />
       </div>
     )
   }
