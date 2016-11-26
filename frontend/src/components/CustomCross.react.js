@@ -5,26 +5,21 @@ import styles from './../../style/customcross.scss'
 class CustomCross extends Component {
 
   getDimensions() {
-    const styles = {}
-    if (this.props.height && this.props.width) {
-      styles.height = this.props.height
-      styles.width = this.props.width
-    }
-    return styles
+    if (!(this.props.height && this.props.color)) return null
+    const { height, width } = this.props
+    return { height, width }
   }
 
   getCrossColor() {
-    const styles = {}
-    if (this.props.color) {
-      styles.backgroundColor = this.props.color
-    }
-    return styles
+    if (!this.props.color) return null
+    const { color: backgroundColor } = this.props
+    return { backgroundColor }
   }
 
   render() {
     return (
       <div
-        className={this.props.customClassName || null}
+        className={this.props.customClassName}
         style={this.getDimensions()}
       >
         <div
