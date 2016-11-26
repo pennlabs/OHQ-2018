@@ -5,11 +5,18 @@ import styles from './../../style/joinqueuebutton.scss'
 
 class JoinQueueButton extends Component {
 
+  getClassName() {
+    return this.props.isSidePanelOpen
+    ? `${styles.greenBox} ${styles.sidePanelOpen}`
+    : styles.greenBox
+  }
+
   render() {
     return (
       <div
-        className={styles.greenBox}
+        className={this.getClassName()}
         title='Join the queue'
+        onClick={this.props.toggleSidePanel}
       >
         <CustomCross
           customClassName={styles.crossContainer}
@@ -18,6 +25,11 @@ class JoinQueueButton extends Component {
       </div>
     )
   }
+}
+
+JoinQueueButton.propTypes = {
+  toggleSidePanel: React.PropTypes.func,
+  isSidePanelOpen: React.PropTypes.bool,
 }
 
 export default JoinQueueButton

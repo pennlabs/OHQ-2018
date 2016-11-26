@@ -14,11 +14,33 @@
   &:active {
     background-color: #8cc152;
   }
+
+  &.sidePanelOpen {
+    //TODO: if we use a min width for the sidepanel, will use a buffer div instead
+    transform: translateX(-25vw);
+    animation: slidein;
+    animation-duration: 0.6s;
+
+    //HACK: this immediately disables the hover state color, otherwise the user needs
+    //to move their mouse to change it.
+    background-color: #a0d468;
+  }
 }
 
 :local .crossContainer {
   width: 40px;
   height: 40px;
+}
+
+//NOTE: use transform because it is easy on the browser
+//and will produce a smooth animation.
+@keyframes :local(slidein) {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25vw);
+  }
 }
 
 @media (max-width: 500px) {
