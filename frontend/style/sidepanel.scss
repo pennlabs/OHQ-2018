@@ -1,4 +1,4 @@
-:local .containerMask {
+:local .mask {
   position: fixed;
   top: 0;
   left: 0;
@@ -7,22 +7,25 @@
   height: 100vh;
   background: rgba(0,0,0,0.5);
 
-  animation-duration: 0.5s;
+  animation-duration: 0.6s;
   animation-name: fadein;
 }
 
 :local .sidePanel {
+  position: fixed;
+  right: 0;
+  top: 0;
   z-index: 2;
   width: 25vw;
   height: 100vh;
   background-color: orange;
 
-  animation-duration: 0.5s;
+  animation-duration: 0.6s;
   animation-name: slidein;
 
-  position: fixed;
-  right: 0;
-  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes :local(fadein) {
@@ -34,14 +37,14 @@
   }
 }
 
+//NOTE: use transform because it is easy on the browser
+//and will produce a smooth animation.
 @keyframes :local(slidein) {
   from {
-    opacity: 1;
-    right: -25vw;
+    transform: translateX(25vw);
   }
   to {
-    opacity: 1;
-    right: 0%;
+    transform: translateX(0);
   }
 }
 

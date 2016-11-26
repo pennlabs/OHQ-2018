@@ -8,15 +8,17 @@ class SidePanel extends Component {
     if (!this.props.isOpen) return null
 
     return (
-      <div className={styles.containerMask}
-        onClick={this.props.toggleSidePanel}
+      <div
+        // onKeyDown={this.props.toggleSidePanel}
+        // tabIndex='0'
       >
-        <div className={styles.sidePanel} onClick={
-          e => {
-            e.preventDefault()
-            e.stopPropagation()
-          }}
+        <div className={styles.mask}
+          onClick={this.props.toggleSidePanel}
         />
+
+        <div className={styles.sidePanel}>
+          Hello, world!
+        </div>
       </div>
     )
   }
