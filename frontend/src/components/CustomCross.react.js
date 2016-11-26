@@ -5,7 +5,7 @@ import styles from './../../style/customcross.scss'
 class CustomCross extends Component {
 
   getDimensions() {
-    if (!(this.props.height && this.props.color)) return null
+    if (!(this.props.height && this.props.width)) return null
     const { height, width } = this.props
     return { height, width }
   }
