@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 // import { Link, Router } from 'react-router'
 import { connect } from 'react-redux'
 
-
-// import Header from './Header.react'
 // import CommentBox from './CommentBox.react'
 import SplashPage from './SplashPage.react'
 import Main from './Main.react'
