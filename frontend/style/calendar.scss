@@ -1,0 +1,24 @@
+:local .container {
+	display: flex;
+	flex-direction: column;
+	margin-right: 30%;
+	margin-top: 1%;
+	letter-spacing: -0.6px;
+	.title {
+		margin-left: 40px;
+		font-style: 'Roboto';
+		color: #9b9b9b;
+		font-size: 14pt;
+		padding-bottom: 5px;
+	}
+	.calendar {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		background-color: #f7f7f7;	
+		height: 220px; 
+
+		// height:2
+	}
+	
+}
