@@ -1,7 +1,7 @@
 :local .container {
 	display: flex;
 	flex-direction: column;
-	margin-right: 30%;
+	margin-right: 25%;
 	margin-top: 1%;
 	.title {
 		margin-left: 40px;
@@ -13,11 +13,21 @@
 	.calendar {
 		display: flex;
 		flex-direction:row; 
+		height: 25vh; 
 		.calendarItems {
 			display: flex;
-			flex-direction: row;
+			flex-direction:  row;
+			justify-content: space-around;
 			background-color: #f7f7f7;	
-			height: 220px; 
+			flex-grow: 1;
+			// .item > .monday{
+			// 	background-color:blue;
+			// 	display:none;
+			// 	flex-direction:row;
+			// }
+			> [day="monday"] {
+				flex-direction: column;
+			}
 		}
 
 		.calendarSide {
@@ -28,7 +38,18 @@
 			font-size: 12pt;
 			color: #9b9b9b;
 		}
-
 	}
-	
+}
+
+@media screen and (max-width: 900px) {
+	:local .container {
+		margin-right: 5%;
+		.calendar {
+			height: 50vh;
+			
+			> .calendarItems {
+			flex-direction: column;
+			}
+		}
+	}
 }

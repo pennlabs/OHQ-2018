@@ -23,6 +23,7 @@ class ClassPage extends Component {
   render() {
     const sessions = [
       {day: 'monday', timeStart: '10:30', timeEnd: '2:00'},
+      {day: 'monday', timeStart: '1:30', timeEnd: '4:00'},
       {day: 'tuesday', timeStart: '10:30', timeEnd: '2:00'},
       {day: 'wednesday', timeStart: '10:30', timeEnd: '2:00'},
       {day: 'thursday', timeStart: '10:30', timeEnd: '2:00'},

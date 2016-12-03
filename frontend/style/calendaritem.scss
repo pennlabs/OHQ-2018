@@ -7,27 +7,25 @@ $fri: #ed5565;
 
 :local .item {
 	display: flex;
-	// background-color: blue;
-	margin:10px;
-	width:100px;
+	margin: 10px;
+	min-width: 80px;
+	flex-grow: 1;
+	min-height: 50px;
 
 	&.monday {
 		background-color: $mon;
 	}
-
 	&.tuesday {
 		background-color: $tues;
 	}
-
 	&.wednesday {
 		background-color: $wed;
 	}
-
 	&.thursday {
 		background-color: $thur;
 	}
-
 	&.friday {
 		background-color: $fri;
 	}
 }
+
