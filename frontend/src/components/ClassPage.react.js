@@ -24,6 +24,9 @@ class ClassPage extends Component {
     const sessions = [
       {day: 'monday', timeStart: '10:30', timeEnd: '2:00'},
       {day: 'tuesday', timeStart: '10:30', timeEnd: '2:00'},
+      {day: 'wednesday', timeStart: '10:30', timeEnd: '2:00'},
+      {day: 'thursday', timeStart: '10:30', timeEnd: '2:00'},
+      {day: 'friday', timeStart: '10:30', timeEnd: '2:00'},
     ]
     return (
       <div className={styles.container}>

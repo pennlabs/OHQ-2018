@@ -3,22 +3,33 @@
 	flex-direction: column;
 	margin-right: 30%;
 	margin-top: 1%;
-	letter-spacing: -0.6px;
+	font-style: 'Roboto';
 	.title {
 		margin-left: 40px;
-		font-style: 'Roboto';
 		color: #9b9b9b;
-		font-size: 14pt;
+		font-size: 15pt;
 		padding-bottom: 5px;
+		letter-spacing: -0.6px;
 	}
 	.calendar {
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		background-color: #f7f7f7;	
-		height: 220px; 
+		flex-direction:row; 
+		.calendarItems {
+			display: flex;
+			flex-direction: row;
+			background-color: #f7f7f7;	
+			height: 220px; 
+		}
 
-		// height:2
+		.calendarSide {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			letter-spacing: -0.3px;
+			font-size: 12pt;
+			color: #9b9b9b;
+		}
+
 	}
 	
 }

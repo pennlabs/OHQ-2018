@@ -7,11 +7,13 @@ class Calendar extends Component {
 
     renderSessions() {
       let key = 0
+      const sessions = this.props.sessions.map(data => 
+          <CalendarItem {...data} key={data.day + data.timeStart}/>
+      )
       return (
-        this.props.sessions.map(data => { 
-          <CalendarItem {...data} key={key}/>
-          key++
-        })
+        <div className={styles.calendarItems}>
+        {sessions}
+        </div>
       )
     }
 
@@ -21,10 +23,13 @@ class Calendar extends Component {
       	<div className={styles.title}>
           This week's office hours 
         </div>
-      	<div className={styles.calendar}> 
-      	hi
-        {this.renderSessions()}
-      	</div>
+        <div className={styles.calendar}>
+          <div className={styles.calendarSide}>
+            <div>8AM</div>
+            <div>10PM</div>
+          </div>
+          {this.renderSessions()}
+        </div>
       </div>
     )
   }

@@ -6,10 +6,9 @@ class CalendarItem extends Component {
 
   render() {
     return (
-      <div className={styles.item}>
-        {this.props.timeStart} - {this.props.timeEnd}
-        session ok
-      </div>
+    	<div className={[styles.item, styles[this.props.day]].join(' ')}> 
+    		{this.props.timeStart} - {this.props.timeEnd}
+    	</div>
     )
   }
 }

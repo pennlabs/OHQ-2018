@@ -1,8 +1,33 @@
+$mon: #ffce54;
+$tues: #ec87c0;
+$wed: #37bc98;
+$thur: #5d9cec;
+$fri: #ed5565;
+
+
 :local .item {
 	display: flex;
-	background-color: blue;
-}
+	// background-color: blue;
+	margin:10px;
+	width:100px;
 
-:local .monday {
+	&.monday {
+		background-color: $mon;
+	}
 
+	&.tuesday {
+		background-color: $tues;
+	}
+
+	&.wednesday {
+		background-color: $wed;
+	}
+
+	&.thursday {
+		background-color: $thur;
+	}
+
+	&.friday {
+		background-color: $fri;
+	}
 }
