@@ -1,63 +1,63 @@
 $background: #c0e28a;
-$dark-gray:rgb(80,80,80);
+$dark-gray: rgb(80,80,80);
 $break-small: 500px;
-
 
 :local .splashpage {
   height: 100vh;
   width: 100vw;
   display: flex;
-  align-items:center;  
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   background-image: radial-gradient(circle at 50% 50%, #c0e28a, #8cc152);
+}
 
-  .logo {
-    width: 40%;
-    max-width: 1000px;
-    min-width: 500px;
-  }
+:local .logo {
+  width: 40%;
+  max-width: 1000px;
+  min-width: 500px;
+}
 
-  :local .button {
-    margin-top: 20px;
-    width: 230px;
-    height: 45px;
-    background-color: #ed5565;
-    display: flex;
-    font-size: 16pt;
-    letter-spacing: -0.8px;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    border-radius: 1px;
-    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
-    transition: background-color 100ms;
+:local .button {
+  margin-top: 20px;
+  width: 230px;
+  height: 45px;
+  background-color: #ed5565;
+  display: flex;
+  font-size: 16pt;
+  letter-spacing: -0.8px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 1px;
+  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
+  transition: background-color 100ms;
 
-    &:hover {
-      background-color: $dark-gray;
-    }
-  }
-
-  :local .labs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    color: white;
-    letter-spacing: -0.3px;
-    font-size: 10pt;
-    .labsImg {
-      width: 10vw;
-      min-width: 80px;
-    }
+  &:hover {
+    background-color: $dark-gray;
   }
 }
 
-@media screen and (max-width: 500px) {
-  .logo {
+:local .labs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  color: white;
+  letter-spacing: -0.3px;
+  font-size: 10pt;
+}
+
+:local .labsImg {
+  width: 10vw;
+  min-width: 80px;
+}
+
+@media (max-width: 500px) {
+  :local .logo {
     width: 100%;
   }
 }
