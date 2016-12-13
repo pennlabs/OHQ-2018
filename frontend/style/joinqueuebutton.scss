@@ -17,7 +17,7 @@
 
   &.sidePanelOpen {
     //TODO: if we use a min width for the sidepanel, will use a buffer div instead
-    transform: translateX(-25vw);
+    transform: translateX(-30vw);
     animation: slidein;
     animation-duration: 0.6s;
 
@@ -39,7 +39,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-25vw);
+    transform: translateX(-30vw);
   }
 }
 
