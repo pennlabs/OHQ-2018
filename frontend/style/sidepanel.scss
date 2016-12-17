@@ -16,17 +16,99 @@
   right: 0;
   top: 0;
   z-index: 2;
-  width: 25vw;
+  width: 30vw;
   height: 100vh;
-  background-color: orange;
 
   animation-duration: 0.6s;
   animation-name: slidein;
+}
+
+:local .sidePanelContent {
+  padding: 0 10%;
+  height: 100%;
+  background-color: #f1f2f6;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
 }
+
+//exit cross
+:local .exitForm {
+  align-self: flex-end;
+}
+
+:local .formHeader {
+  // align-self: center;
+  font-size: 30px;
+  letter-spacing: -0.9px;
+  color: #737373;
+  margin-bottom: 3vh;
+}
+
+//Question section
+:local .questionTitle {
+  font-size: 15px;
+  margin-bottom: 5px;
+  letter-spacing: -0.5px;
+  color: #737373;
+}
+
+:local .questionSection {
+  margin-bottom: 3vh;
+}
+
+:local .questionInput {
+  font-size: 16px;
+  padding: 8px;
+  width: calc(100% - 16px); //offset by padding
+  resize: none;
+  height: calc(24vh - 10px);
+  border: none;
+}
+
+:local .questionCharacterLimit {
+  font-size: 11px;
+  color: #9b9b9b;
+}
+
+//location section
+:local .locationSection {
+  font-size: 15px;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+  color: #737373;
+}
+
+:local .locationTitle {
+  font-size: 15px;
+  margin-bottom: 5px;
+  letter-spacing: -0.5px;
+  color: #737373;
+}
+
+:local .locationInput {
+  padding: 5px 8px;
+  font-size: 16px;
+  width: calc(100% - 16px); //offset by padding
+  border: none;
+}
+
+:local .submit {
+  border: none;
+
+  background: red;
+  color: white;
+  padding: 6px 4px;
+  align-self: flex-end;
+  width: 20%;
+  min-width: 50px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 
 @keyframes :local(fadein) {
   from {
@@ -41,7 +123,7 @@
 //and will produce a smooth animation.
 @keyframes :local(slidein) {
   from {
-    transform: translateX(25vw);
+    transform: translateX(30vw);
   }
   to {
     transform: translateX(0);
