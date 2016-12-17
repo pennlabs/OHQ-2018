@@ -19,6 +19,15 @@ class ClassPage extends Component {
     this.setState({isSidePanelOpen: !this.state.isSidePanelOpen})
   }
 
+  renderSidePanel() {
+    if (!this.state.isSidePanelOpen) return null
+    return (
+      <SidePanel
+        toggleSidePanel={this.toggleSidePanel}
+      />
+    )
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -44,10 +53,7 @@ class ClassPage extends Component {
             {name: 'bar'},
           ]}
         />
-        <SidePanel
-          isOpen={this.state.isSidePanelOpen}
-          toggleSidePanel={this.toggleSidePanel}
-        />
+        {this.renderSidePanel()}
       </div>
     )
   }
