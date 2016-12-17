@@ -30,7 +30,7 @@ class SideBar extends Component {
         </div>
         {this.renderLinks()}
         <div className={styles.sidebarFooter}>
-          <CustomCross color='white' height='20px' width='20px'/>
+          <CustomCross color='white' size='20px'/>
           <div className={styles.footerSpace} />
           <p className={styles.footerText}>Add Courses</p>
         </div>
