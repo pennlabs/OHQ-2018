@@ -150,4 +150,12 @@
     height: 100vh;
     animation: none;
   }
+
+  :local .submit {
+    margin-top: 4vh;
+    font-size: 15px;
+    padding: 8px 6px;
+    align-self: center;
+    width: 100%;
+  }
 }
