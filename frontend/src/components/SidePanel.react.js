@@ -18,6 +18,12 @@ class SidePanel extends Component {
     this.refs.questionInput.focus()
   }
 
+  closeSidePanel = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.toggleSidePanel()
+  }
+
   changeQuestionText = (e) => {
     const value = e.target.value.replace('\n', '')
 
@@ -96,8 +102,8 @@ class SidePanel extends Component {
         className={styles.sidePanelContent}
         onSubmit={this.handleFormSubmit}
       >
-        <div className={styles.exitForm} onClick={this.props.toggleSidePanel}>
-          <CustomCross size='24px' color='#9b9b9b' makeX />
+        <div className={styles.exitForm} onClick={this.closeSidePanel}>
+          <CustomCross size='24px' color='#9b9b9b' makeX/>
         </div>
         <div className={styles.formHeader}>Join the queue</div>
         {this.renderQuestionSection()}
@@ -114,7 +120,7 @@ class SidePanel extends Component {
         // tabIndex='0'
       >
         <div className={styles.mask}
-          onClick={this.props.toggleSidePanel}
+          onClick={this.closeSidePanel}
         />
         <div className={styles.sidePanel}>
           {this.renderForm()}
