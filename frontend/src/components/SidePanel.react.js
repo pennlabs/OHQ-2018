@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import CustomCross from './CustomCross.react'
 import styles from './../../style/sidepanel.scss'
 
 class SidePanel extends Component {
@@ -95,7 +96,9 @@ class SidePanel extends Component {
         className={styles.sidePanelContent}
         onSubmit={this.handleFormSubmit}
       >
-        <div className={styles.exitForm}>X</div>
+        <div className={styles.exitForm} onClick={this.props.toggleSidePanel}>
+          <CustomCross size='24px' color='#9b9b9b' makeX />
+        </div>
         <div className={styles.formHeader}>Join the queue</div>
         {this.renderQuestionSection()}
         {this.renderLocationSection()}

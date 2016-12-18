@@ -36,6 +36,13 @@
 //exit cross
 :local .exitForm {
   align-self: flex-end;
+  margin-top: 15px;
+  position: relative;
+  left: 2vw;
+  bottom: 5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 :local .formHeader {
@@ -59,6 +66,8 @@
 }
 
 :local .questionInput {
+  //HACK: for some reason firefox wants to use a monospace font here so we override it
+  font-family: Roboto;
   font-size: 16px;
   padding: 8px;
   width: calc(100% - 16px); //offset by padding
