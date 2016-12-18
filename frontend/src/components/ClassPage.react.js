@@ -15,7 +15,9 @@ class ClassPage extends Component {
     }
   }
 
-  toggleSidePanel = () => {
+  toggleSidePanel = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     this.setState({isSidePanelOpen: !this.state.isSidePanelOpen})
   }
 
