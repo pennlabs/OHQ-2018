@@ -4,7 +4,15 @@ import styles from './../../style/sidebar.scss'
 import SidebarItem from './SidebarItem.react'
 import CustomCross from './CustomCross.react'
 
-class SideBar extends Component {
+class Sidebar extends Component {
+
+  getClassName() {
+    let className = styles.sidebar
+    if (this.props.isTAForCurrentClass) {
+      className = `${className} ${styles.TA}`
+    }
+    return className
+  }
 
   renderLinks() {
     const sidebarLinks = this.props.classes
@@ -24,7 +32,7 @@ class SideBar extends Component {
 
   render() {
     return (
-      <nav className={styles.sidebar}>
+      <nav className={this.getClassName()}>
         <div className={styles.sidebarTitle}>
           OHQ
         </div>
@@ -39,8 +47,8 @@ class SideBar extends Component {
   }
 }
 
-SideBar.propTypes = {
+Sidebar.propTypes = {
   classes: React.PropTypes.array,
 }
 
-export default SideBar
+export default Sidebar
