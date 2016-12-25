@@ -13,6 +13,9 @@ const cors       = require('cors')
 const router = require('./router')
 const { PORT, MONGO_URI } = require('./constants')
 
+//set mongoose promise to bluebird
+mongoose.Promise = require('bluebird')
+
 //Initialize express app
 const app = express()
 
