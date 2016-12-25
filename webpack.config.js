@@ -31,6 +31,11 @@ if (!isProduction) {
         test: /\.scss$/,
         exclude: /node_modules/,
         loaders: ['style', 'css?importLoaders=1', 'postcss', 'sass']
+      },
+      {
+        test: /\.(jpg|jpeg|gif|png)$/,
+        exclude: /node_modules/,
+        loader: 'file?name=images/[name].[ext]'
       }]
     },
     resolve: {
@@ -66,6 +71,11 @@ if (!isProduction) {
         test: /\.scss$/,
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract('style-loader', ['css?importLoaders=1', 'postcss', 'sass'].join('!'))
+      },
+      {
+        test: /\.(jpg|jpeg|gif|png)$/,
+        exclude: /node_modules/,
+        loader: 'file?name=../images/[name].[ext]'
       }]
     },
     resolve: {
