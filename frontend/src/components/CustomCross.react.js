@@ -5,7 +5,7 @@ import styles from './../../style/customcross.scss'
 class CustomCross extends Component {
 
   getClassName() {
-    let className = this.props.customClassName
+    const className = this.props.customClassName
 
     if (!this.props.makeX) return className
 
