@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-
 import styles from './../../style/main.scss'
-import SideBar from './SideBar.react'
+import Sidebar from './Sidebar.react'
 import ClassPage from './ClassPage.react'
 
 class Main extends Component {
@@ -18,7 +17,7 @@ class Main extends Component {
     ]
     return (
       <div className={styles.container}>
-				<SideBar classes={classes}/>
+				<Sidebar classes={classes} isTAForCurrentClass/>
         <ClassPage />
       </div>
     )
