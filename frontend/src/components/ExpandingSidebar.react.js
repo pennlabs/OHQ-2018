@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/sidebar.scss'
-import SidebarItem from './SidebarItem.react'
+import styles from './../../style/expandingsidebar.scss'
+import ExpandingSidebarItem from './ExpandingSidebarItem.react'
 import CustomCross from './CustomCross.react'
 
-class Sidebar extends Component {
+class ExpandingSidebar extends Component {
 
   getClassName() {
-    let className = styles.sidebar
+    let className = styles.expandingSidebar
     if (this.props.isTAForCurrentClass) {
       className = `${className} ${styles.TA}`
     }
@@ -15,17 +15,17 @@ class Sidebar extends Component {
   }
 
   renderLinks() {
-    const sidebarLinks = this.props.classes
-    ? this.props.classes.map(data => <SidebarItem {...data} key={data.title}/>)
+    const expandingSidebarLinks = this.props.classes
+    ? this.props.classes.map(data => <ExpandingSidebarItem {...data} key={data.title}/>)
     : <p className={styles.noClassText}>No Classes</p>
 
     const className = this.props.classes
-    ? styles.sidebarLinks
-    : `${styles.sidebarLinks} ${styles.noLinks}`
+    ? styles.expandingSidebarLinks
+    : `${styles.expandingSidebarLinks} ${styles.noLinks}`
 
     return (
       <div className={className}>
-        {sidebarLinks}
+        {expandingSidebarLinks}
       </div>
     )
   }
@@ -33,11 +33,11 @@ class Sidebar extends Component {
   render() {
     return (
       <nav className={this.getClassName()}>
-        <div className={styles.sidebarTitle}>
+        <div className={styles.expandingSidebarTitle}>
           OHQ
         </div>
         {this.renderLinks()}
-        <div className={styles.sidebarFooter}>
+        <div className={styles.expandingSidebarFooter}>
           <CustomCross color='white' size='22px'/>
           <div className={styles.footerSpace} />
           <p className={styles.footerText}>Add Courses</p>
@@ -47,8 +47,8 @@ class Sidebar extends Component {
   }
 }
 
-Sidebar.propTypes = {
+ExpandingSidebar.propTypes = {
   classes: React.PropTypes.array,
 }
 
-export default Sidebar
+export default ExpandingSidebar

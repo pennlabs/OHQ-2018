@@ -1,4 +1,4 @@
-:local .sidebar {
+:local .expandingSidebar {
   background-color: #a0d468;
   box-shadow: 2px 2px 11px 0 rgba(0, 0, 0, 0.2);
   height: 100vh;
@@ -11,7 +11,7 @@
   }
 }
 
-:local .sidebarLinks {
+:local .expandingSidebarLinks {
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
   }
 }
 
-:local .sidebarTitle {
+:local .expandingSidebarTitle {
   // Font styles
   font-size: 24px;
   letter-spacing: -0.7px;
@@ -37,7 +37,7 @@
   height: 10vh;
 }
 
-:local .sidebarFooter {
+:local .expandingSidebarFooter {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -71,11 +71,11 @@
     display: none;
     height: 0px;
   }
-  :local .sidebarTitle {
+  :local .expandingSidebarTitle {
     display: none;
     height: 0px;
   }
-  :local .sidebarLinks {
+  :local .expandingSidebarLinks {
     overflow-y: scroll;
     height: 100vh;
   }
