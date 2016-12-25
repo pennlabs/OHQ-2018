@@ -14,8 +14,10 @@ class SidePanel extends Component {
     }
   }
 
-  componentDidMount() {
-    this.refs.questionInput.focus()
+  componentDidUpdate(prevProps) {
+    if (this.props.isOpen && !prevProps.isOpen) {
+      this.refs.questionInput.focus()
+    }
   }
 
   closeSidePanel = (e) => {
@@ -45,7 +47,7 @@ class SidePanel extends Component {
     })
   }
 
-  disableEnter = (e) => {
+  disableEnter(e) {
     if (e.which === 13) { //enter
       e.preventDefault()
       e.stopPropagation()
@@ -114,6 +116,7 @@ class SidePanel extends Component {
   }
 
   render() {
+    if (!this.props.isOpen) return null
     return (
       <div
         // onKeyDown={this.props.toggleSidePanel}
@@ -131,7 +134,8 @@ class SidePanel extends Component {
 }
 
 SidePanel.propTypes = {
-  toggleSidePanel: React.PropTypes.func
+  toggleSidePanel: React.PropTypes.func,
+  isOpen: React.PropTypes.bool
 }
 
 export default SidePanel

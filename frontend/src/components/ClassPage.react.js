@@ -11,7 +11,7 @@ class ClassPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSidePanelOpen: true,
+      isSidePanelOpen: false,
     }
   }
 
@@ -20,10 +20,10 @@ class ClassPage extends Component {
   }
 
   renderSidePanel() {
-    if (!this.state.isSidePanelOpen) return null
     return (
       <SidePanel
         toggleSidePanel={this.toggleSidePanel}
+        isOpen={this.state.isSidePanelOpen}
       />
     )
   }
