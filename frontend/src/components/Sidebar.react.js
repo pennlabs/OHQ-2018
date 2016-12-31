@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/sidebar.scss'
+import styles from './../../style/Sidebar.scss'
 import SidebarItem from './SidebarItem.react'
 import CustomCross from './CustomCross.react'
 

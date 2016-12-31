@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/queueitem.scss'
+import styles from './../../style/QueueItem.scss'
 
 class QueueItem extends Component {
 

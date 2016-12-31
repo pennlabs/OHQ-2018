@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-import styles from './../../style/main.scss'
+import styles from './../../style/Main.scss'
 import Sidebar from './Sidebar.react'
 import ClassPage from './ClassPage.react'
 

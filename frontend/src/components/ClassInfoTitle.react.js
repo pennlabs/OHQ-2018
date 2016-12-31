@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/classinfotitle.scss'
+import styles from './../../style/ClassInfoTitle.scss'
 
 class ClassInfoTitle extends Component {
 

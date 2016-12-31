@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/sidebaritem.scss'
+import styles from './../../style/SidebarItem.scss'
 
 class SidebarItem extends Component {
 

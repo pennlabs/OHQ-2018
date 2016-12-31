@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import QueueItem from './QueueItem.react'
-import styles from './../../style/queue.scss'
+import styles from './../../style/Queue.scss'
 
 class Queue extends Component {
 

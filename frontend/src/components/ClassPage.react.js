@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Queue from './Queue.react'
 import ClassInfoTitle from './ClassInfoTitle.react'
-import styles from './../../style/classpage.scss'
+import styles from './../../style/ClassPage.scss'
 import JoinQueueButton from './JoinQueueButton.react'
 import SidePanel from './SidePanel.react'
 

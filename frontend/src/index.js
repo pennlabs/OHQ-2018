@@ -9,7 +9,7 @@ import reduxThunk from 'redux-thunk'
 import routes from './routes'
 
 import reducers from './reducers'
-import './../style/style.scss'
+import './../style/Style.scss'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 
