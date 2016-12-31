@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/expandingsidebaritem.scss'
+import styles from './../../style/sidebaritem.scss'
 
-class ExpandingSidebarItem extends Component {
+class SidebarItem extends Component {
 
   getClassName() {
-    let className = styles.expandingSidebarItem
+    let className = styles.sidebarItem
     if (this.props.isSelected) {
       className = `${className} ${styles.isSelected}`
     }
@@ -24,10 +24,10 @@ class ExpandingSidebarItem extends Component {
   }
 }
 
-ExpandingSidebarItem.propTypes = {
+SidebarItem.propTypes = {
   title: React.PropTypes.string,
   isSelected: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
 }
 
-export default ExpandingSidebarItem
+export default SidebarItem
