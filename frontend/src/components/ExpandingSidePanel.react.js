@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
 import CustomCross from './CustomCross.react'
-import styles from './../../style/SidePanel.scss'
+import styles from './../../style/ExpandingSidePanel.scss'
 
-class SidePanel extends Component {
+class ExpandingSidePanel extends Component {
 
   constructor(props) {
     super(props)
@@ -23,7 +23,7 @@ class SidePanel extends Component {
   closeSidePanel = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    this.props.toggleSidePanel()
+    this.props.toggleExpandingSidePanel()
   }
 
   changeQuestionText = (e) => {
@@ -62,7 +62,7 @@ class SidePanel extends Component {
     //it on the actual classpage?
 
     this.setState({questionText: '', locationText: ''}, () => {
-      this.props.toggleSidePanel()
+      this.props.toggleExpandingSidePanel()
     })
   }
 
@@ -101,7 +101,7 @@ class SidePanel extends Component {
   renderForm() {
     return (
       <form
-        className={styles.sidePanelContent}
+        className={styles.expandingSidePanelContent}
         onSubmit={this.handleFormSubmit}
       >
         <div className={styles.exitForm} onClick={this.closeSidePanel}>
@@ -119,13 +119,13 @@ class SidePanel extends Component {
     if (!this.props.isOpen) return null
     return (
       <div
-        // onKeyDown={this.props.toggleSidePanel}
+        // onKeyDown={this.props.toggleExpandingSidePanel}
         // tabIndex='0'
       >
         <div className={styles.mask}
           onClick={this.closeSidePanel}
         />
-        <div className={styles.sidePanel}>
+        <div className={styles.expandingSidePanel}>
           {this.renderForm()}
         </div>
       </div>
@@ -133,9 +133,9 @@ class SidePanel extends Component {
   }
 }
 
-SidePanel.propTypes = {
-  toggleSidePanel: React.PropTypes.func,
+ExpandingSidePanel.propTypes = {
+  toggleExpandingSidePanel: React.PropTypes.func,
   isOpen: React.PropTypes.bool
 }
 
-export default SidePanel
+export default ExpandingSidePanel

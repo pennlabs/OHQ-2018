@@ -4,26 +4,26 @@ import Queue from './Queue.react'
 import ClassInfoTitle from './ClassInfoTitle.react'
 import styles from './../../style/ClassPage.scss'
 import JoinQueueButton from './JoinQueueButton.react'
-import SidePanel from './SidePanel.react'
+import ExpandingSidePanel from './ExpandingSidePanel.react'
 
 class ClassPage extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      isSidePanelOpen: false,
+      isExpandingSidePanelOpen: false,
     }
   }
 
-  toggleSidePanel = () => {
-    this.setState({isSidePanelOpen: !this.state.isSidePanelOpen})
+  toggleExpandingSidePanel = () => {
+    this.setState({isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen})
   }
 
-  renderSidePanel() {
+  renderExpandingSidePanel() {
     return (
-      <SidePanel
-        toggleSidePanel={this.toggleSidePanel}
-        isOpen={this.state.isSidePanelOpen}
+      <ExpandingSidePanel
+        toggleExpandingSidePanel={this.toggleExpandingSidePanel}
+        isOpen={this.state.isExpandingSidePanelOpen}
       />
     )
   }
@@ -38,8 +38,8 @@ class ClassPage extends Component {
             location='Moore 001'
           />
           <JoinQueueButton
-            isSidePanelOpen={this.state.isSidePanelOpen}
-            toggleSidePanel={this.toggleSidePanel}
+            isExpandingSidePanelOpen={this.state.isExpandingSidePanelOpen}
+            toggleExpandingSidePanel={this.toggleExpandingSidePanel}
           />
         </div>
         <Queue //TODO: the props will be handled by node and redux
@@ -53,7 +53,7 @@ class ClassPage extends Component {
             {name: 'bar'},
           ]}
         />
-        {this.renderSidePanel()}
+        {this.renderExpandingSidePanel()}
       </div>
     )
   }

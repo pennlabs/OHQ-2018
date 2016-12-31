@@ -11,7 +11,7 @@
   animation-name: fadein;
 }
 
-:local .sidePanel {
+:local .expandingSidePanel {
   position: fixed;
   right: 0;
   top: 0;
@@ -23,7 +23,7 @@
   animation-name: slidein;
 }
 
-:local .sidePanelContent {
+:local .expandingSidePanelContent {
   padding: 0 10%;
   height: 100%;
   background-color: #f1f2f6;
@@ -145,7 +145,7 @@
     display: none;
   }
 
-  :local .sidePanel {
+  :local .expandingSidePanel {
     width: 100vw;
     height: 100vh;
     animation: none;
