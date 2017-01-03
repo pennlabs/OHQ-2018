@@ -12,6 +12,8 @@ class Queue extends Component {
   }
 
   renderPositionTitle() {
+    if (this.props.isTAForCurrentClass) return 'Next Student'
+
     const pos = this.getPosition()
     if (!pos) return `${this.props.line.length} people in line`
     return `You are position ${pos}/${this.props.line.length}`
@@ -28,6 +30,7 @@ class Queue extends Component {
           isFirst={index === 0}
           isLast={index === this.props.line.length - 1}
           isUser={student.isUser}
+          isTAForCurrentClass={this.props.isTAForCurrentClass}
         />
       )
     })
@@ -49,6 +52,7 @@ class Queue extends Component {
 
 Queue.propTypes = {
   line: React.PropTypes.array,
+  isTAForCurrentClass: React.PropTypes.bool,
 }
 
 export default Queue

@@ -10,6 +10,11 @@ class QueueItem extends Component {
     if (this.props.isFirst) {
       className = `${className} ${styles.isFirst}`
     }
+    if (this.props.isTAForCurrentClass) {
+      className = `${className} ${styles.isTAForCurrentClass}`
+      //early return because we don't want other styles being applied for TAs
+      return className
+    }
     if (this.props.isUser) {
       className = `${className} ${styles.isUser}`
     }

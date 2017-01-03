@@ -11,6 +11,9 @@
     background-color: #9b9b9b;
     margin-top: 0px;
   }
+  &.isFirst.isTAForCurrentClass {
+    background-color: #967adc;
+  }
   &.isUser {
     background-color: #a0d468;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
