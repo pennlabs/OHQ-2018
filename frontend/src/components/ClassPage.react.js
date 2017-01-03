@@ -5,6 +5,7 @@ import ClassInfoTitle from './ClassInfoTitle.react'
 import styles from './../../style/ClassPage.scss'
 import JoinQueueButton from './JoinQueueButton.react'
 import ExpandingSidePanel from './ExpandingSidePanel.react'
+import CurrentQuestion from './CurrentQuestion.react'
 
 class ClassPage extends Component {
 
@@ -42,7 +43,8 @@ class ClassPage extends Component {
             toggleExpandingSidePanel={this.toggleExpandingSidePanel}
           />
         </div>
-        <Queue //TODO: the props will be handled by node and redux
+        <div className={styles.middleRow}>
+          <Queue //TODO: the props will be handled by node and redux
           line={[
             {name: 'foo'},
             {name: 'bar'},
@@ -53,6 +55,10 @@ class ClassPage extends Component {
             {name: 'bar'},
           ]}
         />
+        <div className={styles.currentQuestionContainer}>
+          <CurrentQuestion />
+        </div>
+        </div>
         {this.renderExpandingSidePanel()}
       </div>
     )
