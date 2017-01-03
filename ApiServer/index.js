@@ -22,7 +22,9 @@ const app = express()
 
 //DB Setup
 const dbUri = process.env.MONGODB_URI || MONGO_URI
-mongoose.connect(dbUri)
+
+//HACK: disabled until we get a new database up
+// mongoose.connect(dbUri)
 
 
 //App Setup - Middleware
