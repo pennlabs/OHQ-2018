@@ -16,7 +16,13 @@ class Sidebar extends Component {
 
   renderLinks() {
     const sidebarLinks = this.props.classes
-    ? this.props.classes.map(data => <SidebarItem {...data} key={data.title}/>)
+    ? this.props.classes.map(data =>
+        <SidebarItem
+          {...data}
+          isTAForCurrentClass={this.props.isTAForCurrentClass}
+          key={data.title}
+        />
+      )
     : <p className={styles.noClassText}>No Classes</p>
 
     const className = this.props.classes
