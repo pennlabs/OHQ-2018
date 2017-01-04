@@ -22,7 +22,7 @@ class ClassPage extends Component {
 
   getQuestionComponentClassName() {
     let className = styles.currentQuestionContainer
-    if (!this.props.hasQuestion) {
+    if (!this.props.question) {
       className = `${className} ${styles.isEmpty}`
     }
     return className
@@ -65,7 +65,7 @@ class ClassPage extends Component {
             isTAForCurrentClass
           />
         <div className={styles.currentQuestionContainer}>
-          <CurrentQuestion />
+          <CurrentQuestion question={this.props.question}/>
         </div>
         </div>
         {this.renderExpandingSidePanel()}
@@ -75,7 +75,7 @@ class ClassPage extends Component {
 }
 
 ClassPage.propTypes = {
-  hasQuestion: React.PropTypes.bool,
+  question: React.PropTypes.string,
 }
 
 export default ClassPage
