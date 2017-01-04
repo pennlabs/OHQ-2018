@@ -1,15 +1,24 @@
 import React, { Component } from 'react'
-import BeardedMan from './../../images/beardedman.png'
+import BeardedMan from './../../images/BeardedMan.png'
 import styles from './../../style/CurrentQuestion.scss'
 
 class CurrentQuestion extends Component {
 
   static propTypes = {
-    queston: React.PropTypes.string,
+    question: React.PropTypes.string,
   }
 
+  // static defaultProps = {
+  //   question: 'foobarbaz asdfasdfasd fasdfasdfasdf asdfasdf asdfasdfa afsfdasdf asfdasdfa fsdfa sdfa sdf foobarbaz asdfasdfasd fasdfasdfasdf asdfasdf asdfasdfa afsfdasdf asfdasdfa fsdfa sdfa sdf foobarbaz asdfasdfasd fasdfasdfasdf asdfasdf asdfasdfa afsfdasdf asfdasdfa fsdfa sdfa sdf'
+  // }
+
   renderQuestion() {
-    return null
+    return (
+      <div className={styles.questionContainer}>
+        <span className={styles.questionHeader}>Your Question</span>
+        <span className={styles.questionText}>{this.props.question}</span>
+      </div>
+    )
   }
 
   renderEmptyState() {
