@@ -13,11 +13,13 @@
 :local .middleRow {
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 :local .currentQuestionContainer {
-  margin: 0 auto 0 15vw;
+  margin: 0 auto 0 6vw;
+  &.isEmpty {
+    margin: 0 auto 0 15vw;
+  }
 }
 
 @media (max-width: 1000px) {

@@ -20,6 +20,14 @@ class ClassPage extends Component {
     this.setState({isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen})
   }
 
+  getQuestionComponentClassName() {
+    let className = styles.currentQuestionContainer
+    if (!this.props.hasQuestion) {
+      className = `${className} ${styles.isEmpty}`
+    }
+    return className
+  }
+
   renderExpandingSidePanel() {
     return (
       <ExpandingSidePanel
@@ -45,16 +53,17 @@ class ClassPage extends Component {
         </div>
         <div className={styles.middleRow}>
           <Queue //TODO: the props will be handled by node and redux
-          line={[
-            {name: 'foo'},
-            {name: 'bar'},
-            {name: 'baz', isUser: true},
-            {name: 'wibble'},
-            {name: 'wobble'},
-            {name: 'foo'},
-            {name: 'bar'},
-          ]}
-        />
+            line={[
+              {name: 'foo'},
+              {name: 'bar'},
+              {name: 'baz', isUser: true},
+              {name: 'wibble'},
+              {name: 'wobble'},
+              {name: 'foo'},
+              {name: 'bar'},
+            ]}
+            isTAForCurrentClass
+          />
         <div className={styles.currentQuestionContainer}>
           <CurrentQuestion />
         </div>
@@ -63,6 +72,10 @@ class ClassPage extends Component {
       </div>
     )
   }
+}
+
+ClassPage.propTypes = {
+  hasQuestion: React.PropTypes.bool,
 }
 
 export default ClassPage
