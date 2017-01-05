@@ -3,7 +3,7 @@ import axios from 'axios'
 import Promise from 'bluebird'
 import { browserHistory } from 'react-router'
 
-import { AUTH_USER, AUTH_ERROR } from './ActionTypes'
+import { AUTH_USER, AUTH_ERROR, UPDATE_ACTIVE_CLASS } from './ActionTypes'
 import { ROOT_URL } from './../../constants'
 
 const rootUrl = process.env.ROOT_URL || ROOT_URL
@@ -12,6 +12,13 @@ export function authError(error) {
   return {
     type: AUTH_ERROR,
     payload: error,
+  }
+}
+
+export function updateActiveClass(classInfo) {
+  return {
+    type: UPDATE_ACTIVE_CLASS,
+    payload: classInfo
   }
 }
 
