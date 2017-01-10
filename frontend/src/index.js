@@ -1,14 +1,17 @@
+//this file is the entry point for the application frontend
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-// import ReduxPromise from 'redux-promise'
 import reduxThunk from 'redux-thunk'
 
 import routes from './routes'
 
 import reducers from './reducers'
+
+//this file is for global styles that will be applied to everything in the frontend
 import './../style/Style.scss'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)

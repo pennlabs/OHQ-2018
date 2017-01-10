@@ -29,8 +29,8 @@ export function signinUser({email, password}) {
   //also allows us to dispatch many different actions!
   return function(dispatch) {
 
-    //submit email/pass to server (cast es6 promise to bluebird promise)
-    Promise.resolve(axios.post(`${rootUrl}/signin`, {email, password}))
+    //submit email/pass to server
+    axios.post(`${rootUrl}/signin`, {email, password})
     .then(res => {
       //if request is good, update state to indicate user is auth'd
       dispatch({ type: AUTH_USER })

@@ -5,7 +5,6 @@ import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from './../actions/ActionTypes'
 const defaultState = {error: null, authenticated: true}
 
 
-//should really just need one boolean
 export default function(state = defaultState, action) {
   switch (action.type) {
     case AUTH_USER:
