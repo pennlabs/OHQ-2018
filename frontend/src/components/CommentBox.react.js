@@ -2,11 +2,8 @@ import React from 'react'
 
 class CommentBox extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      comment: '',
-    }
+  state = {
+    comment: '',
   }
 
   handleChange = (e) => {

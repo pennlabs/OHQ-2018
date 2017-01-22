@@ -5,6 +5,11 @@ import styles from './../../style/Queue.scss'
 
 class Queue extends Component {
 
+  static propTypes = {
+    line: React.PropTypes.array,
+    isTAForCurrentClass: React.PropTypes.bool,
+  }
+
   getPosition() {
     if (!this.props.line) return null
     const pos = this.props.line.findIndex(student => student.isUser)
@@ -48,11 +53,6 @@ class Queue extends Component {
       </div>
     )
   }
-}
-
-Queue.propTypes = {
-  line: React.PropTypes.array,
-  isTAForCurrentClass: React.PropTypes.bool,
 }
 
 export default Queue

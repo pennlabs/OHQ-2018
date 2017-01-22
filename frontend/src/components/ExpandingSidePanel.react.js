@@ -5,13 +5,15 @@ import styles from './../../style/ExpandingSidePanel.scss'
 
 class ExpandingSidePanel extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      questionCharLimit: 200,
-      questionText: '',
-      locationText: ''
-    }
+  state = {
+    questionCharLimit: 200,
+    questionText: '',
+    locationText: ''
+  }
+
+  static propTypes = {
+    toggleExpandingSidePanel: React.PropTypes.func,
+    isOpen: React.PropTypes.bool
   }
 
   componentDidUpdate(prevProps) {
@@ -131,11 +133,6 @@ class ExpandingSidePanel extends Component {
       </div>
     )
   }
-}
-
-ExpandingSidePanel.propTypes = {
-  toggleExpandingSidePanel: React.PropTypes.func,
-  isOpen: React.PropTypes.bool
 }
 
 export default ExpandingSidePanel

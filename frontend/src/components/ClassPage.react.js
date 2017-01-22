@@ -9,11 +9,12 @@ import CurrentQuestion from './CurrentQuestion.react'
 
 class ClassPage extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isExpandingSidePanelOpen: false,
-    }
+  state = {
+    isExpandingSidePanelOpen: false,
+  }
+
+  static propTypes = {
+    question: React.PropTypes.string,
   }
 
   toggleExpandingSidePanel = () => {
@@ -64,18 +65,14 @@ class ClassPage extends Component {
             ]}
             isTAForCurrentClass
           />
-        <div className={styles.currentQuestionContainer}>
-          <CurrentQuestion question={this.props.question}/>
-        </div>
+          <div className={styles.currentQuestionContainer}>
+            <CurrentQuestion question={this.props.question}/>
+          </div>
         </div>
         {this.renderExpandingSidePanel()}
       </div>
     )
   }
-}
-
-ClassPage.propTypes = {
-  question: React.PropTypes.string,
 }
 
 export default ClassPage

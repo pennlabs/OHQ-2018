@@ -4,6 +4,12 @@ import styles from './../../style/SidebarItem.scss'
 
 class SidebarItem extends Component {
 
+  static propTypes = {
+    title: React.PropTypes.string,
+    isSelected: React.PropTypes.bool,
+    isActive: React.PropTypes.bool,
+  }
+
   getClassName() {
     let className = styles.sidebarItem
     if (this.props.isSelected) {
@@ -22,12 +28,6 @@ class SidebarItem extends Component {
       </div>
     )
   }
-}
-
-SidebarItem.propTypes = {
-  title: React.PropTypes.string,
-  isSelected: React.PropTypes.bool,
-  isActive: React.PropTypes.bool,
 }
 
 export default SidebarItem

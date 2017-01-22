@@ -4,6 +4,13 @@ import styles from './../../style/QueueItem.scss'
 
 class QueueItem extends Component {
 
+  static propTypes = {
+    name: React.PropTypes.string,
+    isUser: React.PropTypes.bool,
+    isFirst: React.PropTypes.bool,
+    isLast: React.PropTypes.bool,
+  }
+
   getBoxClassName() {
     let className = styles.box
 
@@ -32,13 +39,6 @@ class QueueItem extends Component {
     )
   }
 
-}
-
-QueueItem.propTypes = {
-  name: React.PropTypes.string,
-  isUser: React.PropTypes.bool,
-  isFirst: React.PropTypes.bool,
-  isLast: React.PropTypes.bool,
 }
 
 export default QueueItem

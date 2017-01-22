@@ -4,6 +4,16 @@ import styles from './../../style/CustomCross.scss'
 
 class CustomCross extends Component {
 
+  //use size if the cross doesn't need to be responsive;
+  //else use customClassName to set the height and width.
+  //Only use one or the other!
+  static propTypes = {
+    size: React.PropTypes.string,
+    color: React.PropTypes.string,
+    customClassName: React.PropTypes.string,
+    makeX: React.PropTypes.bool, //rotate the cross so it resembles an X
+  }
+
   getClassName() {
     const className = this.props.customClassName
 
@@ -45,16 +55,6 @@ class CustomCross extends Component {
       </div>
     )
   }
-}
-
-//use size if the cross doesn't need to be responsive;
-//else use customClassName to set the height and width.
-//Only use one or the other!
-CustomCross.propTypes = {
-  size: React.PropTypes.string,
-  color: React.PropTypes.string,
-  customClassName: React.PropTypes.string,
-  makeX: React.PropTypes.bool, //rotate the cross so it resembles an X
 }
 
 export default CustomCross

@@ -5,6 +5,11 @@ import styles from './../../style/JoinQueueButton.scss'
 
 class JoinQueueButton extends Component {
 
+  static propTypes = {
+    toggleExpandingSidePanel: React.PropTypes.func,
+    isExpandingSidePanelOpen: React.PropTypes.bool,
+  }
+
   getClassName() {
     return this.props.isExpandingSidePanelOpen
     ? `${styles.greenBox} ${styles.sidePanelOpen}`
@@ -25,11 +30,6 @@ class JoinQueueButton extends Component {
       </div>
     )
   }
-}
-
-JoinQueueButton.propTypes = {
-  toggleExpandingSidePanel: React.PropTypes.func,
-  isExpandingSidePanelOpen: React.PropTypes.bool,
 }
 
 export default JoinQueueButton

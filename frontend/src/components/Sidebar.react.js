@@ -6,6 +6,10 @@ import CustomCross from './CustomCross.react'
 
 class Sidebar extends Component {
 
+  static propTypes = {
+    classes: React.PropTypes.array,
+  }
+
   getClassName() {
     let className = styles.sidebar
     if (this.props.isTAForCurrentClass) {
@@ -51,10 +55,6 @@ class Sidebar extends Component {
       </nav>
     )
   }
-}
-
-Sidebar.propTypes = {
-  classes: React.PropTypes.array,
 }
 
 export default Sidebar
