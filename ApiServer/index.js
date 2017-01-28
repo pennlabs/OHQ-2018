@@ -12,6 +12,7 @@ const cors       = require('cors')
 
 const router = require('./router')
 const { PORT, MONGO_URI } = require('./constants')
+const socketServer = require('./socketserver')
 
 //set mongoose promise to bluebird
 mongoose.Promise = require('bluebird')
@@ -38,6 +39,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 const port = process.env.PORT || PORT
 //app handles http requests coming in from server
 const server = http.createServer(app)
+//get websockets working
+socketServer(server)
+
 server.listen(port)
 
 console.log(`Server listening on ${port}...`)
