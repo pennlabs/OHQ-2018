@@ -1,8 +1,12 @@
+$defaultColor: #8cc152;
+$defaultHoverColor: #c0e796;
+$isTAColor: #ac92ec;
+
 :local .sidebarItem {
   // Font styles
   font-size: 20px;
   letter-spacing: -0.7px;
-  color: #8cc152;
+  color: $defaultColor;
 
   //alignment
   height: 8vh;
@@ -13,11 +17,11 @@
   justify-content: space-around;
   align-items: center;
   &:hover {
-    background-color: #c0e796;
+    background-color: $defaultHoverColor;
     cursor: pointer;
   }
   &.isSelected {
-    background-color: #8cc152;
+    background-color: $defaultColor;
   }
   &.isActive {
     color: white;
