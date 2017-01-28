@@ -1,0 +1,55 @@
+:local .container {
+	display: flex;
+	flex-direction: column;
+	margin-right: 25%;
+	margin-top: 1%;
+	.title {
+		margin-left: 40px;
+		color: #9b9b9b;
+		font-size: 15pt;
+		padding-bottom: 5px;
+		letter-spacing: -0.6px;
+	}
+	.calendar {
+		display: flex;
+		flex-direction:row; 
+		height: 25vh; 
+		.calendarItems {
+			display: flex;
+			flex-direction:  row;
+			justify-content: space-around;
+			background-color: #f7f7f7;	
+			flex-grow: 1;
+			// .item > .monday{
+			// 	background-color:blue;
+			// 	display:none;
+			// 	flex-direction:row;
+			// }
+			> [day="monday"] {
+				flex-direction: column;
+			}
+		}
+
+		.calendarSide {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			letter-spacing: -0.3px;
+			font-size: 12pt;
+			color: #9b9b9b;
+		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	:local .container {
+		margin-right: 5%;
+		.calendar {
+			height: 50vh;
+			
+			> .calendarItems {
+			flex-direction: column;
+			}
+		}
+	}
+}
