@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+
+import { Store } from './../index'
 
 class Modal extends Component {
 
@@ -20,7 +23,12 @@ class Modal extends Component {
   }
 
   _render() {
-    ReactDOM.render(<div>{this.props.children}</div>, this.modalTarget)
+    ReactDOM.render(
+      <Provider store={Store}>
+        <div>{this.props.children}</div>,
+      </Provider>,
+      this.modalTarget
+    )
   }
 
   render() {
