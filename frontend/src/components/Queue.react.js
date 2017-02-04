@@ -17,6 +17,7 @@ class Queue extends Component {
   }
 
   renderPositionTitle() {
+    if (!this.props.line) return null
     if (this.props.isTAForCurrentClass) return 'Next Student'
 
     const pos = this.getPosition()
