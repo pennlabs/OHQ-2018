@@ -13,7 +13,7 @@ class Modal extends Component {
     this._render()
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     this._render()
   }
 
