@@ -1,9 +1,14 @@
 import axios from 'axios'
 
-import Promise from 'bluebird'
 import { browserHistory } from 'react-router'
 
-import { AUTH_USER, AUTH_ERROR, UPDATE_ACTIVE_CLASS } from './ActionTypes'
+import {
+  AUTH_USER,
+  AUTH_ERROR,
+  UPDATE_ACTIVE_CLASS,
+  UPDATE_IS_TA
+} from './ActionTypes'
+
 import { ROOT_URL } from './../../constants'
 
 const rootUrl = process.env.ROOT_URL || ROOT_URL
@@ -15,10 +20,17 @@ export function authError(error) {
   }
 }
 
-export function updateActiveClass(classInfo) {
-  return {
-    type: UPDATE_ACTIVE_CLASS,
-    payload: classInfo
+//TODO: this action will hit both the TA reducer and the active class reducer
+export function updateClassStatus(classInfo) {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_ACTIVE_CLASS,
+      payload: classInfo
+    })
+    dispatch({
+      type: UPDATE_IS_TA,
+      payload: classInfo.isTA
+    })
   }
 }
 
