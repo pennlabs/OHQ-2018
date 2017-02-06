@@ -1,5 +1,8 @@
 const io = require('socket.io')
 
+//TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
+//connect to our socket server.
+
 module.exports = function(server) {
   const socketServer = io(server)
   const connections = []
@@ -24,6 +27,7 @@ module.exports = function(server) {
     })
     console.log('A user connected!')
     console.log(`new length: ${connections.length}`)
+    socket.emit('foo')
   })
 
 }
