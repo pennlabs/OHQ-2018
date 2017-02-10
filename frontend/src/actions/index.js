@@ -1,21 +1,13 @@
 import axios from 'axios'
-
 import { browserHistory } from 'react-router'
-
-import {
-  AUTH_USER,
-  AUTH_ERROR,
-  UPDATE_ACTIVE_CLASS,
-  UPDATE_IS_TA
-} from './ActionTypes'
-
+import * as Actions from './ActionTypes'
 import { ROOT_URL } from './../../constants'
 
 const rootUrl = process.env.ROOT_URL || ROOT_URL
 
 export function authError(error) {
   return {
-    type: AUTH_ERROR,
+    type: Actions.AUTH_ERROR,
     payload: error,
   }
 }
@@ -24,11 +16,11 @@ export function authError(error) {
 export function updateClassStatus(classInfo) {
   return dispatch => {
     dispatch({
-      type: UPDATE_ACTIVE_CLASS,
+      type: Actions.UPDATE_ACTIVE_CLASS,
       payload: classInfo
     })
     dispatch({
-      type: UPDATE_IS_TA,
+      type: Actions.UPDATE_IS_TA,
       payload: classInfo.isTA
     })
   }
@@ -45,7 +37,7 @@ export function signinUser({email, password}) {
     axios.post(`${rootUrl}/signin`, {email, password})
     .then(res => {
       //if request is good, update state to indicate user is auth'd
-      dispatch({ type: AUTH_USER })
+      dispatch({ type: Actions.AUTH_USER })
 
       //save JWT token in LocalStorage (available on window-scope)
       localStorage.setItem('token', res.data.token)
