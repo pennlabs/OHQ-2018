@@ -1,7 +1,3 @@
-import { ROOT_URL } from './../constants'
+//this file is responsibile for initializing our client-side websocket connection
 
-import io from 'socket.io-client'
-
-const socket = process.env.NODE_ENV === 'production' ? io() : io(ROOT_URL)
-
-export default socket
+import 'receiveFromSocket.js'
