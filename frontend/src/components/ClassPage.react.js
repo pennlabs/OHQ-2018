@@ -6,7 +6,7 @@ import styles from './../../style/ClassPage.scss'
 import JoinQueueButton from './JoinQueueButton.react'
 import ExpandingSidePanel from './ExpandingSidePanel.react'
 import CurrentQuestion from './CurrentQuestion.react'
-import SidePanel from './SidePanel.react'
+// import SidePanel from './SidePanel.react'
 import Calendar from './Calendar.react'
 
 class ClassPage extends Component {
@@ -42,12 +42,12 @@ class ClassPage extends Component {
 
   render() {
     const sessions = [
-      {day: 'monday', timeStart: '10:30', timeEnd: '2:00'},
-      {day: 'monday', timeStart: '1:30', timeEnd: '4:00'},
-      {day: 'tuesday', timeStart: '10:30', timeEnd: '2:00'},
-      {day: 'wednesday', timeStart: '10:30', timeEnd: '2:00'},
-      {day: 'thursday', timeStart: '10:30', timeEnd: '2:00'},
-      {day: 'friday', timeStart: '10:30', timeEnd: '2:00'},
+      {day: 'monday', timeStart: '10:30', timeEnd: '14:00'},
+      {day: 'monday', timeStart: '13:30', timeEnd: '16:00'},
+      {day: 'tuesday', timeStart: '10:30', timeEnd: '14:00'},
+      {day: 'wednesday', timeStart: '10:30', timeEnd: '14:00'},
+      {day: 'thursday', timeStart: '10:30', timeEnd: '14:00'},
+      {day: 'friday', timeStart: '10:30', timeEnd: '14:00'},
     ]
     return (
       <div className={styles.container}>
@@ -92,10 +92,7 @@ class ClassPage extends Component {
           ]}
         />
         <Calendar sessions={sessions}/>
-        <SidePanel
-          isOpen={this.state.isSidePanelOpen}
-          toggleSidePanel={this.toggleSidePanel}
-        />
+
       </div>
     )
   }
