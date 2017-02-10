@@ -7,6 +7,12 @@ module.exports = function(server) {
   const socketServer = io(server)
   const connections = []
 
+  //classQueues is an object consisting of keys which map to arrays, where each array consists of
+  //objects containing a user and a question
+  const classQueues = {
+    classFoo: []
+  }
+
   socketServer.on('connection', socket => {
     connections.push(socket)
 
@@ -27,7 +33,14 @@ module.exports = function(server) {
     })
     console.log('A user connected!')
     console.log(`new length: ${connections.length}`)
-    socket.emit('foo')
+
+
+    socket.on('UPDATE_QUEUE', data => {
+      //TODO: this needs to be able to handle different classes
+      console.log('update queue event logged:', data)
+      classQueues.classFoo.push(data)
+      socketServer.emit('QUEUE_UPDATED', classQueues)
+    })
   })
 
 }

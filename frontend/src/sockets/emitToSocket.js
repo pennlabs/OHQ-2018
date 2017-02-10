@@ -5,5 +5,5 @@ import * as SocketActions from './socketActionTypes'
 //`class` key, and `user` key.  HACK: for now, the `user` information is the socket ID
 //and there is no class information
 export function updateQueue(data) {
-  Socket.emit(SocketActions.UPDATE_QUEUE, {...data, user: Socket.id, class: 'classFoo'})
+  Socket.emit(SocketActions.UPDATE_QUEUE, {...data, user: Socket.id.slice(0, 6), class: 'classFoo'})
 }

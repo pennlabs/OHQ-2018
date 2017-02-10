@@ -1,4 +1,4 @@
-import { ROOT_URL } from './../constants'
+import { ROOT_URL } from './../../constants'
 
 import io from 'socket.io-client'
 
