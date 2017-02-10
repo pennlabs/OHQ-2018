@@ -1,6 +1,6 @@
 import { UPDATE_SELECTED_CLASS } from './../actions/ActionTypes'
 
-const defaultState = null
+const defaultState = 'classFoo'
 
 export default function(state = defaultState, action) {
   switch (action.type) {
