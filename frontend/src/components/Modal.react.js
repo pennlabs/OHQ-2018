@@ -9,13 +9,22 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import { Store } from './../index'
+import styles from './../../style/Modal.scss'
 
 class Modal extends Component {
+
+  static propTypes = {
+    shouldBlurBackground: React.PropTypes.bool,
+    shouldDarkenBackground: React.PropTypes.bool,
+    animationDuration: React.PropTypes.string,
+    onCloseCallback: React.PropTypes.func,
+  }
 
   componentDidMount() {
     this.modalTarget = document.createElement('div')
     this.modalTarget.className = 'modal'
     document.body.appendChild(this.modalTarget)
+    // document.querySelector('.container').style.filter = 'blur(2px)'
     this._render()
   }
 
@@ -26,12 +35,16 @@ class Modal extends Component {
   componentWillUnmount() {
     ReactDOM.unmountComponentAtNode(this.modalTarget)
     document.body.removeChild(this.modalTarget)
+    document.querySelector('.container').style.filter = ''
   }
 
   _render() {
     ReactDOM.render(
       <Provider store={Store}>
-        <div>{this.props.children}</div>
+        <div>
+          <div className={styles.mask}></div>
+          {this.props.children}
+        </div>
       </Provider>,
       this.modalTarget
     )
