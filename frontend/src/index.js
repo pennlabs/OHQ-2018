@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux'
 import reduxThunk from 'redux-thunk'
 
 //execute the socket file to establish websocket connections
-import socket from './sockets'
+import './sockets'
 
 import routes from './routes'
 
