@@ -6,17 +6,17 @@ $fri: #ed5565;
 
 :local .container {
 	width: 100%;
-	display:flex;
-	justify-content:space-around;
+	display: flex;
+	justify-content: space-around;
 
 	.itemWrapper {
 		height: 40vh;	
-		position:absolute;
+		position: absolute;
 	}
 
 	.item {
-		display:flex;
-		font-size:80%;
+		display: flex;
+		font-size: 80%;
 		color: #ffffff;
 		width: 10vw;
 		position: relative;
