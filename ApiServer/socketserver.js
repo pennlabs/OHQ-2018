@@ -15,6 +15,8 @@ module.exports = function(server) {
 
   socketServer.on('connection', socket => {
     connections.push(socket)
+    //emit initial event for starting classQueues
+    socketServer.emit('QUEUE_UPDATED', classQueues)
 
     //Example socket code for a chat application
     // socket.on('message', data => {
