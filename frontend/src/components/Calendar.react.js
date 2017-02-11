@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 
 import CalendarItem from './CalendarItem.react'
-import styles from './../../style/calendar.scss'
+import styles from './../../style/Calendar.scss'
 
 class Calendar extends Component {
-  renderSessions() {
-    let key = 0
-    const sessions = this.props.sessions.map(data => 
-        <CalendarItem {...data} key={data.day + data.timeStart} />
-    )
+  renderSessions(sessions) {
+    let items = []
+    for (var day in sessions) {
+      items.push( <CalendarItem sessions={sessions[day]} day={day} key={day} />)
+    }
+    
     return (
       <div className={styles.calendarItems}>
-       {sessions}
+       {items}
       </div>
     )
   }
@@ -27,7 +28,7 @@ class Calendar extends Component {
             <div>8AM</div>
             <div>10PM</div>
           </div>
-          {this.renderSessions()}
+          {this.renderSessions(this.props.sessions)}
         </div>
       </div>
     )
