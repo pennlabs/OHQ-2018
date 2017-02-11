@@ -60,7 +60,7 @@ class ClassPage extends Component {
         {start: '15:00', end: '17:00'},
       ], 
       'friday': [
-        {start: '15:30', end: '17:00'},
+        {start: '15:30', end: '18:00'},
       ],
     }
 
@@ -106,7 +106,7 @@ class ClassPage extends Component {
             {name: 'bar'},
           ]}
         />
-      
+
         <Calendar sessions={sessions}/>
 
       </div>
