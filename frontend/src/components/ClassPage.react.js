@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Queue from './Queue.react'
 import ClassInfoTitle from './ClassInfoTitle.react'
@@ -9,10 +10,12 @@ import CurrentQuestion from './CurrentQuestion.react'
 // import SidePanel from './SidePanel.react'
 import Calendar from './Calendar.react'
 
+import Modal from './Modal.react'
+
 class ClassPage extends Component {
 
   state = {
-    isExpandingSidePanelOpen: false,
+    isExpandingSidePanelOpen: true,
   }
 
   static propTypes = {
@@ -33,10 +36,12 @@ class ClassPage extends Component {
 
   renderExpandingSidePanel() {
     return (
-      <ExpandingSidePanel
-        toggleExpandingSidePanel={this.toggleExpandingSidePanel}
-        isOpen={this.state.isExpandingSidePanelOpen}
-      />
+      <Modal>
+        <ExpandingSidePanel
+          toggleExpandingSidePanel={this.toggleExpandingSidePanel}
+          isOpen={this.state.isExpandingSidePanelOpen}
+        />
+      </Modal>
     )
   }
 
@@ -79,16 +84,16 @@ class ClassPage extends Component {
         </div>
         <div className={styles.middleRow}>
           <Queue //TODO: the props will be handled by node and redux
-            line={[
-              {name: 'foo'},
-              {name: 'bar'},
-              {name: 'baz', isUser: true},
-              {name: 'wibble'},
-              {name: 'wobble'},
-              {name: 'foo'},
-              {name: 'bar'},
-            ]}
-            isTAForCurrentClass
+            // line={[
+            //   {name: 'foo'},
+            //   {name: 'bar'},
+            //   {name: 'baz', isUser: true},
+            //   {name: 'wibble'},
+            //   {name: 'wobble'},
+            //   {name: 'foo'},
+            //   {name: 'bar'},
+            // ]}
+            // isTAForCurrentClass
           />
           <div className={styles.currentQuestionContainer}>
             <CurrentQuestion question={this.props.question}/>
@@ -114,4 +119,10 @@ class ClassPage extends Component {
   }
 }
 
-export default ClassPage
+function mapStateToProps(state) {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps)(ClassPage)

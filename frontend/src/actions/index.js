@@ -1,24 +1,28 @@
 import axios from 'axios'
-
-import Promise from 'bluebird'
 import { browserHistory } from 'react-router'
-
-import { AUTH_USER, AUTH_ERROR, UPDATE_ACTIVE_CLASS } from './ActionTypes'
+import * as Actions from './ActionTypes'
 import { ROOT_URL } from './../../constants'
 
 const rootUrl = process.env.ROOT_URL || ROOT_URL
 
 export function authError(error) {
   return {
-    type: AUTH_ERROR,
+    type: Actions.AUTH_ERROR,
     payload: error,
   }
 }
 
-export function updateActiveClass(classInfo) {
-  return {
-    type: UPDATE_ACTIVE_CLASS,
-    payload: classInfo
+//TODO: this action will hit both the TA reducer and the active class reducer
+export function updateClassStatus(classInfo) {
+  return dispatch => {
+    dispatch({
+      type: Actions.UPDATE_ACTIVE_CLASS,
+      payload: classInfo
+    })
+    dispatch({
+      type: Actions.UPDATE_IS_TA,
+      payload: classInfo.isTA
+    })
   }
 }
 
@@ -33,7 +37,7 @@ export function signinUser({email, password}) {
     axios.post(`${rootUrl}/signin`, {email, password})
     .then(res => {
       //if request is good, update state to indicate user is auth'd
-      dispatch({ type: AUTH_USER })
+      dispatch({ type: Actions.AUTH_USER })
 
       //save JWT token in LocalStorage (available on window-scope)
       localStorage.setItem('token', res.data.token)

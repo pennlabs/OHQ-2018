@@ -7,6 +7,9 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reduxThunk from 'redux-thunk'
 
+//execute the socket file to establish websocket connections
+import './sockets'
+
 import routes from './routes'
 
 import reducers from './reducers'
@@ -15,15 +18,20 @@ import reducers from './reducers'
 import './../style/Style.scss'
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
+const store = createStoreWithMiddleware(reducers, enableReduxDevTools())
 
-const enableReduxDevTools = () => {
+
+function enableReduxDevTools() {
   if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__) {
     return window.__REDUX_DEVTOOLS_EXTENSION__()
   }
 }
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers, enableReduxDevTools())}>
+  <Provider store={store}>
     <Router history={browserHistory} routes={routes} />
-  </Provider>
-  , document.querySelector('.container'))
+  </Provider>,
+  document.querySelector('.container')
+)
+
+export {store as Store}

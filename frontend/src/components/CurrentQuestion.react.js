@@ -8,10 +8,6 @@ class CurrentQuestion extends Component {
     question: React.PropTypes.string,
   }
 
-  // static defaultProps = {
-  //   question: 'foobarbaz asdfasdfasd fasdfasdfasdf asdfasdf asdfasdfa afsfdasdf asfdasdfa fsdfa sdfa sdf foobarbaz asdfasdfasd fasdfasdfasdf asdfasdf asdfasdfa afsfdasdf asfdasdfa fsdfa sdfa sdf foobarbaz asdfasdfasd fasdfasdfasdf asdfasdf asdfasdfa afsfdasdf asfdasdfa fsdfa sdfa sdf'
-  // }
-
   renderQuestion() {
     return (
       <div className={styles.questionContainer}>

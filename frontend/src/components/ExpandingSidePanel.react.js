@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import CustomCross from './CustomCross.react'
 import styles from './../../style/ExpandingSidePanel.scss'
+import { updateQueue } from './../sockets/emitToSocket'
 
 class ExpandingSidePanel extends Component {
 
@@ -62,7 +63,10 @@ class ExpandingSidePanel extends Component {
     //TODO: submit data to the backend here
     //Maybe trigger a loading state on sidepanel?  Or can trigger
     //it on the actual classpage?
-
+    updateQueue({
+      text: this.state.questionText,
+      location: this.state.locationText
+    })
     this.setState({questionText: '', locationText: ''}, () => {
       this.props.toggleExpandingSidePanel()
     })
