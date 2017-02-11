@@ -59,13 +59,11 @@ class CalendarItem extends Component {
 
 
   itemStyle(start, end) {
-    console.log("before: " + this.state.currentPosition);
     const dur = this.getDuration(start, end)
     const startPos = this.getStart(start) - this.state.currentPosition
 
     this.state.currentPosition += dur
 
-    console.log("startPos for " + start + " is " + startPos)
     return {
       height: dur + "%",
       top: startPos + "%"
