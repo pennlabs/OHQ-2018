@@ -50,20 +50,20 @@ class ClassPage extends Component {
       'monday': [
         {start: '9:30', end: '14:00'},
         {start: '14:30', end: '16:00'},
-      ], 
+      ],
       'tuesday': [
-        {start: '13', end:'16'},
+        {start: '13', end: '16'},
         {start: '16', end: '19:30'},
         {start: '20:00', end: '22:00'},
-      ], 
+      ],
       'wednesday': [
         {start: '11:30', end: '12:30'},
         {start: '12:30', end: '16'},
-      ], 
+      ],
       'thursday': [
         {start: '8', end: '14:00'},
         {start: '15:00', end: '17:00'},
-      ], 
+      ],
       'friday': [
         {start: '15:30', end: '18:00'},
       ],

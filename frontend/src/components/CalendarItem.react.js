@@ -13,25 +13,26 @@ class CalendarItem extends Component {
         <div style={this.itemStyle(data.start, data.end)} className={[styles.item, styles[this.props.day]].join(' ')} key={data.timeStart}>
           <div className={styles.itemText}>
             {this.getTime(data.start)} - {this.getTime(data.end)}
-          </div>  
+          </div>
         </div>
-        )
+      )
     })
 
     return <div className={styles.itemWrapper}>{sessions}</div>
   }
 
   getDuration(start, end) {
-    const startTime = start.split(':'),
-      endTime = end.split(':')
+    const startTime = start.split(':')
+    const endTime = end.split(':')
 
     const dHour = parseInt(endTime[0]) - parseInt(startTime[0])
 
-    let startMin = startTime[1], endMin = endTime[1]
+    let startMin = startTime[1]
+    let endMin = endTime[1]
 
     if (!startMin) {
       startMin = 0
-    } 
+    }
 
     if (!endMin) {
       endMin = 0
@@ -65,20 +66,20 @@ class CalendarItem extends Component {
     this.state.currentPosition += dur
 
     return {
-      height: dur + "%",
-      top: startPos + "%"
+      height: dur + '%',
+      top: startPos + '%'
     }
   }
 
   // Parses time HH:MM into twelve-hour time
   // Turns 2:00 -> 2
-  // Adds 'am' & 'pm' 
+  // Adds 'am' & 'pm'
   getTime(time) {
     var times = time.split(':')
     var hour = parseInt(times[0])
     var min = times[1]
 
-    if (! min || min === '00') {
+    if (!min || min === '00') {
       min = ''
     } else {
       min = ':' + min

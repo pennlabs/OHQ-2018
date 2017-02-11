@@ -7,9 +7,9 @@ class Calendar extends Component {
   renderSessions(sessions) {
     let items = []
     for (var day in sessions) {
-      items.push( <CalendarItem sessions={sessions[day]} day={day} key={day} />)
+      items.push(<CalendarItem sessions={sessions[day]} day={day} key={day} />)
     }
-    
+
     return (
       <div className={styles.calendarItems}>
        {items}
@@ -20,8 +20,8 @@ class Calendar extends Component {
   render() {
     return (
       <div className={styles.container}>
-      	<div className={styles.title}>
-          This week's office hours 
+        <div className={styles.title}>
+          This week's office hours
         </div>
         <div className={styles.calendar}>
           <div className={styles.calendarSide}>
