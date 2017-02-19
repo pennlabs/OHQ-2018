@@ -1,4 +1,4 @@
-import { UPDATE_USER_INFO } from './../actions/ActionTypes'
+import { USER_INFO_UPDATED } from './../actions/ActionTypes'
 
 const defaultState = {
   id: null,
@@ -8,7 +8,7 @@ const defaultState = {
 
 export default function(state = defaultState, action) {
   switch (action.type) {
-    case UPDATE_USER_INFO:
+    case USER_INFO_UPDATED:
       return action.payload
     default:
       return state
