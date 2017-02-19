@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { get } from 'lodash'
 
 import styles from './../../style/Sidebar.scss'
 import SidebarItem from './SidebarItem.react'
@@ -7,7 +9,9 @@ import CustomCross from './CustomCross.react'
 class Sidebar extends Component {
 
   static propTypes = {
-    classes: React.PropTypes.array,
+    //from redux
+    classes: React.PropTypes.object,
+    selectedClass: React.PropTypes.object,
   }
 
   getClassName() {
@@ -20,11 +24,12 @@ class Sidebar extends Component {
 
   renderLinks() {
     const sidebarLinks = this.props.classes
-    ? this.props.classes.map(data =>
+    ? Object.values(this.props.classes).map(data =>
         <SidebarItem
           {...data}
           isTAForCurrentClass={this.props.isTAForCurrentClass}
-          key={data.title}
+          isSelected={data.id === get(this.props, 'selectedClass.id', null)}
+          key={data.id}
         />
       )
     : <p className={styles.noClassText}>No Classes</p>
@@ -57,4 +62,11 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar
+function mapStateToProps({selectedClass, classes}) {
+  return {
+    selectedClass,
+    classes
+  }
+}
+
+export default connect(mapStateToProps)(Sidebar)
