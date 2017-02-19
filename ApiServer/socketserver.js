@@ -74,24 +74,35 @@ module.exports = function(server) {
   const connections = []
 
   //classQueues is an object consisting of keys which map to arrays, where each array consists of
-  //objects containing a user and a question
+  //objects containing a user and a question.  TODO: the initial list of classQueues
+  //will need to be retrieved from some kind of database
   const classQueues = {
-    classFoo: []
+    0: {
+      queue: [], //queue is an array of objects, where each object has user, location, and question properties
+      TAs: [],
+      isActive: true,
+      id: 0,
+      name: 'classFoo'
+    }
   }
+
+  let currentName
 
   socketServer.on('connection', socket => {
     connections.push(socket)
-    //emit initial event for starting classQueues
-    socketServer.emit('QUEUE_UPDATED', classQueues)
+    console.log('A user connected!')
+    console.log(`new length: ${connections.length}`)
 
-    //Example socket code for a chat application
-    // socket.on('message', data => {
-    //   connections.forEach(connectedSocket => {
-    //     if (connectedSocket !== socket) {
-    //       connectedSocket.emit('message', data)
-    //     }
-    //   })
-    // })
+    //emit initial event for starting classQueues
+    socketServer.emit('ALL_CLASS_DATA', classQueues)
+
+    //TODO: we will need to query information from our database here
+    currentName = nameData.getName()
+    socket.emit('USER_INFO_UPDATED', {
+      id: socket.id,
+      firstName: currentName.split(' ')[0],
+      lastName: currentName.split(' ')[1],
+    })
 
     socket.on('disconnect', () => {
       const index = connections.indexOf(socket)
@@ -99,16 +110,21 @@ module.exports = function(server) {
       console.log('a user disconnected!')
       console.log(`new length: ${connections.length}`)
     })
-    console.log('A user connected!')
-    console.log(`new length: ${connections.length}`)
 
+    //TODO: in future, we probably don't want to allow the user to modify any property of the classQueue.
+    //Logic should be restricted based on TA/user status and only specific properties should be able
+    //to be modified.
+    socket.on('UPDATE_CLASS', data => {
+      console.log('update class event logged:', data)
+      classQueues[data.id] = data
+      socketServer.emit('CLASS_UPDATED', classQueues[data.id])
+    })
 
-    socket.on('UPDATE_QUEUE', data => {
-      //TODO: this needs to be able to handle different classes
-      console.log('update queue event logged:', data)
-      classQueues.classFoo.push(data)
-      socketServer.emit('QUEUE_UPDATED', classQueues)
+    socket.on('UPDATE_CLASS_QUEUE', data => {
+      console.log('update class queue event logged:', data)
+      const { question, location, userInfo } = data
+      classQueues[data.class.id].queue.push({question, location, userInfo})
+      socketServer.emit('CLASS_QUEUE_UPDATED', classQueues[data.class.id])
     })
   })
-
 }
