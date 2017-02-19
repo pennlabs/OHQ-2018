@@ -5,7 +5,7 @@ import styles from './../../style/SidebarItem.scss'
 class SidebarItem extends Component {
 
   static propTypes = {
-    title: React.PropTypes.string,
+    name: React.PropTypes.string,
     isSelected: React.PropTypes.bool,
     isActive: React.PropTypes.bool,
   }
@@ -24,7 +24,7 @@ class SidebarItem extends Component {
   render() {
     return (
       <div className={this.getClassName()}>
-        {this.props.title}
+        {this.props.name}
       </div>
     )
   }
