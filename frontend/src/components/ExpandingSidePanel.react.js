@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import CustomCross from './CustomCross.react'
 import styles from './../../style/ExpandingSidePanel.scss'
-import { updateQueue } from './../sockets/emitToSocket'
 
 class ExpandingSidePanel extends Component {
 
@@ -14,7 +13,8 @@ class ExpandingSidePanel extends Component {
 
   static propTypes = {
     toggleExpandingSidePanel: React.PropTypes.func,
-    isOpen: React.PropTypes.bool
+    isOpen: React.PropTypes.bool,
+    submitQuestion: React.PropTypes.func,
   }
 
   componentDidUpdate(prevProps) {
@@ -60,13 +60,9 @@ class ExpandingSidePanel extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    //TODO: submit data to the backend here
-    //Maybe trigger a loading state on sidepanel?  Or can trigger
+    //TODO: Maybe trigger a loading state on sidepanel?  Or can trigger
     //it on the actual classpage?
-    updateQueue({
-      text: this.state.questionText,
-      location: this.state.locationText
-    })
+    this.props.submitQuestion(this.state.questionText, this.state.locationText)
     this.setState({questionText: '', locationText: ''}, () => {
       this.props.toggleExpandingSidePanel()
     })
