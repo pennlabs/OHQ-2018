@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 
 import QueueItem from './QueueItem.react'
 import styles from './../../style/Queue.scss'
@@ -7,13 +8,14 @@ import styles from './../../style/Queue.scss'
 class Queue extends Component {
 
   static propTypes = {
-    line: React.PropTypes.array,
-    isTAForCurrentClass: React.PropTypes.bool,
+    line: PropTypes.array,
+    isTAForCurrentClass: PropTypes.bool,
+    userInfo: PropTypes.object
   }
 
   getPosition() {
     if (!this.props.line || !this.props.line.length) return null
-    const pos = this.props.line.findIndex(student => student.isUser)
+    const pos = this.props.line.findIndex(student => student.id === get(this.props, 'userInfo.id', null))
     return pos < 0 ? null : pos + 1
   }
 
@@ -32,15 +34,15 @@ class Queue extends Component {
   renderQueue() {
     if (!this.props.line) return null
 
-    return this.props.line.map((student, index) => {
+    return this.props.line.map((data, index) => {
       return (
         <QueueItem
-          name={student.user}
-          key={index} //TODO: need a proper key
+          name={data.userInfo.firstName}
+          key={data.userInfo.id}
           isFirst={index === 0}
           isLast={index === this.props.line.length - 1}
           // isUser={student.isUser} HACK: temporarily disabled
-          isUser={index === 1 && this.props.line.length > 2}
+          isUser={data.userInfo.id === get(this.props, 'userInfo.id', null)}
           isTAForCurrentClass={this.props.isTAForCurrentClass}
         />
       )
@@ -61,17 +63,10 @@ class Queue extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  if (!state.queue) {
-    return {
-      line: null
-    }
-  }
-  const currentLine = state.queue[state.activeClass]
-  console.warn(state.queue)
-  console.warn(currentLine)
+function mapStateToProps({ selectedClass, userInfo }) {
   return {
-    line: currentLine
+    line: get(selectedClass, 'queue', null),
+    userInfo
   }
 }
 
