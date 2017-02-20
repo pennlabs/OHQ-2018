@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 
+import { updateClassQueue } from './../sockets/emitToSocket'
 import Queue from './Queue.react'
 import ClassInfoTitle from './ClassInfoTitle.react'
 import styles from './../../style/ClassPage.scss'
@@ -17,11 +19,27 @@ class ClassPage extends Component {
   }
 
   static propTypes = {
-    question: React.PropTypes.string,
+    question: PropTypes.string,
+
+    //from redux
+    userInfo: PropTypes.object,
+    selectedClass: PropTypes.object,
   }
 
   toggleExpandingSidePanel = () => {
     this.setState({isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen})
+  }
+
+  updateSelectedClassQueue = (question, location) => {
+    if (!this.props.selectedClass || !this.props.userInfo) return null
+
+    const queueData = {
+      question,
+      location,
+      userInfo: this.props.userInfo,
+      class: this.props.selectedClass
+    }
+    updateClassQueue(queueData)
   }
 
   getQuestionComponentClassName() {
@@ -38,6 +56,7 @@ class ClassPage extends Component {
         <ExpandingSidePanel
           toggleExpandingSidePanel={this.toggleExpandingSidePanel}
           isOpen={this.state.isExpandingSidePanelOpen}
+          submitQuestion={this.updateSelectedClassQueue}
         />
       </Modal>
     )
@@ -49,7 +68,7 @@ class ClassPage extends Component {
         <div className={styles.topRow}>
           <ClassInfoTitle
             teacher='John Doe'
-            classCode='CIS 110'
+            classCode={get(this.props, 'selectedClass.name', null)}
             location='Moore 001'
           />
           <JoinQueueButton
@@ -58,17 +77,8 @@ class ClassPage extends Component {
           />
         </div>
         <div className={styles.middleRow}>
-          <Queue //TODO: the props will be handled by node and redux
-            // line={[
-            //   {name: 'foo'},
-            //   {name: 'bar'},
-            //   {name: 'baz', isUser: true},
-            //   {name: 'wibble'},
-            //   {name: 'wobble'},
-            //   {name: 'foo'},
-            //   {name: 'bar'},
-            // ]}
-            // isTAForCurrentClass
+          <Queue
+            line={get(this.props, 'selectedClass.queue', null)}
           />
           <div className={styles.currentQuestionContainer}>
             <CurrentQuestion question={this.props.question}/>
@@ -80,9 +90,10 @@ class ClassPage extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({userInfo, selectedClass}) {
   return {
-
+    userInfo,
+    selectedClass,
   }
 }
 
