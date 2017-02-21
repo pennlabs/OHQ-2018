@@ -124,7 +124,8 @@ class ExpandingSidePanel extends Component {
         // onKeyDown={this.props.toggleExpandingSidePanel}
         // tabIndex='0'
       >
-        <div className={styles.mask}
+        <div
+          className={styles.mask}
           onClick={this.closeSidePanel}
         />
         <div className={styles.expandingSidePanel}>
