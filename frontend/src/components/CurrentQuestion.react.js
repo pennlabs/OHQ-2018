@@ -5,14 +5,14 @@ import styles from './../../style/CurrentQuestion.scss'
 class CurrentQuestion extends Component {
 
   static propTypes = {
-    question: React.PropTypes.string,
+    questionData: React.PropTypes.object,
   }
 
   renderQuestion() {
     return (
       <div className={styles.questionContainer}>
         <span className={styles.questionHeader}>Your Question</span>
-        <span className={styles.questionText}>{this.props.question}</span>
+        <span className={styles.questionText}>{this.props.questionData.question}</span>
       </div>
     )
   }
@@ -27,7 +27,7 @@ class CurrentQuestion extends Component {
   }
 
   render() {
-    return this.props.question
+    return this.props.questionData
     ? this.renderQuestion()
     : this.renderEmptyState()
   }

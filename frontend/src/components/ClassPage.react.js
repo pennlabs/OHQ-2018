@@ -51,6 +51,17 @@ class ClassPage extends Component {
     return className
   }
 
+  getCurrentQuestion() {
+    //TODO: also if user is a TA
+    if (!this.props.userInfo ||
+     this.props.selectedClass == null ||
+     !this.props.classes) return null
+
+    return this.props.classes[this.props.selectedClass].queue.find(data => (
+      data.userInfo.id === this.props.userInfo.id
+    ))
+  }
+
   renderExpandingSidePanel() {
     return (
       <Modal>
@@ -84,7 +95,7 @@ class ClassPage extends Component {
             line={this.props.classes[this.props.selectedClass].queue}
           />
           <div className={styles.currentQuestionContainer}>
-            <CurrentQuestion question={this.props.question}/>
+            <CurrentQuestion questionData={this.getCurrentQuestion()}/>
           </div>
         </div>
         {this.renderExpandingSidePanel()}
