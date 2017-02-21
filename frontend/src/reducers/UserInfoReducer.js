@@ -1,4 +1,4 @@
-import { USER_INFO_UPDATED } from './../actions/ActionTypes'
+import { USER_INFO_UPDATED } from './../sockets/socketActionTypes'
 
 const defaultState = {
   id: null,
