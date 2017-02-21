@@ -12,7 +12,7 @@
     "url": "https://github.com/pennlabs/OHQ/issues"
   },
   "scripts": {
-    "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css",
+    "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css && rimraf ApiServer/public/images",
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "build": "npm run clean && npm run postinstall",
     "postinstall": "NODE_ENV=production webpack --progress --display-reasons --display-modules",
