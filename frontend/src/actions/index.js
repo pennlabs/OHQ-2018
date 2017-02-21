@@ -29,7 +29,7 @@ export function updateClassStatus(classInfo) {
 export function updateSelectedClass(classInfo) {
   return {
     type: Actions.UPDATE_SELECTED_CLASS,
-    data: classInfo
+    payload: classInfo
   }
 }
 
