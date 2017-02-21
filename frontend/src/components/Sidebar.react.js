@@ -1,17 +1,23 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 
 import styles from './../../style/Sidebar.scss'
 import SidebarItem from './SidebarItem.react'
 import CustomCross from './CustomCross.react'
+import { updateSelectedClass } from './../actions/index.js'
 
 class Sidebar extends Component {
 
   static propTypes = {
     //from redux
-    classes: React.PropTypes.object,
-    selectedClass: React.PropTypes.object,
+    classes: PropTypes.object,
+    selectedClass: PropTypes.object,
+    updateSelectedClass: PropTypes.func
+  }
+
+  updateSelectedClass = (id) => {
+    this.props.updateSelectedClass(this.props.classes[id])
   }
 
   getClassName() {
@@ -30,6 +36,7 @@ class Sidebar extends Component {
           isTAForCurrentClass={this.props.isTAForCurrentClass}
           isSelected={data.id === get(this.props, 'selectedClass.id', null)}
           key={data.id}
+          onClick={this.updateSelectedClass}
         />
       )
     : <p className={styles.noClassText}>No Classes</p>
@@ -69,4 +76,10 @@ function mapStateToProps({selectedClass, classes}) {
   }
 }
 
-export default connect(mapStateToProps)(Sidebar)
+function mapDispatchToProps(dispatch) {
+  return {
+    updateSelectedClass: (id) => { dispatch(updateSelectedClass(id)) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

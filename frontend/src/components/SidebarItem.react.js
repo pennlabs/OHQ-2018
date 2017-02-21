@@ -1,13 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+
 
 import styles from './../../style/SidebarItem.scss'
 
 class SidebarItem extends Component {
 
   static propTypes = {
-    name: React.PropTypes.string,
-    isSelected: React.PropTypes.bool,
-    isActive: React.PropTypes.bool,
+    name: PropTypes.string,
+    isSelected: PropTypes.bool,
+    isActive: PropTypes.bool,
+    id: PropTypes.number,
+    onClick: PropTypes.func
+  }
+
+  onClick = () => {
+    this.props.onClick(this.props.id)
   }
 
   getClassName() {
@@ -23,7 +30,7 @@ class SidebarItem extends Component {
 
   render() {
     return (
-      <div className={this.getClassName()}>
+      <div className={this.getClassName()} onClick={this.onClick}>
         {this.props.name}
       </div>
     )
