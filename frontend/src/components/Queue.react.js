@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { get } from 'lodash'
 
 import QueueItem from './QueueItem.react'
@@ -63,11 +62,4 @@ class Queue extends Component {
   }
 }
 
-function mapStateToProps({ selectedClass, userInfo }) {
-  return {
-    line: get(selectedClass, 'queue', null),
-    userInfo
-  }
-}
-
-export default connect(mapStateToProps)(Queue)
+export default Queue
