@@ -26,6 +26,13 @@ export function updateClassStatus(classInfo) {
   }
 }
 
+export function updateSelectedClass(classInfo) {
+  return {
+    type: Actions.UPDATE_SELECTED_CLASS,
+    data: classInfo
+  }
+}
+
 export function signinUser({email, password}) {
 
   //reduxThunk allows us to return a function instead of a raw object
