@@ -40,7 +40,6 @@ class Queue extends Component {
           key={data.userInfo.id}
           isFirst={index === 0}
           isLast={index === this.props.line.length - 1}
-          // isUser={student.isUser} HACK: temporarily disabled
           isUser={data.userInfo.id === get(this.props, 'userInfo.id', null)}
           isTAForCurrentClass={this.props.isTAForCurrentClass}
         />
