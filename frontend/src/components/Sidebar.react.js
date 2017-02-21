@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
 
 import styles from './../../style/Sidebar.scss'
 import SidebarItem from './SidebarItem.react'
@@ -12,12 +11,8 @@ class Sidebar extends Component {
   static propTypes = {
     //from redux
     classes: PropTypes.object,
-    selectedClass: PropTypes.object,
+    selectedClass: PropTypes.number,
     updateSelectedClass: PropTypes.func
-  }
-
-  updateSelectedClass = (id) => {
-    this.props.updateSelectedClass(this.props.classes[id])
   }
 
   getClassName() {
@@ -34,9 +29,9 @@ class Sidebar extends Component {
         <SidebarItem
           {...data}
           isTAForCurrentClass={this.props.isTAForCurrentClass}
-          isSelected={data.id === get(this.props, 'selectedClass.id', null)}
+          isSelected={data.id === this.props.selectedClass}
           key={data.id}
-          onClick={this.updateSelectedClass}
+          onClick={this.props.updateSelectedClass}
         />
       )
     : <p className={styles.noClassText}>No Classes</p>

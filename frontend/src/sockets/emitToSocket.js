@@ -6,7 +6,7 @@ export function updateClass(myClass) {
   Socket.emit(SocketActions.UPDATE_CLASS, myClass)
 }
 
-//updateClassQueue takes an object containing question, location, userInfo, and class properties.
+//updateClassQueue takes an object containing question, location, userInfo, and classId properties.
 export function updateClassQueue(data) {
   Socket.emit(SocketActions.UPDATE_CLASS_QUEUE, data)
 }

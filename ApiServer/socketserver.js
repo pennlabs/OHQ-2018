@@ -129,9 +129,15 @@ module.exports = function(server) {
 
     socket.on('UPDATE_CLASS_QUEUE', data => {
       console.log('update class queue event logged:', data)
-      const { question, location, userInfo } = data
-      classQueues[data.class.id].queue.push({question, location, userInfo})
-      socketServer.emit('CLASS_QUEUE_UPDATED', classQueues[data.class.id])
+      const { question, location, userInfo, classId } = data
+
+      //check if the user is already in the queue, if so, do nothing.
+      //using a for loop here for faster execution
+      for (let i = 0; i < classQueues[classId].queue.length; i++) {
+        if (classQueues[classId].queue[i].userInfo.id === userInfo.id) return
+      }
+      classQueues[classId].queue.push({question, location, userInfo})
+      socketServer.emit('CLASS_QUEUE_UPDATED', classQueues[classId])
     })
   })
 }

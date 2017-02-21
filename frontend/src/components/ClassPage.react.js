@@ -23,7 +23,8 @@ class ClassPage extends Component {
 
     //from redux
     userInfo: PropTypes.object,
-    selectedClass: PropTypes.object,
+    selectedClass: PropTypes.number,
+    classes: PropTypes.object
   }
 
   toggleExpandingSidePanel = () => {
@@ -31,13 +32,13 @@ class ClassPage extends Component {
   }
 
   updateSelectedClassQueue = (question, location) => {
-    if (!this.props.selectedClass || !this.props.userInfo) return null
+    if (this.props.selectedClass == null || !this.props.userInfo) return null
 
     const queueData = {
       question,
       location,
       userInfo: this.props.userInfo,
-      class: this.props.selectedClass
+      classId: this.props.selectedClass
     }
     updateClassQueue(queueData)
   }
@@ -68,7 +69,7 @@ class ClassPage extends Component {
         <div className={styles.topRow}>
           <ClassInfoTitle
             teacher='John Doe'
-            classCode={get(this.props, 'selectedClass.name', null)}
+            classCode={this.props.classes[this.props.selectedClass].name}
             location='Moore 001'
           />
           <JoinQueueButton
@@ -79,6 +80,8 @@ class ClassPage extends Component {
         <div className={styles.middleRow}>
           <Queue
             line={get(this.props, 'selectedClass.queue', null)}
+            userInfo={this.props.userInfo}
+            line={this.props.classes[this.props.selectedClass].queue}
           />
           <div className={styles.currentQuestionContainer}>
             <CurrentQuestion question={this.props.question}/>
@@ -90,10 +93,11 @@ class ClassPage extends Component {
   }
 }
 
-function mapStateToProps({userInfo, selectedClass}) {
+function mapStateToProps({userInfo, selectedClass, classes}) {
   return {
     userInfo,
     selectedClass,
+    classes
   }
 }
 
