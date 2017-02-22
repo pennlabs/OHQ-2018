@@ -43,10 +43,14 @@ class ClassPage extends Component {
     updateClassQueue(queueData)
   }
 
-  getQuestionComponentClassName() {
+  getQuestionContainerClassName() {
     let className = styles.currentQuestionContainer
-    if (!this.props.question) {
-      className = `${className} ${styles.isEmpty}`
+    const hasQuestion = this.getCurrentQuestion()
+    const hasQueue = this.getSelectedClassProperty('queue').length
+    if (!hasQuestion && hasQueue) {
+      className = `${className} ${styles.isEmptyAndQueue}`
+    } else if (!hasQuestion && !hasQueue) {
+      className = `${className} ${styles.isEmptyAndNoQueue}`
     }
     return className
   }
@@ -89,7 +93,7 @@ class ClassPage extends Component {
           userInfo={this.props.userInfo}
           line={this.getSelectedClassProperty('queue')}
         />
-        <div className={styles.currentQuestionContainer}>
+        <div className={this.getQuestionContainerClassName()}>
           <CurrentQuestion questionData={this.getCurrentQuestion()}/>
         </div>
       </div>

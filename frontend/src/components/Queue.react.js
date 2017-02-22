@@ -20,6 +20,14 @@ class Queue extends Component {
     return pos < 0 ? null : pos + 1
   }
 
+  getQueueClassName() {
+    let className = styles.container
+    if (!this.props.line.length) {
+      className = `${className} ${styles.isEmpty}`
+    }
+    return className
+  }
+
   renderPositionTitle() {
     if (!this.props.line || !this.props.line.length) return null
     if (this.props.isTAForCurrentClass) return 'Next Student'
@@ -51,7 +59,7 @@ class Queue extends Component {
 
   render() {
     return (
-      <div className={styles.container}>
+      <div className={this.getQueueClassName()}>
         <span className={styles.positionTitle}>
           {this.renderPositionTitle()}
         </span>

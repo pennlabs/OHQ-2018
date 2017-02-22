@@ -17,8 +17,15 @@
 
 :local .currentQuestionContainer {
   margin: 0 auto 0 6vw;
-  &.isEmpty {
-    margin: 0 auto 0 15vw;
+  &.isEmptyAndNoQueue {
+    position: relative;
+    right: 45px;
+    margin: 0 auto;
+  }
+  &.isEmptyAndQueue {
+    position: relative;
+    right: 145px;
+    margin: 0 auto;
   }
 }
 
@@ -38,5 +45,10 @@
   :local .container {
     padding-top: 10px;
     padding-left: 10px;
+  }
+  :local .currentQuestionContainer {
+    &.isEmpty {
+      position: static;
+    }
   }
 }

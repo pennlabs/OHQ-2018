@@ -1,8 +1,10 @@
 :local .container {
   display: flex;
   width: 200px;
-  justify-content: center;
   flex-direction: column;
+  &.isEmpty {
+    display: none;
+  }
 }
 
 :local .queue {
@@ -15,7 +17,8 @@
   //to do a true custom scrollbar would require JS
   //and is not worth the effort at this stage.
   //(autoprefixer does not work because this is
-  //vendor specific)
+  //vendor specific).  Also note that the scrollbar
+  //adds width.
   &::-webkit-scrollbar {
     width:10px; //scrollbar width
   }
