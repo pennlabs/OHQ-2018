@@ -16,7 +16,7 @@
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "build": "npm run clean && NODE_ENV=production webpack --progress --display-reasons --display-modules",
     "postinstall": "npm run clean && NODE_ENV=production webpack --progress",
-    "prod": "node ./ApiServer/index.js",
+    "prod": "npm run build && node ./ApiServer/index.js",
     "server": "nodemon ./ApiServer/index.js",
     "lint": "eslint **/",
     "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require ignore-styles --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
