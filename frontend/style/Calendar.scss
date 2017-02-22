@@ -1,0 +1,47 @@
+:local .container {
+	display: flex;
+	flex-direction: column;
+	margin-top: 1%;
+	font-family: Roboto;
+
+	.title {
+		margin-left: 40px;
+		color: #9b9b9b;
+		font-size: 15pt;
+		padding-bottom: 1vh;
+	}
+	
+	.calendar {
+		display: flex;
+		height: 40vh; 
+		width: 60vw;
+
+		.calendarItems {
+			display: flex;
+			background-color: #f7f7f7;	
+			flex-grow: 1;
+		}
+
+		.calendarSide {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			letter-spacing: -0.3px;
+			font-size: 12pt;
+			color: #9b9b9b;
+		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	:local .container {
+		.calendar {
+			height: 50vh;
+			width: 40vh;
+			
+			> .calendarItems {
+			flex-direction: column;
+			}
+		}
+	}
+}
