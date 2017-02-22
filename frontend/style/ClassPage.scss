@@ -47,7 +47,10 @@
     padding-left: 10px;
   }
   :local .currentQuestionContainer {
-    &.isEmpty {
+    &.isEmptyAndNoQueue {
+      position: static;
+    }
+    &.isEmptyAndQueue {
       position: static;
     }
   }

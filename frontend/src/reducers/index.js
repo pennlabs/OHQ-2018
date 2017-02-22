@@ -6,7 +6,6 @@
 //are split across two files: src/actions/ActionTypes.js, and src/sockets/socketActionTypes.js.
 
 import { combineReducers } from 'redux'
-// import { reducer as formReducer } from 'redux-form'
 
 import authReducer from './AuthReducer'
 import selectedClassReducer from './SelectedClassReducer'
@@ -14,7 +13,6 @@ import userInfoReducer from './UserInfoReducer'
 import classesReducer from './ClassesReducer'
 
 const rootReducer = combineReducers({
-  // form: formReducer,
   auth: authReducer,
   userInfo: userInfoReducer,
   classes: classesReducer,
