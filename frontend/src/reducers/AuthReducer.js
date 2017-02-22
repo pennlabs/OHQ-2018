@@ -2,7 +2,7 @@
 //auth reducer tracks two pieces of state on state.auth: authenticated, and error
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from './../actions/ActionTypes'
 
-const defaultState = {error: null, authenticated: true}
+const defaultState = {error: null, authenticated: false}
 
 
 export default function(state = defaultState, action) {

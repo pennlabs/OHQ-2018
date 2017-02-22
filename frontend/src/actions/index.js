@@ -26,10 +26,10 @@ export function updateClassStatus(classInfo) {
   }
 }
 
-export function updateSelectedClass(classInfo) {
+export function updateSelectedClass(classId) {
   return {
     type: Actions.UPDATE_SELECTED_CLASS,
-    payload: classInfo
+    payload: classId
   }
 }
 

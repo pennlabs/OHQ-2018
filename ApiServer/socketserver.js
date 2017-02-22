@@ -82,14 +82,14 @@ module.exports = function(server) {
       TAs: [],
       isActive: true,
       id: 0,
-      name: 'classFoo'
+      name: 'CIS 110'
     },
     1: {
-      queue: [], //queue is an array of objects, where each object has user, location, and question properties
+      queue: [],
       TAs: [],
-      isActive: false,
+      isActive: true,
       id: 1,
-      name: 'classBar'
+      name: 'CIS 120'
     }
   }
 

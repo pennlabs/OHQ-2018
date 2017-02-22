@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { Link, browserHistory } from 'react-router'
 
 import logo from './../../images/Splash.png'
 import labsImg from './../../images/LabsLogo.png'
 import styles from './../../style/SplashPage.scss'
 
 class SplashPage extends Component {
+
+  componentWillMount() {
+    if (this.props.authenticated) {
+      browserHistory.push('/')
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authenticated) {
+      browserHistory.push('/')
+    }
+  }
 
   render() {
     return (
@@ -26,4 +39,8 @@ class SplashPage extends Component {
   }
 }
 
-export default SplashPage
+function mapStateToProps(state) {
+  return { authenticated: state.auth.authenticated }
+}
+
+export default connect(mapStateToProps)(SplashPage)

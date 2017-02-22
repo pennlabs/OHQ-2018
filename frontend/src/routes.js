@@ -6,11 +6,14 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
 import App from './components/app.react'
+import SplashPage from './components/SplashPage.react'
+import Main from './components/Main.react'
 import Signin from './components/auth/Signin.react'
 
 export default (
   <Route path='/' component={App}>
-    <Route path='/signin' component={Signin}>
+    <IndexRoute component={Main} />
+    <Route path='/signin' component={SplashPage}>
     </Route>
   </Route>
 )

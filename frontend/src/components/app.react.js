@@ -1,31 +1,28 @@
-import React, { Component } from 'react'
-// import { Link, Router } from 'react-router'
+import { Component } from 'react'
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
 // import CommentBox from './CommentBox.react'
-import SplashPage from './SplashPage.react'
-import Main from './Main.react'
 
 class App extends Component {
 
-  renderMain() {
+  componentWillMount() {
+    //If the user is not auth'd, redirect to the signin page
     if (!this.props.authenticated) {
-      return <SplashPage />
+      browserHistory.push('/signin')
     }
-    return <Main>{this.props.children}</Main>
   }
 
   render() {
     (async () => {
       await console.log('es8!')
     })()
-    return (
-      this.renderMain()
-    )
+    return this.props.children
   }
 }
 
 function mapStateToProps(state) {
   return { authenticated: state.auth.authenticated }
 }
+
 export default connect(mapStateToProps)(App)

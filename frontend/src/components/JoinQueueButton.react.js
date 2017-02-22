@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import CustomCross from './CustomCross.react'
 
 import styles from './../../style/JoinQueueButton.scss'
@@ -6,8 +6,13 @@ import styles from './../../style/JoinQueueButton.scss'
 class JoinQueueButton extends Component {
 
   static propTypes = {
-    toggleExpandingSidePanel: React.PropTypes.func,
-    isExpandingSidePanelOpen: React.PropTypes.bool,
+    toggleExpandingSidePanel: PropTypes.func,
+    isExpandingSidePanelOpen: PropTypes.bool,
+    shouldDisplay: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    shouldDisplay: true
   }
 
   getClassName() {
@@ -17,6 +22,7 @@ class JoinQueueButton extends Component {
   }
 
   render() {
+    if (!this.props.shouldDisplay) return null
     return (
       <div
         className={this.getClassName()}

@@ -15,7 +15,7 @@ import Modal from './Modal.react'
 class ClassPage extends Component {
 
   state = {
-    isExpandingSidePanelOpen: true,
+    isExpandingSidePanelOpen: false,
   }
 
   static propTypes = {
@@ -62,6 +62,40 @@ class ClassPage extends Component {
     ))
   }
 
+  getSelectedClassProperty(property) {
+    return get(this.props.classes, `[${this.props.selectedClass}[${property}]`)
+  }
+
+  renderTopRow() {
+    return (
+      <div className={styles.topRow}>
+        <ClassInfoTitle
+          teacher='John Doe'
+          classCode={this.getSelectedClassProperty('name')}
+          location='Moore 001'
+        />
+        <JoinQueueButton
+          isExpandingSidePanelOpen={this.state.isExpandingSidePanelOpen}
+          toggleExpandingSidePanel={this.toggleExpandingSidePanel}
+        />
+      </div>
+    )
+  }
+
+  renderMiddleRow() {
+    return (
+      <div className={styles.middleRow}>
+        <Queue
+          userInfo={this.props.userInfo}
+          line={this.getSelectedClassProperty('queue')}
+        />
+        <div className={styles.currentQuestionContainer}>
+          <CurrentQuestion questionData={this.getCurrentQuestion()}/>
+        </div>
+      </div>
+    )
+  }
+
   renderExpandingSidePanel() {
     return (
       <Modal>
@@ -77,27 +111,8 @@ class ClassPage extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <div className={styles.topRow}>
-          <ClassInfoTitle
-            teacher='John Doe'
-            classCode={this.props.classes[this.props.selectedClass].name}
-            location='Moore 001'
-          />
-          <JoinQueueButton
-            isExpandingSidePanelOpen={this.state.isExpandingSidePanelOpen}
-            toggleExpandingSidePanel={this.toggleExpandingSidePanel}
-          />
-        </div>
-        <div className={styles.middleRow}>
-          <Queue
-            line={get(this.props, 'selectedClass.queue', null)}
-            userInfo={this.props.userInfo}
-            line={this.props.classes[this.props.selectedClass].queue}
-          />
-          <div className={styles.currentQuestionContainer}>
-            <CurrentQuestion questionData={this.getCurrentQuestion()}/>
-          </div>
-        </div>
+        {this.renderTopRow()}
+        {this.renderMiddleRow()}
         {this.renderExpandingSidePanel()}
       </div>
     )

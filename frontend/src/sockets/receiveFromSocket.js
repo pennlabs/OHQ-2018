@@ -8,15 +8,9 @@ Socket.on(SocketActions.CLASS_UPDATED, classData => {
   Store.dispatch({type: SocketActions.CLASS_UPDATED, payload: classData})
 })
 
-//while the action is class queue updated, we're returning the entire class object.
 Socket.on(SocketActions.CLASS_QUEUE_UPDATED, classData => {
   console.log('class queue updated', classData)
   Store.dispatch({type: SocketActions.CLASS_QUEUE_UPDATED, payload: classData})
-})
-
-Socket.on(SocketActions.SELECTED_CLASS_UPDATED, classData => {
-  console.log('class updated', classData)
-  Store.dispatch({type: SocketActions.SELECTED_CLASS_UPDATED, payload: classData})
 })
 
 Socket.on(SocketActions.USER_INFO_UPDATED, userInfo => {

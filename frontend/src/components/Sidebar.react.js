@@ -15,6 +15,14 @@ class Sidebar extends Component {
     updateSelectedClass: PropTypes.func
   }
 
+  //TODO: update select only an active class if one is available;
+  //also need some kind of default state for if no classes are online.
+  componentWillMount() {
+    if (this.props.selectedClass == null && this.props.classes) {
+      this.props.updateSelectedClass(+Object.keys(this.props.classes)[0])
+    }
+  }
+
   getClassName() {
     let className = styles.sidebar
     if (this.props.isTAForCurrentClass) {
@@ -64,10 +72,11 @@ class Sidebar extends Component {
   }
 }
 
-function mapStateToProps({selectedClass, classes}) {
+function mapStateToProps({selectedClass, classes, userInfo}) {
   return {
     selectedClass,
-    classes
+    classes,
+    userInfo
   }
 }
 

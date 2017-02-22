@@ -6,7 +6,7 @@
   "repository": "https://github.com/pennlabs/OHQ.git",
   "homepage": "https://github.com/pennlabs/OHQ",
   "engines": {
-    "node": "7.6.0"
+    "node": "6.9.1"
   },
   "bugs": {
     "url": "https://github.com/pennlabs/OHQ/issues"
@@ -65,7 +65,7 @@
     "lodash": "^4.13.1",
     "mongoose": "^4.6.1",
     "morgan": "^1.7.0",
-    "node-sass": "^3.13.1",
+    "node-sass": "^3.11.2",
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0",
     "passport-local": "^1.0.0",
@@ -81,7 +81,6 @@
     "reselect": "^2.5.3",
     "sass-loader": "^4.0.0",
     "socket.io": "^1.5.1",
-    "socket.io-client": "^1.7.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
   }
