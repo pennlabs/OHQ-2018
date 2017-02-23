@@ -18,7 +18,7 @@
     // "preinstall": "npm install node-sass --no-bin-links",
     "postinstall": "npm run clean && NODE_ENV=production webpack --progress",
     "fix-sass": "node node_modules/node-sass/scripts/install.js && npm rebuild node-sass --no-bin-links",
-    "prod": "npm install -g yarn && rimraf node_modules && yarn install && node ./ApiServer/index.js",
+    "prod": "curl -o- -L https://yarnpkg.com/install.sh | bash && rimraf node_modules && ~/.yarn/bin/yarn install && node ./ApiServer/index.js",
     "server": "nodemon ./ApiServer/index.js",
     "lint": "eslint **/",
     "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require ignore-styles --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
