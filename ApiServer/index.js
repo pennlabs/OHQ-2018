@@ -20,6 +20,9 @@ mongoose.Promise = require('bluebird')
 //Initialize express app
 const app = express()
 
+//Since our node server is behind an nginx reverse proxy, we need to set it to
+//correctly register the client's IP address
+app.set('trust proxy', 'loopback')
 
 //DB Setup
 const dbUri = process.env.MONGODB_URI || MONGO_URI
