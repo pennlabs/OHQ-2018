@@ -24,6 +24,7 @@
     "no-multi-spaces": 0,
     "no-multiple-empty-lines": 0,
     "no-tabs": 0,
+    "no-unexpected-multiline": 2,
     "no-unused-vars": 1,
     "no-var": 2,
     "padded-blocks": 0,
