@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import { Store } from './../index'
-import styles from './../../style/Modal.scss'
+import styles from './../../style/Modal.less'
 
 class Modal extends Component {
 

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import CustomCross from './CustomCross.react'
 
-import styles from './../../style/JoinQueueButton.scss'
+import styles from './../../style/JoinQueueButton.less'
 
 class JoinQueueButton extends Component {
 

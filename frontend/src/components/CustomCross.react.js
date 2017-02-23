@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/CustomCross.scss'
+import styles from './../../style/CustomCross.less'
 
 class CustomCross extends Component {
 

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { get } from 'lodash'
 
 import QueueItem from './QueueItem.react'
-import styles from './../../style/Queue.scss'
+import styles from './../../style/Queue.less'
 
 class Queue extends Component {
 

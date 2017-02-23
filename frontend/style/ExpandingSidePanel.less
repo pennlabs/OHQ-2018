@@ -118,24 +118,27 @@
   }
 }
 
-
-@keyframes :local(fadein) {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+:local {
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
 //NOTE: use transform because it is easy on the browser
 //and will produce a smooth animation.
-@keyframes :local(slidein) {
-  from {
-    transform: translateX(30vw);
-  }
-  to {
-    transform: translateX(0);
+:local {
+  @keyframes slidein {
+    from {
+      transform: translateX(30vw);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 }
 

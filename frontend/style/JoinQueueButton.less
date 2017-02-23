@@ -34,12 +34,14 @@
 
 //NOTE: use transform because it is easy on the browser
 //and will produce a smooth animation.
-@keyframes :local(slidein) {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-30vw);
+:local {
+  @keyframes slidein {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-30vw);
+    }
   }
 }
 

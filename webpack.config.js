@@ -28,9 +28,9 @@ if (!isProduction) {
         exclude: /node_modules/,  //Use test?
         loader: 'babel',
       }, {
-        test: /\.scss$/,
+        test: /\.less$/,
         exclude: /node_modules/,
-        loaders: ['style', 'css?importLoaders=1', 'postcss', 'sass']
+        loaders: ['style', 'css?modules&importLoaders=1', 'postcss', 'less']
       },
       {
         test: /\.(jpg|jpeg|gif|png)$/,
@@ -39,7 +39,7 @@ if (!isProduction) {
       }]
     },
     resolve: {
-      extensions: ['', '.react.js', '.js', '.jsx', '.scss']
+      extensions: ['', '.react.js', '.js', '.jsx', '.less']
     },
     devServer: {
       historyApiFallback: true,
@@ -68,9 +68,9 @@ if (!isProduction) {
         exclude: /node_modules/,  //Use test?
         loader: 'babel',
       }, {
-        test: /\.scss$/,
+        test: /\.less$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract('style-loader', ['css?importLoaders=1', 'postcss', 'sass'].join('!'))
+        loader: ExtractTextPlugin.extract('style-loader', ['css?modules&importLoaders=1', 'postcss', 'less'].join('!'))
       },
       {
         test: /\.(jpg|jpeg|gif|png)$/,
@@ -79,7 +79,7 @@ if (!isProduction) {
       }]
     },
     resolve: {
-      extensions: ['', '.react.js', '.js', '.jsx', '.scss']
+      extensions: ['', '.react.js', '.js', '.jsx', '.less']
     },
     plugins: [
       new webpack.DefinePlugin({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import CustomCross from './CustomCross.react'
-import styles from './../../style/ExpandingSidePanel.scss'
+import styles from './../../style/ExpandingSidePanel.less'
 
 class ExpandingSidePanel extends Component {
 

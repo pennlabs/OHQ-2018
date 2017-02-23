@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import BeardedMan from './../../images/BeardedMan.png'
-import styles from './../../style/CurrentQuestion.scss'
+import styles from './../../style/CurrentQuestion.less'
 
 class CurrentQuestion extends Component {
 

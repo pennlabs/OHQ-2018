@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import styles from './../../style/Main.scss'
+import styles from './../../style/Main.less'
 import Sidebar from './Sidebar.react'
 import ClassPage from './ClassPage.react'
 

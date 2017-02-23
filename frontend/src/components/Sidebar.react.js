@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import styles from './../../style/Sidebar.scss'
+import styles from './../../style/Sidebar.less'
 import SidebarItem from './SidebarItem.react'
 import CustomCross from './CustomCross.react'
 import { updateSelectedClass } from './../actions/index.js'

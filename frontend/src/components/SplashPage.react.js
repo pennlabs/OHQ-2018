@@ -4,7 +4,7 @@ import { Link, browserHistory } from 'react-router'
 
 import logo from './../../images/Splash.png'
 import labsImg from './../../images/LabsLogo.png'
-import styles from './../../style/SplashPage.scss'
+import styles from './../../style/SplashPage.less'
 
 class SplashPage extends Component {
 
