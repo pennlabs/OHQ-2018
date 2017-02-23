@@ -21,7 +21,7 @@ class CurrentQuestion extends Component {
     return (
       <div className={styles.emptyContainer}>
         <img className={styles.beardedMan} src={BeardedMan}></img>
-        <span>Click on the + button to add a question to the queue!</span>
+        <span className={styles.emptyText}>Click on the + button to add a question to the queue!</span>
       </div>
     )
   }
