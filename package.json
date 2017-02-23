@@ -15,7 +15,6 @@
     "clean": "rimraf ApiServer/public/js && rimraf ApiServer/public/css && rimraf ApiServer/public/images",
     "start": "NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "build": "npm run clean && NODE_ENV=production webpack --progress --display-reasons --display-modules",
-    "preinstall": "npm install node-sass --no-bin-links && npm run fix-sass",
     "postinstall": "npm run clean && NODE_ENV=production webpack --progress",
     "fix-sass": "node node_modules/node-sass/scripts/install.js && npm rebuild node-sass --no-bin-links",
     "prod": "rimraf node_modules && npm install yarn && yarn install && node ./ApiServer/index.js",
