@@ -79,17 +79,19 @@ module.exports = function(server) {
   const classQueues = {
     0: {
       queue: [], //queue is an array of objects, where each object has user, location, and question properties
-      TAs: [],
+      TAs: [], //TAs is a list of ids, where each id represents a TA's student id.
       isActive: true,
       id: 0,
-      name: 'CIS 110'
+      name: 'CIS 110',
+      locations: ['Moore 100'] // use an array here in case of multiple locations
     },
     1: {
       queue: [],
       TAs: [],
       isActive: true,
       id: 1,
-      name: 'CIS 120'
+      name: 'CIS 120',
+      locations: ['Towne 100']
     }
   }
 

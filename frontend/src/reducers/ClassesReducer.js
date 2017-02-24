@@ -14,7 +14,8 @@ const defaultState = {
     TAs: [],
     isActive: true,
     id: 0,
-    name: 'CIS 110'
+    name: 'Initial State',
+    locations: ['some place']
   }
 }
 
