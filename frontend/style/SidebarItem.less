@@ -1,6 +1,8 @@
 @defaultColor: #8cc152;
 @defaultHoverColor: #c0e796;
-@isTAColor: #ac92ec;
+
+@TAHoverColor: #C9BBEB;
+@TASelectedColor: #967ADC;
 
 :local .sidebarItem {
   // Font styles
@@ -19,9 +21,15 @@
   &:hover {
     background-color: @defaultHoverColor;
     cursor: pointer;
+    &.isTA {
+      background-color: @TAHoverColor;
+    }
   }
   &.isSelected {
     background-color: @defaultColor;
+    &.isTA {
+      background-color: @TASelectedColor;
+    }
   }
   &.isActive {
     color: white;

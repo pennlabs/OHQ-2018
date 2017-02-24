@@ -10,6 +10,7 @@ class Sidebar extends Component {
 
   static propTypes = {
     //from redux
+    userInfo: PropTypes.object,
     classes: PropTypes.object,
     selectedClass: PropTypes.number,
     updateSelectedClass: PropTypes.func
@@ -23,9 +24,15 @@ class Sidebar extends Component {
     }
   }
 
+  isUserTAForSelectedClass() {
+    const { classes, selectedClass, userInfo } = this.props
+    if (classes == null || selectedClass == null || userInfo == null) return null
+    return classes[selectedClass].TAs.includes(userInfo.id)
+  }
+
   getClassName() {
     let className = styles.sidebar
-    if (this.props.isTAForCurrentClass) {
+    if (this.isUserTAForSelectedClass()) {
       className = `${className} ${styles.TA}`
     }
     return className
@@ -36,7 +43,7 @@ class Sidebar extends Component {
     ? Object.values(this.props.classes).map(data =>
         <SidebarItem
           {...data}
-          isTAForCurrentClass={this.props.isTAForCurrentClass}
+          isTA={this.isUserTAForSelectedClass()}
           isSelected={data.id === this.props.selectedClass}
           key={data.id}
           onClick={this.props.updateSelectedClass}

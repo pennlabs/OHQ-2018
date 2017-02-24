@@ -9,7 +9,8 @@ class SidebarItem extends Component {
     isSelected: PropTypes.bool,
     isActive: PropTypes.bool,
     id: PropTypes.number,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    isTA: PropTypes.bool
   }
 
   onClick = () => {
@@ -23,6 +24,9 @@ class SidebarItem extends Component {
     }
     if (this.props.isActive) {
       className = `${className} ${styles.isActive}`
+    }
+    if (this.props.isTA) {
+      className = `${className} ${styles.isTA}`
     }
     return className
   }
