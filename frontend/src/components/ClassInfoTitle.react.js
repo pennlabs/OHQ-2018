@@ -9,14 +9,14 @@ class ClassInfoTitle extends Component {
       <div className={styles.container}>
         <div className={styles.classCode}>{this.props.classCode}</div>
         <div className={styles.location}>{this.props.location}</div>
-        <div className={styles.teacher}>{this.props.teacher}</div>
+        <div className={styles.student}>{this.props.student}</div>
       </div>
     )
   }
 }
 
 ClassInfoTitle.propTypes = {
-  teacher: React.PropTypes.string,
+  student: React.PropTypes.string,
   classCode: React.PropTypes.string,
   location: React.PropTypes.string,
 }
