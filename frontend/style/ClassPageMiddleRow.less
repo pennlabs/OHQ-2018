@@ -1,0 +1,88 @@
+:local .middleRow {
+  display: flex;
+  flex-direction: row;
+}
+
+:local .currentQuestionContainer {
+  margin: 0 auto 0 6vw;
+  &.isEmptyAndNoQueue {
+    position: relative;
+    right: 45px;
+    margin: 0 auto;
+  }
+  &.isEmptyAndQueue {
+    position: relative;
+    right: 145px;
+    margin: 0 auto;
+  }
+}
+
+:local .startSessionContainer {
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  background: green;
+  position: relative;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 60vw;
+}
+
+:local .startSessionRow {
+  align-self: center;
+  background: red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // justify-content: center;
+  margin: 5px 0;
+  // width: 500px;
+}
+
+:local .startSessionText {
+  width: 138px;
+  height: 100%;
+  font-size: 30px;
+  color: #9b9b9b;
+  margin-right: 10px;
+}
+
+:local .locationInput {
+  // padding: 10px;
+  font-size: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+:local .timeInput {
+  // align-self: flex-end;
+  // padding: 10px;
+  font-size: 20px;
+  width: 100%;
+}
+
+:local .createButton {
+
+}
+
+@media (max-width: 1000px) {
+  :local .currentQuestionContainer {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 500px) {
+  :local .middleRow {
+    flex-direction: column;
+  }
+  :local .currentQuestionContainer {
+    &.isEmptyAndNoQueue {
+      position: static;
+    }
+    &.isEmptyAndQueue {
+      position: static;
+    }
+  }
+}
