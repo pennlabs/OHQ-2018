@@ -14,9 +14,9 @@ class Queue extends Component {
 
   getPosition() {
     if (!this.props.line || !this.props.line.length) return null
-    const pos = this.props.line.findIndex(data =>
-      data.userInfo.id === get(this.props, 'userInfo.id', null
-    ))
+    const pos = this.props.line.findIndex(data => {
+      return data.userInfo.id === get(this.props, 'userInfo.id', null)
+    })
     return pos < 0 ? null : pos + 1
   }
 
