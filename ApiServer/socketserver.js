@@ -6,14 +6,15 @@ const io = require('socket.io')
 //temporary obj to hold user data
 const nameData = {
   count: 0,
-  getName() {
+  getNameAndCount() {
     if (this.count >= this.list.length) {
       this.count = 1
-      return this.list[0]
+      return { name: this.list[0], count: 0 }
     }
     const str = this.list[this.count]
+    const currentCount = this.count
     this.count++
-    return str
+    return {name: str, count: currentCount}
   },
   list: [
     'Jazmine Kidney',
@@ -79,7 +80,7 @@ module.exports = function(server) {
   const classQueues = {
     0: {
       queue: [], //queue is an array of objects, where each object has user, location, and question properties
-      TAs: [], //TAs is a list of ids, where each id represents a TA's student id.
+      TAs: [0, 1, 2, 3], //TAs is a list of ids, where each id represents a TA's student id.
       isActive: true,
       id: 0,
       name: 'CIS 110',
@@ -95,8 +96,6 @@ module.exports = function(server) {
     }
   }
 
-  let currentName
-
   socketServer.on('connection', socket => {
     connections.push(socket)
     console.log('A user connected!')
@@ -106,9 +105,9 @@ module.exports = function(server) {
     socketServer.emit('ALL_CLASS_DATA', classQueues)
 
     //TODO: we will need to query information from our database here
-    currentName = nameData.getName()
+    const { name: currentName, count } = nameData.getNameAndCount()
     socket.emit('USER_INFO_UPDATED', {
-      id: socket.id,
+      id: count,
       firstName: currentName.split(' ')[0],
       lastName: currentName.split(' ')[1],
     })
