@@ -5,12 +5,12 @@ import { get } from 'lodash'
 import { updateClassQueue } from './../sockets/emitToSocket'
 import Queue from './Queue.react'
 import ClassInfoTitle from './ClassInfoTitle.react'
-import styles from './../../style/ClassPage.less'
 import JoinQueueButton from './JoinQueueButton.react'
 import ExpandingSidePanel from './ExpandingSidePanel.react'
 import CurrentQuestion from './CurrentQuestion.react'
-
 import Modal from './Modal.react'
+import ClassPageMiddleRow from './ClassPageMiddleRow.react'
+import styles from './../../style/ClassPage.less'
 
 class ClassPage extends Component {
 
@@ -19,12 +19,18 @@ class ClassPage extends Component {
   }
 
   static propTypes = {
-    question: PropTypes.string,
-
     //from redux
     userInfo: PropTypes.object,
     selectedClass: PropTypes.number,
     classes: PropTypes.object
+  }
+
+  // NOTE: may want to memoize or refactor this later, as it's being called
+  // multiple times on each render
+  isUserTAForSelectedClass() {
+    const { classes, selectedClass, userInfo } = this.props
+    if (classes == null || selectedClass == null || userInfo == null) return null
+    return classes[selectedClass].TAs.includes(userInfo.id)
   }
 
   toggleExpandingSidePanel = () => {
@@ -32,8 +38,8 @@ class ClassPage extends Component {
   }
 
   updateSelectedClassQueue = (question, location) => {
-    if (this.props.selectedClass == null || !this.props.userInfo) return null
-
+    const { selectedClass, userInfo } = this.props
+    if (selectedClass == null || userInfo == null) return null
     const queueData = {
       question,
       location,
@@ -43,23 +49,9 @@ class ClassPage extends Component {
     updateClassQueue(queueData)
   }
 
-  getQuestionContainerClassName() {
-    let className = styles.currentQuestionContainer
-    const hasQuestion = this.getCurrentQuestion()
-    const hasQueue = this.getSelectedClassProperty('queue').length
-    if (!hasQuestion && hasQueue) {
-      className = `${className} ${styles.isEmptyAndQueue}`
-    } else if (!hasQuestion && !hasQueue) {
-      className = `${className} ${styles.isEmptyAndNoQueue}`
-    }
-    return className
-  }
-
   getCurrentQuestion() {
-    //TODO: also if user is a TA
-    if (!this.props.userInfo ||
-     this.props.selectedClass == null ||
-     !this.props.classes) return null
+    const { classes, selectedClass, userInfo } = this.props
+    if (classes == null || selectedClass == null || userInfo == null) return null
 
     return this.props.classes[this.props.selectedClass].queue.find(data => (
       data.userInfo.id === this.props.userInfo.id
@@ -70,33 +62,49 @@ class ClassPage extends Component {
     return get(this.props.classes, `[${this.props.selectedClass}[${property}]`)
   }
 
+  renderJoinQueueButton() {
+    // TAs cannot join the queue of their own OH
+    if (this.isUserTAForSelectedClass()) {
+      return null
+    }
+    return (
+      <JoinQueueButton
+        isExpandingSidePanelOpen={this.state.isExpandingSidePanelOpen}
+        toggleExpandingSidePanel={this.toggleExpandingSidePanel}
+      />
+    )
+  }
+
   renderTopRow() {
+    let student = `${get(this.props.userInfo, 'firstName')} ${get(this.props.userInfo, 'lastName')}`
+    if (this.isUserTAForSelectedClass()) {
+      student = `${student} (TA)`
+    }
+    const location = this.getSelectedClassProperty('locations')
+    ? this.getSelectedClassProperty('locations')[0]
+    : null
+
     return (
       <div className={styles.topRow}>
         <ClassInfoTitle
-          teacher='John Doe'
+          student={student}
           classCode={this.getSelectedClassProperty('name')}
-          location='Moore 001'
+          location={location}
         />
-        <JoinQueueButton
-          isExpandingSidePanelOpen={this.state.isExpandingSidePanelOpen}
-          toggleExpandingSidePanel={this.toggleExpandingSidePanel}
-        />
+        {this.renderJoinQueueButton()}
       </div>
     )
   }
 
   renderMiddleRow() {
     return (
-      <div className={styles.middleRow}>
-        <Queue
-          userInfo={this.props.userInfo}
-          line={this.getSelectedClassProperty('queue')}
-        />
-        <div className={this.getQuestionContainerClassName()}>
-          <CurrentQuestion questionData={this.getCurrentQuestion()}/>
-        </div>
-      </div>
+      <ClassPageMiddleRow
+        selectedClassQueue={this.getSelectedClassProperty('queue')}
+        userInfo={this.props.userInfo}
+        isSelectedClassActive={this.getSelectedClassProperty('active')}
+        isUserTAForSelectedClass={this.isUserTAForSelectedClass()}
+        currentQuestion={this.getCurrentQuestion()}
+      />
     )
   }
 

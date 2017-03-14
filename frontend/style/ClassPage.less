@@ -10,48 +10,12 @@
   justify-content: space-between;
 }
 
-:local .middleRow {
-  display: flex;
-  flex-direction: row;
-}
-
-:local .currentQuestionContainer {
-  margin: 0 auto 0 6vw;
-  &.isEmptyAndNoQueue {
-    position: relative;
-    right: 45px;
-    margin: 0 auto;
-  }
-  &.isEmptyAndQueue {
-    position: relative;
-    right: 145px;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 1000px) {
-  :local .currentQuestionContainer {
-    margin: 0 auto;
-  }
-}
-
 @media (max-width: 500px) {
   :local .topRow {
     flex-direction: column-reverse;
   }
-  :local .middleRow {
-    flex-direction: column;
-  }
   :local .container {
     padding-top: 10px;
     padding-left: 10px;
-  }
-  :local .currentQuestionContainer {
-    &.isEmptyAndNoQueue {
-      position: static;
-    }
-    &.isEmptyAndQueue {
-      position: static;
-    }
   }
 }
