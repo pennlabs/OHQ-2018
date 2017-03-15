@@ -51,9 +51,9 @@ class ClassPage extends Component {
     const { classes, selectedClass, userInfo } = this.props
     if (classes == null || selectedClass == null || userInfo == null) return null
 
-    return this.props.classes[this.props.selectedClass].queue.find(data => (
-      data.userInfo.id === this.props.userInfo.id
-    ))
+    return this.props.classes[this.props.selectedClass].queue.find(data => {
+      return data.userInfo.id === this.props.userInfo.id
+    })
   }
 
   getSelectedClassProperty(property) {
