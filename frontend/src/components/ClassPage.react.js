@@ -99,7 +99,7 @@ class ClassPage extends Component {
       <ClassPageMiddleRow
         selectedClassQueue={this.getSelectedClassProperty('queue')}
         userInfo={this.props.userInfo}
-        isSelectedClassActive={this.getSelectedClassProperty('active')}
+        isSelectedClassActive={this.getSelectedClassProperty('isActive')}
         isUserTAForSelectedClass={this.isUserTAForSelectedClass()}
         currentQuestion={this.getCurrentQuestion()}
         selectedClassId={this.props.selectedClass}
