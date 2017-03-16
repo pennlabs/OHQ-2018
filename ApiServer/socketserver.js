@@ -1,9 +1,10 @@
 const io = require('socket.io')
 
-//TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
-//connect to our socket server.
+// TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
+// connect to our socket server.
 
-//temporary obj to hold user data
+// temporary obj to hold user data
+// TODO: each user will also need to store the classes subscribed to
 const nameData = {
   count: 0,
   getNameAndCount() {
@@ -14,10 +15,10 @@ const nameData = {
     const str = this.list[this.count]
     const currentCount = this.count
     this.count++
-    return {name: str, count: currentCount}
+    return { name: str, count: currentCount }
   },
   list: [
-    'Jazmine Kidney',
+    'Bilbo Baggins',
     'Marlys Hannah',
     'Moriah Treaster',
     'Golden Bloyd',
@@ -70,6 +71,8 @@ const nameData = {
   ]
 }
 
+// TODO: we need to ensure that users only see updates to the classes they've added.
+// Right now every user sees the action for every class.
 module.exports = function(server) {
   const socketServer = io(server)
   const connections = []
@@ -80,7 +83,7 @@ module.exports = function(server) {
   const classQueues = {
     0: {
       queue: [], //queue is an array of objects, where each object has user, location, and question properties
-      TAs: [0, 1, 2, 3], //TAs is a list of ids, where each id represents a TA's student id.
+      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18], //TAs is a list of ids, where each id represents a TA's student id.
       isActive: true,
       id: 0,
       name: 'CIS 110',
@@ -93,6 +96,14 @@ module.exports = function(server) {
       id: 1,
       name: 'CIS 120',
       locations: ['Towne 100']
+    },
+    2: {
+      queue: [],
+      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18].map(x => x + 1),
+      isActive: false,
+      id: 2,
+      name: 'CIS 160',
+      locations: []
     }
   }
 
@@ -119,8 +130,7 @@ module.exports = function(server) {
       console.log(`new length: ${connections.length}`)
     })
 
-    //TODO: in future, we probably don't want to allow the user to modify any property of the classQueue.
-    //Logic should be restricted based on TA/user status and only specific properties should be able
+    //A general method to modify data is a bad idea; only specific properties should be able
     //to be modified.
     socket.on('UPDATE_CLASS', data => {
       console.log('update class event logged:', data)
@@ -128,6 +138,9 @@ module.exports = function(server) {
       socketServer.emit('CLASS_UPDATED', classQueues[data.id])
     })
 
+    //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
+    //Logic should be restricted based on TA/user status.  Simply requiring the userId isn't secure;
+    //we will need to also use whatever auth mechanism we end up using
     socket.on('UPDATE_CLASS_QUEUE', data => {
       console.log('update class queue event logged:', data)
       const { question, location, userInfo, classId } = data
@@ -139,6 +152,19 @@ module.exports = function(server) {
       }
       classQueues[classId].queue.push({question, location, userInfo})
       socketServer.emit('CLASS_QUEUE_UPDATED', classQueues[classId])
+    })
+
+    socket.on('ACTIVATE_CLASS', classId => {
+      classQueues[classId].isActive = true
+      socketServer.emit('CLASS_ACTIVATED', classQueues[classId])
+    })
+
+    socket.on('DEACTIVATE_CLASS', classId => {
+      classQueues[classId].isActive = false
+      // empty working arrays
+      classQueues[classId].queue = []
+      classQueues[classId].locations = []
+      socketServer.emit('CLASS_DEACTIVATED', classQueues[classId])
     })
   })
 }
