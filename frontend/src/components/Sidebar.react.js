@@ -19,6 +19,7 @@ class Sidebar extends Component {
   //TODO: update select only an active class if one is available;
   //also need some kind of default state for if no classes are online.
   componentWillMount() {
+    // if there is at least one active class, select the first one by default.
     if (this.props.selectedClass == null && this.props.classes) {
       this.props.updateSelectedClass(+Object.keys(this.props.classes)[0])
     }
