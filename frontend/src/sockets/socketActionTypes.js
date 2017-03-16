@@ -15,3 +15,9 @@ export const USER_INFO_UPDATED = 'USER_INFO_UPDATED'
 
 //this is used to send all the relevant classes when a user first connects
 export const ALL_CLASS_DATA = 'ALL_CLASS_DATA'
+
+// this is used to activate and deactivate a class.
+export const ACTIVATE_CLASS = 'ACTIVATE_CLASS'
+export const CLASS_ACTIVATED = 'CLASS_ACTIVATED'
+export const DEACTIVATE_CLASS = 'DEACTIVATE_CLASS'
+export const CLASS_DEACTIVATED = 'CLASS_DEACTIVATED'
