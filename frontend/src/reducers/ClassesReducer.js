@@ -3,7 +3,9 @@
 
 import {
   CLASS_QUEUE_UPDATED,
-  ALL_CLASS_DATA
+  ALL_CLASS_DATA,
+  CLASS_ACTIVATED,
+  CLASS_DEACTIVATED
 } from './../sockets/socketActionTypes'
 
 //Classes is a an object made of class class objects,
@@ -25,6 +27,11 @@ export default function(state = defaultState, action) {
       return {...state, [action.payload.id]: action.payload}
     case ALL_CLASS_DATA:
       return action.payload
+    // this logic is a duplicate of the logic for class queue updates.
+    // we separate it for clarity and ease of refactoring.
+    case CLASS_ACTIVATED:
+    case CLASS_DEACTIVATED:
+      return {...state, [action.payload.id]: action.payload}
     default:
       return state
   }
