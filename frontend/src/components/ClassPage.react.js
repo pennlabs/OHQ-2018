@@ -102,6 +102,7 @@ class ClassPage extends Component {
         isSelectedClassActive={this.getSelectedClassProperty('active')}
         isUserTAForSelectedClass={this.isUserTAForSelectedClass()}
         currentQuestion={this.getCurrentQuestion()}
+        selectedClassId={this.props.selectedClass}
       />
     )
   }
