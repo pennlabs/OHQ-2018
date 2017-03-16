@@ -1,3 +1,7 @@
+// This file contains actions that are sent via websocket to the server.
+// It is not necessary to use mapDispatchToProps; instead, reducers should just handle
+// any corresponding events in receiveFromSocket
+
 import Socket from './initSocket'
 import * as SocketActions from './socketActionTypes'
 
@@ -11,8 +15,19 @@ export function updateClassQueue(data) {
   Socket.emit(SocketActions.UPDATE_CLASS_QUEUE, data)
 }
 
-//NOTE: may not be necessary, updateClass could simply add a class.
-//updateClass takes an entire class as an object.
+// activateClass and deactivateClass are used by TAs
+// to mark a class as active and not active respectively
+// They take a class id as a parameter
+export function activateClass(classId) {
+  Socket.emit(SocketActions.ACTIVATE_CLASS, classId)
+}
+
+export function deactivateClass(classId) {
+  Socket.emit(SocketActions.DEACTIVATE_CLASS, classId)
+}
+
+// NOTE: may not be necessary, updateClass could simply add a class.
+// updateClass takes an entire class as an object.
 // export function addClass(myClass) {
 //   Socket.emit(SocketActions.UPDATE_CLASS, myClass)
 // }
