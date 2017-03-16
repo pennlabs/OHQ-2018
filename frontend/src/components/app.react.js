@@ -2,8 +2,6 @@ import { Component } from 'react'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
-// import CommentBox from './CommentBox.react'
-
 class App extends Component {
 
   componentWillMount() {
