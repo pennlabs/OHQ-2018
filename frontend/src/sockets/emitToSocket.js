@@ -15,13 +15,13 @@ export function updateClassQueue(data) {
   Socket.emit(SocketActions.UPDATE_CLASS_QUEUE, data)
 }
 
-// activateClass and deactivateClass are used by TAs
-// to mark a class as active and not active respectively
-// They take a class id as a parameter
-export function activateClass(classId) {
-  Socket.emit(SocketActions.ACTIVATE_CLASS, classId)
+// activateClass takes an object with classId, locationText, and endTime fields
+// classId is a number and the other two are strings
+export function activateClass(data) {
+  Socket.emit(SocketActions.ACTIVATE_CLASS, data)
 }
 
+// deactiveClass takes a class id as a parameter
 export function deactivateClass(classId) {
   Socket.emit(SocketActions.DEACTIVATE_CLASS, classId)
 }
