@@ -47,10 +47,18 @@ class ClassPage extends Component {
     updateClassQueue(queueData)
   }
 
+  getTACurrentQuestion() {
+    console.log('****', this.props.classes[this.props.selectedClass].queue[0])
+    return this.props.classes[this.props.selectedClass].queue[0]
+  }
+
   getCurrentQuestion() {
     const { classes, selectedClass, userInfo } = this.props
     if (classes == null || selectedClass == null || userInfo == null) return null
 
+    if (this.isUserTAForSelectedClass()) {
+      return this.getTACurrentQuestion()
+    }
     return this.props.classes[this.props.selectedClass].queue.find(data => {
       return data.userInfo.id === this.props.userInfo.id
     })
@@ -61,8 +69,8 @@ class ClassPage extends Component {
   }
 
   renderJoinQueueButton() {
-    // TAs cannot join the queue of their own OH
-    if (this.isUserTAForSelectedClass()) {
+    // Don't render the button if user is TA or class isn't active
+    if (this.isUserTAForSelectedClass() || !this.getSelectedClassProperty('isActive')) {
       return null
     }
     return (
