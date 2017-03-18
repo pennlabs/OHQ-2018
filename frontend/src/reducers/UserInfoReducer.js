@@ -8,9 +8,9 @@ const defaultState = {
 
 export default function(state = defaultState, action) {
   switch (action.type) {
-    case USER_INFO_UPDATED:
-      return action.payload
-    default:
-      return state
+  case USER_INFO_UPDATED:
+    return action.payload
+  default:
+    return state
   }
 }

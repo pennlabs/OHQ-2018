@@ -38,12 +38,12 @@ const jwtOptions = {
 }
 
 //Create JWT strategy (strategies are plugins that work with Passport)
-//payload is decoded jwt token (will have sub and iat props); done is callback to use when authenticated
+//payload is decoded jwt token (will
+//have sub and iat props); done is callback to use when authenticated
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-
-  Promise.coroutine(function*() {
+  (async function() {
     try {
-      const user = yield User.findById(payload.sub)
+      const user = await User.findById(payload.sub)
       if (user) {
         done(null, user)
       } else {
@@ -53,32 +53,6 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
       return done(err, false)
     }
   })()
-
-  // User.findById(payload.sub)
-  // .then(user => {
-  // 	if (user) {
-  // 		//if success, call done with our user
-  // 		done(null, user)
-  // 	} else {
-  // 		//else call done without a user object
-  // 		done(null, false)
-  // 	}
-  //  //don't forget .catch!
-  // })
-
-
-  // //see if the user ID in the payload exists in our database
-  // User.findById(payload.sub, (err, user) => {
-  // 	if (err) return done(err, false)
-  // 	//done takes error as first parameter and user as second
-  // 	if (user) {
-  // 		//if success, call done with our user
-  // 		done(null, user)
-  // 	} else {
-  // 		//else call done without a user object
-  // 		done(null, false)
-  // 	}
-  // })
 })
 
 
