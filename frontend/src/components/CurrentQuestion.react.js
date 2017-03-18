@@ -10,7 +10,7 @@ class CurrentQuestion extends Component {
     isStudentInactiveState: PropTypes.bool,
   }
 
-  renderQuestionStudentView() {
+  renderStudentQuestionView() {
     return (
       <div className={styles.questionContainer}>
         <span className={styles.questionHeader}>Your Question</span>
@@ -28,10 +28,9 @@ class CurrentQuestion extends Component {
     )
   }
 
-  renderQuestionTAView() {
+  renderTAQuestionView() {
     const { questionData: { userInfo: data, location, question } } = this.props
     const { firstName: first, lastName: last } = data
-    console
     return (
       <div className={styles.questionContainer}>
         <span className={styles.questionHeader}>{`${first} ${last}'s question`}</span>
@@ -53,17 +52,17 @@ class CurrentQuestion extends Component {
 
   renderStudentView() {
     return this.props.questionData
-    ? this.renderQuestionStudentView()
+    ? this.renderStudentQuestionView()
     : this.renderStudentEmptyState()
   }
 
   renderTAView() {
-    console.log('@@@@', this.props.questionData)
     return this.props.questionData
-    ? this.renderQuestionTAView()
+    ? this.renderTAQuestionView()
     : this.renderTAEmptyState()
   }
 
+  // TODO: maybe calendar here instead
   renderStudentInactiveState() {
     return (
       <div className={styles.emptyContainer}>
