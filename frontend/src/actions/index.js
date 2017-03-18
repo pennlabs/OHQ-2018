@@ -1,3 +1,8 @@
+// this file contains actions that do not interact with the backend,
+// and actions that interact with the backend via API requests.
+// By contrast, socket actions interact with the backend
+// via websockets.
+
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 import * as Actions from './ActionTypes'
@@ -9,20 +14,6 @@ export function authError(error) {
   return {
     type: Actions.AUTH_ERROR,
     payload: error,
-  }
-}
-
-//TODO: this action will hit both the TA reducer and the active class reducer
-export function updateClassStatus(classInfo) {
-  return dispatch => {
-    dispatch({
-      type: Actions.UPDATE_ACTIVE_CLASS,
-      payload: classInfo
-    })
-    dispatch({
-      type: Actions.UPDATE_IS_TA,
-      payload: classInfo.isTA
-    })
   }
 }
 
