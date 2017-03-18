@@ -84,10 +84,10 @@ module.exports = function(server) {
     0: {
       queue: [], //queue is an array of objects, where each object has user, location, and question properties
       TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18], //TAs is a list of ids, where each id represents a TA's student id.
-      isActive: true,
+      isActive: false,
       id: 0,
       name: 'CIS 110',
-      locations: ['Moore 100'] // use an array here in case of multiple locations
+      locations: [] // use an array here in case of multiple locations
     },
     1: {
       queue: [],
@@ -154,8 +154,11 @@ module.exports = function(server) {
       socketServer.emit('CLASS_QUEUE_UPDATED', classQueues[classId])
     })
 
-    socket.on('ACTIVATE_CLASS', classId => {
+    socket.on('ACTIVATE_CLASS', ({classId, locationText, endTime}) => {
+      console.log(classId, locationText, endTime)
+      console.log('class trying to activate')
       classQueues[classId].isActive = true
+      classQueues[classId].locations.push(locationText)
       socketServer.emit('CLASS_ACTIVATED', classQueues[classId])
     })
 
