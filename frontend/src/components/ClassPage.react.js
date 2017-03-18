@@ -48,7 +48,6 @@ class ClassPage extends Component {
   }
 
   getTACurrentQuestion() {
-    console.log('****', this.props.classes[this.props.selectedClass].queue[0])
     return this.props.classes[this.props.selectedClass].queue[0]
   }
 

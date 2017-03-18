@@ -155,8 +155,6 @@ module.exports = function(server) {
     })
 
     socket.on('ACTIVATE_CLASS', ({classId, locationText, endTime}) => {
-      console.log(classId, locationText, endTime)
-      console.log('class trying to activate')
       classQueues[classId].isActive = true
       classQueues[classId].locations.push(locationText)
       socketServer.emit('CLASS_ACTIVATED', classQueues[classId])

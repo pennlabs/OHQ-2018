@@ -55,12 +55,10 @@ class ClassPageMiddleRow extends Component {
       locationText: this.state.locationText,
       endTime: this.state.endTimeInputText
     })
-    console.log('activating class')
   }
 
   // TODO: add an are you sure confirmation
   deactivateClass = () => {
-    console.log('deactivating class')
     deactivateClass(this.props.selectedClassId)
   }
 
