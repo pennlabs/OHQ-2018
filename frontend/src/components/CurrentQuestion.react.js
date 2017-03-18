@@ -6,7 +6,8 @@ class CurrentQuestion extends Component {
 
   static propTypes = {
     questionData: PropTypes.object,
-    isUserTAForSelectedClass: PropTypes.bool
+    isUserTAForSelectedClass: PropTypes.bool,
+    isStudentInactiveState: PropTypes.bool,
   }
 
   renderQuestionStudentView() {
@@ -28,12 +29,15 @@ class CurrentQuestion extends Component {
   }
 
   renderQuestionTAView() {
-    const { questionData: data } = this.props
+    const { questionData: { userInfo: data, location, question } } = this.props
     const { firstName: first, lastName: last } = data
+    console
     return (
       <div className={styles.questionContainer}>
         <span className={styles.questionHeader}>{`${first} ${last}'s question`}</span>
-        <span className={styles.questionText}>{this.props.questionData.question}</span>
+        <span className={styles.questionText}>{question}</span>
+        <span className={styles.questionHeader}>{`${first} ${last}'s location`}</span>
+        <span className={styles.questionText}>{location}</span>
       </div>
     )
   }
@@ -54,12 +58,26 @@ class CurrentQuestion extends Component {
   }
 
   renderTAView() {
+    console.log('@@@@', this.props.questionData)
     return this.props.questionData
     ? this.renderQuestionTAView()
     : this.renderTAEmptyState()
   }
 
+  renderStudentInactiveState() {
+    return (
+      <div className={styles.emptyContainer}>
+        <img className={styles.beardedMan} src={BeardedMan}></img>
+        <span className={styles.emptyText}>This class isn't open.</span>
+      </div>
+    )
+  }
+
   render() {
+    if (this.props.isStudentInactiveState) {
+      return this.renderStudentInactiveState()
+    }
+
     return this.props.isUserTAForSelectedClass
     ? this.renderTAView()
     : this.renderStudentView()
