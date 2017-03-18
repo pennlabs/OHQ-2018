@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Queue from './Queue.react'
 import CurrentQuestion from './CurrentQuestion.react'
+import { activateClass, deactivateClass } from './../sockets/emitToSocket'
 import styles from './../../style/ClassPageMiddleRow.less'
 
 class ClassPageMiddleRow extends Component {
@@ -16,6 +17,7 @@ class ClassPageMiddleRow extends Component {
     isSelectedClassActive: PropTypes.bool,
     isUserTAForSelectedClass: PropTypes.bool,
     currentQuestion: PropTypes.object,
+    selectedClassId: PropTypes.number,
   }
 
   getQuestionContainerClassName() {
@@ -46,6 +48,43 @@ class ClassPageMiddleRow extends Component {
     })
   }
 
+  // TODO: add warning messages if TA doesn't location/endtime
+  activateClass = () => {
+    activateClass({
+      classId: this.props.selectedClassId,
+      locationText: this.state.locationText,
+      endTime: this.state.endTimeInputText
+    })
+    console.log('activating class')
+  }
+
+  // TODO: add an are you sure confirmation
+  deactivateClass = () => {
+    console.log('deactivating class')
+    deactivateClass(this.props.selectedClassId)
+  }
+
+  renderInactiveQuestion() {
+    return (
+      <div className={this.getQuestionContainerClassName()}>
+        <CurrentQuestion
+          isStudentInactiveState
+        />
+      </div>
+    )
+  }
+
+  renderCurrentQuestion() {
+    return (
+      <div className={this.getQuestionContainerClassName()}>
+        <CurrentQuestion
+          questionData={this.props.currentQuestion}
+          isUserTAForSelectedClass={this.props.isUserTAForSelectedClass}
+        />
+      </div>
+    )
+  }
+
   renderTAInactiveRow() {
     return (
       <div className={styles.startSessionContainer}>
@@ -53,6 +92,7 @@ class ClassPageMiddleRow extends Component {
           <div className={styles.startSessionText}>
             Location:
           </div>
+          {/*Todo: inner divs?*/}
           <div>
             <input
               className={styles.locationInput}
@@ -73,37 +113,50 @@ class ClassPageMiddleRow extends Component {
             />
           </div>
         </div>
-        <div className={styles.createButton}></div>
+        <div
+          className={styles.createButton}
+          onClick={this.activateClass}
+        >
+          Create Session
+        </div>
       </div>
     )
   }
 
   renderTAActiveRow() {
-    // TODO: allow TAs to interact with student queue
-  }
-
-
-  renderTAMiddleRow() {
-    // if the class is not active, we render a panel for them to create a session.
-    // else, we allow them to interact with the queue
-    if (!this.props.isSelectedClassActive) {
-      return this.renderTAInactiveRow()
-    }
-    return this.renderTAActiveRow()
-  }
-
-  renderCurrentQuestion() {
+    // TODO: allow TAs to interact with student queue.
+    // Also probably want some kind of confirm modal before
+    // TAs close a session.
     return (
-      <div className={this.getQuestionContainerClassName()}>
-        <CurrentQuestion questionData={this.props.currentQuestion}/>
+      <div>
+        {this.renderCurrentQuestion()}
+        <Queue
+          userInfo={this.props.userInfo}
+          line={this.props.selectedClassQueue}
+          isTAForCurrentClass
+        />
+        <div
+          className={styles.createButton}
+          onClick={this.deactivateClass}
+        >
+          Close Session
+        </div>
       </div>
     )
   }
 
-  render() {
-    if (this.props.isUserTAForSelectedClass) {
-      return this.renderTAMiddleRow()
-    }
+  renderStudentInactiveRow() {
+    // TODO: implement styles - ripped from CurrentQuestion
+    // We do it this way so currentQuestion is only be responsible for
+    // handling active classes
+    return (
+      <div className={styles.middleRow}>
+        {this.renderInactiveQuestion()}
+      </div>
+    )
+  }
+
+  renderStudentActiveRow() {
     return (
       <div className={styles.middleRow}>
         <Queue
@@ -115,6 +168,25 @@ class ClassPageMiddleRow extends Component {
     )
   }
 
+  renderTAMiddleRow() {
+    // if the class is not active, we render a panel for them to create a session.
+    // else, we allow them to interact with the queue
+    return this.props.isSelectedClassActive
+    ? this.renderTAActiveRow()
+    : this.renderTAInactiveRow()
+  }
+
+  renderStudentMiddleRow() {
+    return this.props.isSelectedClassActive
+    ? this.renderStudentActiveRow()
+    : this.renderStudentInactiveRow()
+  }
+
+  render() {
+    return this.props.isUserTAForSelectedClass
+    ? this.renderTAMiddleRow()
+    : this.renderStudentMiddleRow()
+  }
 }
 
 export default ClassPageMiddleRow
