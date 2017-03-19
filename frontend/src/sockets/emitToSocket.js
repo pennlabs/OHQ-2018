@@ -11,8 +11,8 @@ export function updateClass(myClass) {
 }
 
 //updateClassQueue takes an object containing question, location, userInfo, and classId properties.
-export function updateClassQueue(data) {
-  Socket.emit(SocketActions.UPDATE_CLASS_QUEUE, data)
+export function joinClassQueue(data) {
+  Socket.emit(SocketActions.JOIN_CLASS_QUEUE, data)
 }
 
 // activateClass takes an object with classId, locationText, and endTime fields

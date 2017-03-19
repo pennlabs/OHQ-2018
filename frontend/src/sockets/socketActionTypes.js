@@ -7,8 +7,8 @@ export const UPDATE_CLASS = 'UPDATE_CLASS'
 export const CLASS_UPDATED = 'CLASS_UPDATED'
 
 //this is used to update the current class queue
-export const UPDATE_CLASS_QUEUE = 'UPDATE_CLASS_QUEUE'
-export const CLASS_QUEUE_UPDATED = 'CLASS_QUEUE_UPDATED'
+export const JOIN_CLASS_QUEUE = 'JOIN_CLASS_QUEUE'
+export const CLASS_QUEUE_JOINED = 'CLASS_QUEUE_JOINED'
 
 //this is used to update user info, and to send the initial info to the user.
 export const USER_INFO_UPDATED = 'USER_INFO_UPDATED'

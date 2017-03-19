@@ -2,7 +2,7 @@
 //the key for each class is the class’ ID.
 
 import {
-  CLASS_QUEUE_UPDATED,
+  CLASS_QUEUE_JOINED,
   ALL_CLASS_DATA,
   CLASS_ACTIVATED,
   CLASS_DEACTIVATED
@@ -23,7 +23,7 @@ const defaultState = {
 
 export default function(state = defaultState, action) {
   switch (action.type) {
-  case CLASS_QUEUE_UPDATED:
+  case CLASS_QUEUE_JOINED:
     return {...state, [action.payload.id]: action.payload}
   case ALL_CLASS_DATA:
     return action.payload

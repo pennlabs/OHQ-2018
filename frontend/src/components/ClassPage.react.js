@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
 
-import { updateClassQueue } from './../sockets/emitToSocket'
+import { joinClassQueue } from './../sockets/emitToSocket'
 import ClassInfoTitle from './ClassInfoTitle.react'
 import JoinQueueButton from './JoinQueueButton.react'
 import ExpandingSidePanel from './ExpandingSidePanel.react'
@@ -35,7 +35,7 @@ class ClassPage extends Component {
     this.setState({isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen})
   }
 
-  updateSelectedClassQueue = (question, location) => {
+  joinSelectedClassQueue = (question, location) => {
     const { selectedClass, userInfo } = this.props
     if (selectedClass == null || userInfo == null) return null
     const queueData = {
@@ -44,7 +44,7 @@ class ClassPage extends Component {
       userInfo: this.props.userInfo,
       classId: this.props.selectedClass
     }
-    updateClassQueue(queueData)
+    joinClassQueue(queueData)
   }
 
   getTACurrentQuestion() {
@@ -120,7 +120,7 @@ class ClassPage extends Component {
         <ExpandingSidePanel
           toggleExpandingSidePanel={this.toggleExpandingSidePanel}
           isOpen={this.state.isExpandingSidePanelOpen}
-          submitQuestion={this.updateSelectedClassQueue}
+          submitQuestion={this.joinSelectedClassQueue}
         />
       </Modal>
     )

@@ -141,7 +141,7 @@ module.exports = function(server) {
     //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
     //Logic should be restricted based on TA/user status.  Simply requiring the userId isn't secure;
     //we will need to also use whatever auth mechanism we end up using
-    socket.on('UPDATE_CLASS_QUEUE', data => {
+    socket.on('JOIN_CLASS_QUEUE', data => {
       console.log('update class queue event logged:', data)
       const { question, location, userInfo, classId } = data
 
@@ -151,7 +151,7 @@ module.exports = function(server) {
         if (classQueues[classId].queue[i].userInfo.id === userInfo.id) return
       }
       classQueues[classId].queue.push({question, location, userInfo})
-      socketServer.emit('CLASS_QUEUE_UPDATED', classQueues[classId])
+      socketServer.emit('CLASS_QUEUE_JOINED', classQueues[classId])
     })
 
     socket.on('ACTIVATE_CLASS', ({classId, locationText, endTime}) => {

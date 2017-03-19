@@ -8,9 +8,9 @@ Socket.on(SocketActions.CLASS_UPDATED, classData => {
   Store.dispatch({type: SocketActions.CLASS_UPDATED, payload: classData})
 })
 
-Socket.on(SocketActions.CLASS_QUEUE_UPDATED, classData => {
+Socket.on(SocketActions.CLASS_QUEUE_JOINED, classData => {
   console.log('class queue updated', classData)
-  Store.dispatch({type: SocketActions.CLASS_QUEUE_UPDATED, payload: classData})
+  Store.dispatch({type: SocketActions.CLASS_QUEUE_JOINED, payload: classData})
 })
 
 Socket.on(SocketActions.USER_INFO_UPDATED, userInfo => {
