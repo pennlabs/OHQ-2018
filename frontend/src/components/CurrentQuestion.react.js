@@ -67,7 +67,7 @@ class CurrentQuestion extends Component {
     return (
       <div className={styles.emptyContainer}>
         <img className={styles.beardedMan} src={BeardedMan}></img>
-        <span className={styles.emptyText}>This class isn't open.</span>
+        <span className={styles.emptyText}>This class is closed.</span>
       </div>
     )
   }
