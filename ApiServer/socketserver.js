@@ -1,10 +1,12 @@
 const io = require('socket.io')
+const { pick } = require('lodash')
 
 // TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
 // connect to our socket server.
 
 // temporary obj to hold user data
-// TODO: each user will also need to store the classes subscribed to
+// TODO: each user will also need to store the classes subscribed to,
+// so that they only receive socket events relevant to those classes
 const nameData = {
   count: 0,
   getNameAndCount() {
@@ -12,62 +14,63 @@ const nameData = {
       this.count = 1
       return { name: this.list[0], count: 0 }
     }
-    const str = this.list[this.count]
+    const str = this.list[this.count].name
+    const classes = this.list[this.count].classIDList
     const currentCount = this.count
     this.count++
-    return { name: str, count: currentCount }
+    return { name: str, count: currentCount, classes }
   },
   list: [
-    'Bilbo Baggins',
-    'Marlys Hannah',
-    'Moriah Treaster',
-    'Golden Bloyd',
-    'Kiana Chartrand',
-    'Willow Brockwell',
-    'Xuan Fronk',
-    'Victoria Mebane',
-    'Tiffaney Wile',
-    'Troy Gervais',
-    'Valda Carriere',
-    'Deborah Loder',
-    'Karl Giddens',
-    'Marguerite Brookes',
-    'Cameron Rushford',
-    'Charlesetta Lundstrom',
-    'Klara Gallman',
-    'Angele Harry',
-    'Norah Pears',
-    'Debora Waymire',
-    'Norine Messerly',
-    'Mark Weingart',
-    'Stephanie Mcginnis',
-    'Roscoe Birdsell',
-    'Santa Staudt',
-    'Jonathon Abram',
-    'Tomas Lagarde',
-    'Renda Strauch',
-    'Carolynn Mullikin',
-    'Elias Scogin',
-    'Edward Elric',
-    'Ty Gaeth',
-    'Imelda Melnick',
-    'Jackie Kuiper',
-    'Stacey Mone',
-    'Elfreda Antonelli',
-    'Elizabeth Soriano',
-    'Kristyn Hultman',
-    'Miles Andre',
-    'Tammera Phaneuf',
-    'Roxane Wirtz',
-    'Vergie Level',
-    'Verna Einhorn',
-    'Nereida Romanowski',
-    'Dorathy Cafferty',
-    'Sean Fadden',
-    'Garrett Bossard',
-    'Alla Montijo',
-    'Randall Reddington',
-    'Arlinda Rent',
+    { name: 'Bilbo Baggins', classIDList: [0, 1, 2] },
+    { name: 'Marlys Hannah', classIDList: [0, 1, 2] },
+    { name: 'Moriah Treaster', classIDList: [0, 1, 2] },
+    { name: 'Golden Bloyd', classIDList: [0, 1, 2] },
+    { name: 'Kiana Chartrand', classIDList: [0, 1, 2] },
+    { name: 'Willow Brockwell', classIDList: [0, 1, 2] },
+    { name: 'Xuan Fronk', classIDList: [0, 1, 2] },
+    { name: 'Victoria Mebane', classIDList: [0, 1, 2] },
+    { name: 'Tiffaney Wile', classIDList: [0, 1, 2] },
+    { name: 'Troy Gervais', classIDList: [0, 1, 2] },
+    { name: 'Valda Carriere', classIDList: [0, 1, 2] },
+    { name: 'Deborah Loder', classIDList: [0, 1, 2] },
+    { name: 'Karl Giddens', classIDList: [0, 1, 2] },
+    { name: 'Marguerite Brookes', classIDList: [0, 1, 2] },
+    { name: 'Cameron Rushford', classIDList: [0, 1, 2] },
+    { name: 'Charlesetta Lundstrom', classIDList: [0, 1, 2] },
+    { name: 'Klara Gallman', classIDList: [0, 1, 2] },
+    { name: 'Angele Harry', classIDList: [0, 1, 2] },
+    { name: 'Norah Pears', classIDList: [0, 1, 2] },
+    { name: 'Debora Waymire', classIDList: [0, 1, 2] },
+    { name: 'Norine Messerly', classIDList: [0, 1, 2] },
+    { name: 'Mark Weingart', classIDList: [0, 1, 2] },
+    { name: 'Stephanie Mcginnis', classIDList: [0, 1, 2] },
+    { name: 'Roscoe Birdsell', classIDList: [0, 1, 2] },
+    { name: 'Santa Staudt', classIDList: [0, 1, 2] },
+    { name: 'Jonathon Abram', classIDList: [0, 1, 2] },
+    { name: 'Tomas Lagarde', classIDList: [0, 1, 2] },
+    { name: 'Renda Strauch', classIDList: [0, 1, 2] },
+    { name: 'Carolynn Mullikin', classIDList: [0, 1, 2] },
+    { name: 'Elias Scogin', classIDList: [0, 1, 2] },
+    { name: 'Edward Elric', classIDList: [0, 1, 2] },
+    { name: 'Ty Gaeth', classIDList: [0, 1, 2] },
+    { name: 'Imelda Melnick', classIDList: [0, 1, 2] },
+    { name: 'Jackie Kuiper', classIDList: [0, 1, 2] },
+    { name: 'Stacey Mone', classIDList: [0, 1, 2] },
+    { name: 'Elfreda Antonelli', classIDList: [0, 1, 2] },
+    { name: 'Elizabeth Soriano', classIDList: [0, 1, 2] },
+    { name: 'Kristyn Hultman', classIDList: [0, 1, 2] },
+    { name: 'Miles Andre', classIDList: [0, 1, 2] },
+    { name: 'Tammera Phaneuf', classIDList: [0, 1, 2] },
+    { name: 'Roxane Wirtz', classIDList: [0, 1, 2] },
+    { name: 'Vergie Level', classIDList: [0, 1, 2] },
+    { name: 'Verna Einhorn', classIDList: [0, 1, 2] },
+    { name: 'Nereida Romanowski', classIDList: [0, 1, 2] },
+    { name: 'Dorathy Cafferty', classIDList: [0, 1, 2] },
+    { name: 'Sean Fadden', classIDList: [0, 1, 2] },
+    { name: 'Garrett Bossard', classIDList: [0, 1, 2] },
+    { name: 'Alla Montijo', classIDList: [0, 1, 2] },
+    { name: 'Randall Reddington', classIDList: [0, 1, 2] },
+    { name: 'Arlinda Rent', classIDList: [0, 1, 2] },
   ]
 }
 
@@ -112,11 +115,18 @@ module.exports = function(server) {
     console.log('A user connected!')
     console.log(`new length: ${connections.length}`)
 
-    //emit initial event for starting classQueues
-    socketServer.emit('ALL_CLASS_DATA', classQueues)
-
     //TODO: we will need to query information from our database here
-    const { name: currentName, count } = nameData.getNameAndCount()
+    //Get the connected user's information
+    const { name: currentName, count, classes } = nameData.getNameAndCount()
+
+    //connect the user to a channel for each class ID.
+    classes.forEach(id => {
+      socket.join(`${id}`)
+    })
+
+    //send the user information for every class they're subscribed to
+    socket.emit('ALL_CLASS_DATA', pick(classQueues, classes))
+
     socket.emit('USER_INFO_UPDATED', {
       id: count,
       firstName: currentName.split(' ')[0],
@@ -151,13 +161,13 @@ module.exports = function(server) {
         if (classQueues[classId].queue[i].userInfo.id === userInfo.id) return
       }
       classQueues[classId].queue.push({question, location, userInfo})
-      socketServer.emit('CLASS_QUEUE_JOINED', classQueues[classId])
+      socketServer.to(`${classId}`).emit('CLASS_QUEUE_JOINED', classQueues[classId])
     })
 
     socket.on('ACTIVATE_CLASS', ({classId, locationText, endTime}) => {
       classQueues[classId].isActive = true
       classQueues[classId].locations.push(locationText)
-      socketServer.emit('CLASS_ACTIVATED', classQueues[classId])
+      socketServer.to(`${classId}`).emit('CLASS_ACTIVATED', classQueues[classId])
     })
 
     socket.on('DEACTIVATE_CLASS', classId => {
@@ -165,7 +175,7 @@ module.exports = function(server) {
       // empty working arrays
       classQueues[classId].queue = []
       classQueues[classId].locations = []
-      socketServer.emit('CLASS_DEACTIVATED', classQueues[classId])
+      socketServer.to(`${classId}`).emit('CLASS_DEACTIVATED', classQueues[classId])
     })
   })
 }
