@@ -31,6 +31,12 @@ class Sidebar extends Component {
     return classes[selectedClass].TAs.includes(userInfo.id)
   }
 
+  isUserTAForThisClass(classId) {
+    const { classes, userInfo } = this.props
+    if (classes == null || userInfo == null || classId == null) return null
+    return classes[classId].TAs.includes(userInfo.id)
+  }
+
   getClassName() {
     let className = styles.sidebar
     if (this.isUserTAForSelectedClass()) {
@@ -44,7 +50,8 @@ class Sidebar extends Component {
     ? Object.values(this.props.classes).map(data =>
         <SidebarItem
           {...data}
-          isTA={this.isUserTAForSelectedClass()}
+          isTAForThisClass={this.isUserTAForThisClass(data.id)}
+          isTAForSelectedClass={this.isUserTAForSelectedClass()}
           isSelected={data.id === this.props.selectedClass}
           key={data.id}
           onClick={this.props.updateSelectedClass}
