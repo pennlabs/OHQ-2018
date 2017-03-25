@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
+import { get, find } from 'lodash'
 
 import { joinClassQueue } from './../sockets/emitToSocket'
 import ClassInfoTitle from './ClassInfoTitle.react'
@@ -67,9 +67,17 @@ class ClassPage extends Component {
     return get(this.props.classes, `[${this.props.selectedClass}[${property}]`)
   }
 
+  isStudentInQueue() {
+    const queue = this.getSelectedClassProperty('queue')
+    // using !! to cast the return value to a truthy value
+    return !!find(queue, item => item.userInfo.id === this.props.userInfo.id)
+  }
+
   renderJoinQueueButton() {
     // Don't render the button if user is TA or class isn't active
-    if (this.isUserTAForSelectedClass() || !this.getSelectedClassProperty('isActive')) {
+    if (this.isUserTAForSelectedClass() ||
+    !this.getSelectedClassProperty('isActive') ||
+    this.isStudentInQueue()) {
       return null
     }
     return (
