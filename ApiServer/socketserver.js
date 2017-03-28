@@ -24,7 +24,7 @@ const nameData = {
     { name: 'Bilbo Baggins', classIDList: [0, 1, 2] },
     { name: 'Marlys Hannah', classIDList: [0, 1, 2] },
     { name: 'Moriah Treaster', classIDList: [0, 1, 2] },
-    { name: 'Golden Bloyd', classIDList: [0, 1, 2] },
+    { name: 'Samwise Gamgee', classIDList: [0, 1, 2] },
     { name: 'Kiana Chartrand', classIDList: [0, 1, 2] },
     { name: 'Willow Brockwell', classIDList: [0, 1, 2] },
     { name: 'Xuan Fronk', classIDList: [0, 1, 2] },
@@ -86,7 +86,7 @@ module.exports = function(server) {
   const classQueues = {
     0: {
       queue: [], //queue is an array of objects, where each object has user, location, and question properties
-      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18], //TAs is a list of ids, where each id represents a TA's student id.
+      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30], //TAs is a list of ids, where each id represents a TA's student id.
       isActive: false,
       id: 0,
       name: 'CIS 110',
@@ -102,7 +102,7 @@ module.exports = function(server) {
     },
     2: {
       queue: [],
-      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18].map(x => x + 1),
+      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30].map(x => x + 1),
       isActive: false,
       id: 2,
       name: 'CIS 160',
