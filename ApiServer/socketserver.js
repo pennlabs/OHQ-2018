@@ -120,9 +120,12 @@ module.exports = function(server) {
     const { name: currentName, count, classes } = nameData.getNameAndCount()
 
     //connect the user to a channel for each class ID.
-    classes.forEach(id => {
-      socket.join(`${id}`)
-    })
+    //using a for loop for maximum performance server side
+    if (classes && classes.length) {
+      for (let i = 0; i < classes.length; i++) {
+        socket.join(`${classes[i]}`)
+      }
+    }
 
     //send the user information for every class they're subscribed to
     socket.emit('ALL_CLASS_DATA', pick(classQueues, classes))
