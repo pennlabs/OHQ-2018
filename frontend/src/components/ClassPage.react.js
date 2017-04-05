@@ -2,18 +2,20 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { get, find } from 'lodash'
 
-import { joinClassQueue } from './../sockets/emitToSocket'
+import { joinClassQueue, deactivateClass } from './../sockets/emitToSocket'
 import ClassInfoTitle from './ClassInfoTitle.react'
 import JoinQueueButton from './JoinQueueButton.react'
 import ExpandingSidePanel from './ExpandingSidePanel.react'
 import Modal from './Modal.react'
 import ClassPageMiddleRow from './ClassPageMiddleRow.react'
+import Broadcast from './Broadcast.react'
 import styles from './../../style/ClassPage.less'
 
 class ClassPage extends Component {
 
   state = {
     isExpandingSidePanelOpen: false,
+    isTAConfirmCloseSessionModalOpen: false,
   }
 
   static propTypes = {
@@ -21,6 +23,14 @@ class ClassPage extends Component {
     userInfo: PropTypes.object,
     selectedClass: PropTypes.number,
     classes: PropTypes.object
+  }
+
+  preventDefaultWrapper = (func, ...args) => {
+    return (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      func.bind(this)(...args)
+    }
   }
 
   // NOTE: may want to memoize or refactor this later, as it's being called
@@ -73,6 +83,34 @@ class ClassPage extends Component {
     return !!find(queue, item => item.userInfo.id === this.props.userInfo.id)
   }
 
+  renderTAConfirmCloseSessionModal = () => {
+    if (!(this.isUserTAForSelectedClass() && this.getSelectedClassProperty('isActive'))) {
+      return null
+    }
+    if (!this.state.isTAConfirmCloseSessionModalOpen) {
+      return null
+    }
+    return (
+      <Modal>
+        <div className={styles.confirmCloseSessionModal}>
+          Are you sure you want to close this session?
+          <div className={styles.closeSessionModalButtonRow}>
+            <div
+              onClick={this.preventDefaultWrapper(deactivateClass, this.props.selectedClass)}
+            >
+              Yes
+            </div>
+            <div
+              onClick={this.preventDefaultWrapper(this.setState, {isTAConfirmCloseSessionModalOpen: false})}
+            >
+              No
+            </div>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
+
   renderJoinQueueButton() {
     // Don't render the button if user is TA or class isn't active
     if (this.isUserTAForSelectedClass() ||
@@ -122,15 +160,41 @@ class ClassPage extends Component {
     )
   }
 
+  renderTACloseSessionButton() {
+    const onClick = this.preventDefaultWrapper(this.setState, {isTAConfirmCloseSessionModalOpen: true})
+    return (
+      <div
+        className={styles.closeSessionButton}
+        onClick={onClick}
+      >
+        {/*onClick={deactivateClass.bind(this, this.props.selectedClass)}*/}
+        Close Session
+      </div>
+    )
+  }
+
+  renderBottomRow() {
+    if (!this.getSelectedClassProperty('isActive')) return null
+    return (
+      <div className={styles.bottomRow}>
+        {/* TODO: add an are you sure modal */}
+        {this.isUserTAForSelectedClass() ? this.renderTACloseSessionButton() : null}
+        <Broadcast
+          isUserTAForSelectedClass={this.isUserTAForSelectedClass()}
+          selectedClassId={this.props.selectedClass}
+          broadcastMessage={this.getSelectedClassProperty('broadcast')}
+        />
+      </div>
+    )
+  }
+
   renderExpandingSidePanel() {
     return (
-      <Modal>
-        <ExpandingSidePanel
-          toggleExpandingSidePanel={this.toggleExpandingSidePanel}
-          isOpen={this.state.isExpandingSidePanelOpen}
-          submitQuestion={this.joinSelectedClassQueue}
-        />
-      </Modal>
+      <ExpandingSidePanel
+        toggleExpandingSidePanel={this.toggleExpandingSidePanel}
+        isOpen={this.state.isExpandingSidePanelOpen}
+        submitQuestion={this.joinSelectedClassQueue}
+      />
     )
   }
 
@@ -139,6 +203,8 @@ class ClassPage extends Component {
       <div className={styles.container}>
         {this.renderTopRow()}
         {this.renderMiddleRow()}
+        {this.renderBottomRow()}
+        {this.renderTAConfirmCloseSessionModal()}
         {this.renderExpandingSidePanel()}
       </div>
     )

@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Queue from './Queue.react'
 import CurrentQuestion from './CurrentQuestion.react'
-import { activateClass, deactivateClass } from './../sockets/emitToSocket'
+import { activateClass } from './../sockets/emitToSocket'
 import styles from './../../style/ClassPageMiddleRow.less'
 
 class ClassPageMiddleRow extends Component {
@@ -55,11 +55,6 @@ class ClassPageMiddleRow extends Component {
       locationText: this.state.locationText,
       endTime: this.state.endTimeInputText
     })
-  }
-
-  // TODO: add an are you sure confirmation
-  deactivateClass = () => {
-    deactivateClass(this.props.selectedClassId)
   }
 
   renderInactiveQuestion() {
@@ -133,12 +128,6 @@ class ClassPageMiddleRow extends Component {
           line={this.props.selectedClassQueue}
           isTAForCurrentClass
         />
-        <div
-          className={styles.createButton}
-          onClick={this.deactivateClass}
-        >
-          Close Session
-        </div>
       </div>
     )
   }
