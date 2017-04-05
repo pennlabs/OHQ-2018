@@ -24,7 +24,7 @@ class Modal extends Component {
     this.modalTarget = document.createElement('div')
     this.modalTarget.className = 'modal'
     document.body.appendChild(this.modalTarget)
-    // document.querySelector('.container').style.filter = 'blur(2px)'
+    document.querySelector('.container').style.filter = 'blur(3px)'
     this._render()
   }
 
