@@ -32,3 +32,8 @@ Socket.on(SocketActions.CLASS_DEACTIVATED, classData => {
   console.log('class session removed', classData)
   Store.dispatch({type: SocketActions.CLASS_DEACTIVATED, payload: classData})
 })
+
+Socket.on(SocketActions.BROADCAST_UPDATED, classData => {
+  console.log('broadcast updated', classData)
+  Store.dispatch({type: SocketActions.BROADCAST_UPDATED, payload: classData})
+})

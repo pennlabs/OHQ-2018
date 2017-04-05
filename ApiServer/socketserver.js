@@ -12,7 +12,7 @@ const nameData = {
   getNameAndCount() {
     if (this.count >= this.list.length) {
       this.count = 1
-      return { name: this.list[0], count: 0 }
+      return { name: this.list[0], count: 0, classes: this.list[0].classIDList }
     }
     const str = this.list[this.count].name
     const classes = this.list[this.count].classIDList
@@ -90,6 +90,7 @@ module.exports = function(server) {
       isActive: false,
       id: 0,
       name: 'CIS 110',
+      broadcast: '',
       locations: [] // use an array here in case of multiple locations
     },
     1: {
@@ -98,6 +99,7 @@ module.exports = function(server) {
       isActive: true,
       id: 1,
       name: 'CIS 120',
+      broadcast: '',
       locations: ['Towne 100']
     },
     2: {
@@ -106,6 +108,7 @@ module.exports = function(server) {
       isActive: false,
       id: 2,
       name: 'CIS 160',
+      broadcast: '',
       locations: []
     }
   }
@@ -154,10 +157,7 @@ module.exports = function(server) {
     //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
     //Logic should be restricted based on TA/user status.  Simply requiring the userId isn't secure;
     //we will need to also use whatever auth mechanism we end up using
-    socket.on('JOIN_CLASS_QUEUE', data => {
-      console.log('update class queue event logged:', data)
-      const { question, location, userInfo, classId } = data
-
+    socket.on('JOIN_CLASS_QUEUE', ({ question, location, userInfo, classId }) => {
       //check if the user is already in the queue, if so, do nothing.
       //using a for loop here for faster execution
       for (let i = 0; i < classQueues[classId].queue.length; i++) {
@@ -167,7 +167,7 @@ module.exports = function(server) {
       socketServer.to(`${classId}`).emit('CLASS_QUEUE_JOINED', classQueues[classId])
     })
 
-    socket.on('ACTIVATE_CLASS', ({classId, locationText, endTime}) => {
+    socket.on('ACTIVATE_CLASS', ({ classId, locationText, endTime }) => {
       classQueues[classId].isActive = true
       classQueues[classId].locations.push(locationText)
       socketServer.to(`${classId}`).emit('CLASS_ACTIVATED', classQueues[classId])
@@ -179,6 +179,11 @@ module.exports = function(server) {
       classQueues[classId].queue = []
       classQueues[classId].locations = []
       socketServer.to(`${classId}`).emit('CLASS_DEACTIVATED', classQueues[classId])
+    })
+
+    socket.on('UPDATE_BROADCAST', ({ classId, broadcast }) => {
+      classQueues[classId].broadcast = broadcast
+      socketServer.to(`${classId}`).emit('BROADCAST_UPDATED', classQueues[classId])
     })
   })
 }

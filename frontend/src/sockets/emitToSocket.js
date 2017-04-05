@@ -26,6 +26,13 @@ export function deactivateClass(classId) {
   Socket.emit(SocketActions.DEACTIVATE_CLASS, classId)
 }
 
+// updateBroadcast updates the broadcast section of the classpage.
+// takes an object containing a `classId` which is a number,
+// and a `broadcast` which is a string
+export function updateBroadcast(data) {
+  Socket.emit(SocketActions.UPDATE_BROADCAST, data)
+}
+
 // NOTE: may not be necessary, updateClass could simply add a class.
 // updateClass takes an entire class as an object.
 // export function addClass(myClass) {
