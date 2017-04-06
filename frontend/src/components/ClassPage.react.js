@@ -15,7 +15,7 @@ class ClassPage extends Component {
 
   state = {
     isExpandingSidePanelOpen: false,
-    isTAConfirmCloseSessionModalOpen: true,
+    isTAConfirmCloseSessionModalOpen: false,
   }
 
   static propTypes = {
