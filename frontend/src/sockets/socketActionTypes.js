@@ -23,7 +23,7 @@ export const DEACTIVATE_CLASS = 'DEACTIVATE_CLASS'
 export const CLASS_DEACTIVATED = 'CLASS_DEACTIVATED'
 
 //this is used for TAs to remove a student from the queue
-export const REMOVE_FROM_QUEUE = 'REMOVE_QUEUE'
+export const REMOVE_FROM_QUEUE = 'REMOVE_FROM_QUEUE'
 export const QUEUE_REMOVED_FROM = 'QUEUE_REMOVED_FROM'
 
 // this is used to update a class' broadcast

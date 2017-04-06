@@ -33,6 +33,11 @@ export function updateBroadcast(data) {
   Socket.emit(SocketActions.UPDATE_BROADCAST, data)
 }
 
+// TODO: make sure this can also handle the TA activity log
+export function removeFromQueue(data) {
+  Socket.emit(SocketActions.REMOVE_FROM_QUEUE, data)
+}
+
 // NOTE: may not be necessary, updateClass could simply add a class.
 // updateClass takes an entire class as an object.
 // export function addClass(myClass) {

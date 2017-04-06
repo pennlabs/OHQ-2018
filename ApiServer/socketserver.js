@@ -4,6 +4,8 @@ const { pick } = require('lodash')
 // TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
 // connect to our socket server.
 
+// TODO: handle type checking to prevent someone sending wrong types and crashing server
+
 // temporary obj to hold user data
 // TODO: each user will also need to store the classes subscribed to,
 // so that they only receive socket events relevant to those classes
@@ -184,6 +186,12 @@ module.exports = function(server) {
     socket.on('UPDATE_BROADCAST', ({ classId, broadcast }) => {
       classQueues[classId].broadcast = broadcast
       socketServer.to(`${classId}`).emit('BROADCAST_UPDATED', classQueues[classId])
+    })
+
+    // TODO: will also need to handle the TA log.
+    socket.on('REMOVE_FROM_QUEUE', ({ classId }) => {
+      classQueues[classId].queue.shift()
+      socketServer.to(`${classId}`).emit('QUEUE_REMOVED_FROM', classQueues[classId])
     })
   })
 }

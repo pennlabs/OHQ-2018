@@ -37,3 +37,7 @@ Socket.on(SocketActions.BROADCAST_UPDATED, classData => {
   console.log('broadcast updated', classData)
   Store.dispatch({type: SocketActions.BROADCAST_UPDATED, payload: classData})
 })
+
+Socket.on(SocketActions.QUEUE_REMOVED_FROM, classData => {
+  Store.dispatch({type: SocketActions.QUEUE_REMOVED_FROM, payload: classData})
+})
