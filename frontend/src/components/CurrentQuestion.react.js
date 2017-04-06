@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+
+import { removeFromQueue } from './../sockets/emitToSocket'
+
 import BeardedMan from './../../images/BeardedMan.png'
 import styles from './../../style/CurrentQuestion.less'
 
@@ -8,6 +11,15 @@ class CurrentQuestion extends Component {
     questionData: PropTypes.object,
     isUserTAForSelectedClass: PropTypes.bool,
     isStudentInactiveState: PropTypes.bool,
+    selectedClassId: PropTypes.number,
+  }
+
+  removeFromQueue = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (this.props.selectedClassId == null) return
+
+    removeFromQueue({classId: this.props.selectedClassId})
   }
 
   renderStudentQuestionView() {
@@ -33,10 +45,11 @@ class CurrentQuestion extends Component {
     const { firstName: first, lastName: last } = data
     return (
       <div className={styles.questionContainer}>
-        <span className={styles.questionHeader}>{`${first} ${last}'s question`}</span>
-        <span className={styles.questionText}>{question}</span>
-        <span className={styles.questionHeader}>{`${first} ${last}'s location`}</span>
+        <span className={styles.TAQuestionHeader}>{`${first} ${last}'s location`}</span>
         <span className={styles.questionText}>{location}</span>
+        <span className={styles.TAQuestionHeader}>{`${first} ${last}'s question`}</span>
+        <span className={styles.questionText}>{question}</span>
+        <div className={styles.TAHelpButton} onClick={this.removeFromQueue}>Help this student</div>
       </div>
     )
   }

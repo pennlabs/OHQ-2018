@@ -15,7 +15,7 @@ class ClassPage extends Component {
 
   state = {
     isExpandingSidePanelOpen: false,
-    isTAConfirmCloseSessionModalOpen: false,
+    isTAConfirmCloseSessionModalOpen: true,
   }
 
   static propTypes = {
@@ -31,6 +31,12 @@ class ClassPage extends Component {
       e.stopPropagation()
       func.bind(this)(...args)
     }
+  }
+
+  deactivateClass() {
+    this.setState({isTAConfirmCloseSessionModalOpen: false}, () => {
+      deactivateClass(this.props.selectedClass)
+    })
   }
 
   // NOTE: may want to memoize or refactor this later, as it's being called
@@ -96,11 +102,13 @@ class ClassPage extends Component {
           Are you sure you want to close this session?
           <div className={styles.closeSessionModalButtonRow}>
             <div
-              onClick={this.preventDefaultWrapper(deactivateClass, this.props.selectedClass)}
+              className={`${styles.closeSessionModalButton} ${styles.yesButton}`}
+              onClick={this.preventDefaultWrapper(this.deactivateClass)}
             >
               Yes
             </div>
             <div
+              className={`${styles.closeSessionModalButton} ${styles.noButton}`}
               onClick={this.preventDefaultWrapper(this.setState, {isTAConfirmCloseSessionModalOpen: false})}
             >
               No
@@ -177,7 +185,6 @@ class ClassPage extends Component {
     if (!this.getSelectedClassProperty('isActive')) return null
     return (
       <div className={styles.bottomRow}>
-        {/* TODO: add an are you sure modal */}
         {this.isUserTAForSelectedClass() ? this.renderTACloseSessionButton() : null}
         <Broadcast
           isUserTAForSelectedClass={this.isUserTAForSelectedClass()}

@@ -27,19 +27,45 @@
   top: 50%;
   transform: translate(-50%, -50%);
   left: 50%;
-  background: white;
-  height: 200px;
-  width: 200px;
+  background: #f1f2f6;
+  height: 140px;
+  width: 300px;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  align-items: center;
+  font-size: 20px;
 }
 
 :local .closeSessionModalButtonRow {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background: red;
+}
+
+:local .closeSessionModalButton {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 4px;
+}
+
+:local .yesButton {
+  color: white;
+  background: #ac92ec;
+}
+
+:local .noButton {
+  background: gray;
+  color: white;
 }
 
 :local .closeSessionButton {

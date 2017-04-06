@@ -73,6 +73,7 @@ class ClassPageMiddleRow extends Component {
         <CurrentQuestion
           questionData={this.props.currentQuestion}
           isUserTAForSelectedClass={this.props.isUserTAForSelectedClass}
+          selectedClassId={this.props.selectedClassId}
         />
       </div>
     )
@@ -121,13 +122,13 @@ class ClassPageMiddleRow extends Component {
     // Also probably want some kind of confirm modal before
     // TAs close a session.
     return (
-      <div>
-        {this.renderCurrentQuestion()}
+      <div className={styles.middleRow}>
         <Queue
           userInfo={this.props.userInfo}
           line={this.props.selectedClassQueue}
           isTAForCurrentClass
         />
+        {this.renderCurrentQuestion()}
       </div>
     )
   }
