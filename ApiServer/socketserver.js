@@ -87,8 +87,10 @@ module.exports = function(server) {
   //will need to be retrieved from some kind of database
   const classQueues = {
     0: {
-      queue: [], //queue is an array of objects, where each object has user, location, and question properties
-      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30], //TAs is a list of ids, where each id represents a TA's student id.
+      // queue is an array of objects, where each object has user, location, and question properties
+      queue: [],
+      // TAs is a list of ids, where each id represents a TA's student id.
+      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
       isActive: false,
       id: 0,
       name: 'CIS 110',
@@ -177,9 +179,11 @@ module.exports = function(server) {
 
     socket.on('DEACTIVATE_CLASS', classId => {
       classQueues[classId].isActive = false
-      // empty working arrays
+      // empty working data
       classQueues[classId].queue = []
       classQueues[classId].locations = []
+      classQueues[classId].broadcast = ''
+      // TODO: here also empty the ta log and write it to the DB for analytics
       socketServer.to(`${classId}`).emit('CLASS_DEACTIVATED', classQueues[classId])
     })
 
