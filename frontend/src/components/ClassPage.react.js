@@ -29,7 +29,7 @@ class ClassPage extends Component {
     return (e) => {
       e.preventDefault()
       e.stopPropagation()
-      func.bind(this)(...args)
+      func.apply(this, args)
     }
   }
 
