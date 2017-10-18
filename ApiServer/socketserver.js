@@ -91,6 +91,7 @@ module.exports = function(server) {
       queue: [],
       // TAs is a list of ids, where each id represents a TA's student id.
       TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+      TAActivityLog: [],
       isActive: false,
       id: 0,
       name: 'CIS 110',
@@ -100,6 +101,7 @@ module.exports = function(server) {
     1: {
       queue: [],
       TAs: [],
+      TAActivityLog: [],
       isActive: true,
       id: 1,
       name: 'CIS 120',
@@ -109,6 +111,7 @@ module.exports = function(server) {
     2: {
       queue: [],
       TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30].map(x => x + 1),
+      TAActivityLog: [],
       isActive: false,
       id: 2,
       name: 'CIS 160',
@@ -161,6 +164,9 @@ module.exports = function(server) {
     //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
     //Logic should be restricted based on TA/user status.  Simply requiring the userId isn't secure;
     //we will need to also use whatever auth mechanism we end up using
+    // question is a string containing the question the user is asking,
+    // location is a string containing the asker's location,
+    // classId is the ID of the class, and userInfo is the userInfo object.
     socket.on('JOIN_CLASS_QUEUE', ({ question, location, userInfo, classId }) => {
       //check if the user is already in the queue, if so, do nothing.
       //using a for loop here for faster execution
@@ -171,12 +177,16 @@ module.exports = function(server) {
       socketServer.to(`${classId}`).emit('CLASS_QUEUE_JOINED', classQueues[classId])
     })
 
+    // classId the ID of the class, locationText is a string representing
+    // the location of where the offices hours are being held, and
+    // endTime is a number representing when the office hours will end.
     socket.on('ACTIVATE_CLASS', ({ classId, locationText, endTime }) => {
       classQueues[classId].isActive = true
       classQueues[classId].locations.push(locationText)
       socketServer.to(`${classId}`).emit('CLASS_ACTIVATED', classQueues[classId])
     })
 
+    // classId is the ID of the class
     socket.on('DEACTIVATE_CLASS', classId => {
       classQueues[classId].isActive = false
       // empty working data
@@ -187,15 +197,23 @@ module.exports = function(server) {
       socketServer.to(`${classId}`).emit('CLASS_DEACTIVATED', classQueues[classId])
     })
 
+    // classId is the ID of the class, and broadcast is a string
+    // that has the text of the TA broadcast announcement
     socket.on('UPDATE_BROADCAST', ({ classId, broadcast }) => {
       classQueues[classId].broadcast = broadcast
       socketServer.to(`${classId}`).emit('BROADCAST_UPDATED', classQueues[classId])
     })
 
     // TODO: will also need to handle the TA log.
-    socket.on('REMOVE_FROM_QUEUE', ({ classId }) => {
-      classQueues[classId].queue.shift()
+    // TAInfo contains TA id, firstname, and lastname
+    socket.on('REMOVE_FROM_QUEUE', ({ classId, TAInfo }) => {
+      if (!classQueues[classId].queue.length) return
+      // const { question, location, userInfo } = classQueues[classId].queue.shift()
       socketServer.to(`${classId}`).emit('QUEUE_REMOVED_FROM', classQueues[classId])
+    })
+
+    socket.on('UPDATE_TA_ACTIVITY_LOG', ({ classId, TAInfo }) => {
+      socketServer.to(`${classId}`)
     })
   })
 }
