@@ -1,4 +1,4 @@
-import Socket from './initSocket.js'
+import Socket from './initSocket'
 
 import { Store } from './../index.js'
 import * as SocketActions from './socketActionTypes'

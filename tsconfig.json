@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "jsx": "preserve",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "outDir": "ApiServer/build"
+  },
+  "files": [
+    "ApiServer/index.ts"
+  ],
+  "include": [
+    "ApiServer"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "useWebpackText": true,
+    "useTranspileModule": true,
+    "doTypeCheck": true,
+    "forkChecker": true
+  }
+}

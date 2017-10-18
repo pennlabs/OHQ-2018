@@ -78,7 +78,7 @@ const nameData = {
 
 // TODO: we need to ensure that users only see updates to the classes they've added.
 // Right now every user sees the action for every class.
-module.exports = function(server) {
+export default function(server) {
   const socketServer = io(server)
   const connections = []
 
