@@ -26,7 +26,11 @@ if (!isProduction) {
         loader: 'react-hot'
       }, {
         exclude: /node_modules/,  //Use test?
-        loader: 'babel',
+        loaders: ['babel'],
+      }, {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'awesome-typescript-loader',
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
@@ -39,7 +43,7 @@ if (!isProduction) {
       }]
     },
     resolve: {
-      extensions: ['', '.react.js', '.js', '.jsx', '.less']
+      extensions: ['', '.tsx', '.ts', '.react.js', '.js', '.jsx', '.less']
     },
     devServer: {
       historyApiFallback: true,
@@ -66,7 +70,11 @@ if (!isProduction) {
     module: {
       loaders: [{
         exclude: /node_modules/,  //Use test?
-        loader: 'babel',
+        loaders: ['babel'],
+      }, {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'awesome-typescript-loader',
       }, {
         test: /\.less$/,
         exclude: /node_modules/,

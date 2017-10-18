@@ -14,7 +14,6 @@ class App extends Component {
   render() {
     (async () => {
       await console.log('es8!')
-      console.log('test')
     })()
     return this.props.children
   }

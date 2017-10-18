@@ -18,6 +18,7 @@
     "postinstall": "npm run clean && NODE_ENV=production webpack --progress",
     "prod": "node ./ApiServer/index.js",
     "server": "nodemon ./ApiServer/index.js",
+    "server2": "tsc -p ./tsconfig.json",
     "lint": "eslint **/",
     "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require ignore-styles --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
     "test:watch": "npm run test -- --watch"
@@ -25,7 +26,9 @@
   "author": "Penn Labs",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^8.0.44",
     "babel-eslint": "^6.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "chai": "^3.5.0",
     "chai-jquery": "^2.0.0",
     "eslint": "^3.16.0",
@@ -42,6 +45,7 @@
     "webpack-dev-server": "^1.16.3"
   },
   "dependencies": {
+    "awesome-typescript-loader": "^3.2.3",
     "axios": "^0.13.1",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
@@ -64,7 +68,6 @@
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
     "lodash": "^4.17.4",
-    "mongoose": "^4.8.4",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
@@ -80,6 +83,7 @@
     "rimraf": "^2.5.4",
     "socket.io": "^1.7.3",
     "style-loader": "^0.13.1",
+    "typescript": "^2.5.3",
     "webpack": "^1.14.0"
   }
 }
