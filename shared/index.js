@@ -3,7 +3,7 @@
 /**
  * Represents a person.
  */
-export class UserInfo {
+exports.UserInfo = class UserInfo {
   /**
    * @param {number} id - a unique id associated with the person
    * @param {string} firstName - the person's first name
@@ -19,7 +19,7 @@ export class UserInfo {
 /**
  * Stores information about a question in the queue
  */
-export class QuestionInfo {
+exports.QuestionInfo = class QuestionInfo {
   /**
    * @param {UserInfo} userInfo - info of the person associated with the question.
    * @param {string} location - the location of where the asker is sitting
@@ -36,7 +36,7 @@ export class QuestionInfo {
  * The information needed to represent a full class
  * TODO: taactivitylog
  */
-export class ClassInfo {
+exports.ClassInfo = class ClassInfo {
   /**
    * @param {QuestionInfo[]} [queue=[]] - a queue representing the students in office hours
    * @param {Number[]} TAs - a list of the ids of the TAs in the course
