@@ -135,7 +135,7 @@ module.exports = function(server) {
     //using a for loop for maximum performance server side
     // TODO: we can use this to check if the user belongs to the class
     // for which they're trying to send events.
-    if (classes && classes.length) {
+    if (classes != null && classes.length != null) {
       for (let i = 0; i < classes.length; i++) {
         socket.join(`${classes[i]}`)
       }
@@ -156,8 +156,10 @@ module.exports = function(server) {
       console.log(`new length: ${connections.length}`)
     })
 
-    //A general method to modify data is a bad idea; only specific properties should be able
-    //to be modified.
+    /**
+     * A brute force update of an entire class.  Shouldn't need to be used.
+     * @param {ClassInfo} myClass - all information about a class
+     */
     socket.on(SocketActions.UPDATE_CLASS, data => {
       console.log('update class event logged:', data)
       classQueues[data.id] = data
@@ -167,9 +169,13 @@ module.exports = function(server) {
     //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
     //Logic should be restricted based on TA/user status.  Simply requiring the userId isn't secure;
     //we will need to also use whatever auth mechanism we end up using
-    // question is a string containing the question the user is asking,
-    // location is a string containing the asker's location,
-    // classId is the ID of the class, and userInfo is the userInfo object.
+    /**
+     * Used by students to join the office hours queue for a given class
+     * @param {Number} classId - the class whose office hours are being joined
+     * @param {String} location - where the student is located
+     * @param {String} question - the text of the student's question
+     * @param {UserInfo} userInfo - the student's information
+     */
     socket.on(SocketActions.JOIN_CLASS_QUEUE, ({ question, location, userInfo, classId }) => {
       //check if the user is already in the queue, if so, do nothing.
       //using a for loop here for faster execution
@@ -180,17 +186,23 @@ module.exports = function(server) {
       socketServer.to(`${classId}`).emit(SocketActions.CLASS_QUEUE_JOINED, classQueues[classId])
     })
 
-    // classId the ID of the class, locationText is a string representing
-    // the location of where the offices hours are being held, and
-    // endTime is a number representing when the office hours will end.
+    /**
+     * Used by TAs to activate an inactive class
+     * @param {Number} classId
+     * @param {String} locationText - where the office hours are being held
+     * @param {String} endTime - when the office hours finish
+     */
     socket.on(SocketActions.ACTIVATE_CLASS, ({ classId, locationText, endTime }) => {
       classQueues[classId].isActive = true
       classQueues[classId].locations.push(locationText)
       socketServer.to(`${classId}`).emit(SocketActions.CLASS_ACTIVATED, classQueues[classId])
     })
 
-    // classId is the ID of the class
-    socket.on(SocketActions.DEACTIVATE_CLASS, classId => {
+    /**
+     * Used by TAs to deactivate an active class
+     * @param {Number} classId
+     */
+    socket.on(SocketActions.DEACTIVATE_CLASS, ({ classId }) => {
       classQueues[classId].isActive = false
       // empty working data
       classQueues[classId].queue = []
@@ -200,16 +212,25 @@ module.exports = function(server) {
       socketServer.to(`${classId}`).emit(SocketActions.CLASS_DEACTIVATED, classQueues[classId])
     })
 
-    // classId is the ID of the class, and broadcast is a string
-    // that has the text of the TA broadcast announcement
+    /**
+     * Used by TAs topdate the broadcast section of an active class, which
+     * all students in that class see.
+     * @param {Number} classId
+     * @param {String} broadcast - the message being broadcasted
+     */
     socket.on(SocketActions.UPDATE_BROADCAST, ({ classId, broadcast }) => {
       classQueues[classId].broadcast = broadcast
       socketServer.to(`${classId}`).emit(SocketActions.BROADCAST_UPDATED, classQueues[classId])
     })
 
     // TODO: will also need to handle the TA log.
-    // TAInfo contains TA id, firstname, and lastname
-    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ classId, TAInfo }) => {
+    /**
+     * Used by TAs to unqueue students from the office hours queue
+     * when they go to help them.
+     * @param {Number} classId
+     * @param {UserInfo} userInfo - information on the TA who unqueued the student
+     */
+    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ classId, userInfo }) => {
       if (!classQueues[classId].queue.length) return
       // const { question, location, userInfo } = classQueues[classId].queue.shift()
       socketServer.to(`${classId}`).emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classQueues[classId])

@@ -1,6 +1,20 @@
 // This file contains constants and types shared between the frontend and backend
 // TODO: probably best to have a class for each kind of data that a socket sends
 
+// checks if an object is an instance of CandidateClass via duck typing
+exports.matches = function(object, CandidateClass) {
+  const keys = Object.keys(new CandidateClass())
+  if (keys.length !== Object.keys(object).length) {
+    return false
+  }
+  for (const key of keys) {
+    if (!object.hasOwnProperty(key)) {
+      return false
+    }
+  }
+  return true
+}
+
 /**
  * Represents a person.
  */

@@ -35,7 +35,7 @@ class ClassPage extends Component {
 
   deactivateClass() {
     this.setState({isTAConfirmCloseSessionModalOpen: false}, () => {
-      deactivateClass(this.props.selectedClass)
+      deactivateClass({classId: this.props.selectedClass})
     })
   }
 
