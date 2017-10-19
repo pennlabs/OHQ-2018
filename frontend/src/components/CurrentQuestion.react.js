@@ -8,7 +8,8 @@ import styles from './../../style/CurrentQuestion.less'
 class CurrentQuestion extends Component {
 
   static propTypes = {
-    questionData: PropTypes.object,
+    // See shared folder for description of questionInfo
+    questionInfo: PropTypes.object,
     isUserTAForSelectedClass: PropTypes.bool,
     isStudentInactiveState: PropTypes.bool,
     selectedClassId: PropTypes.number,
@@ -26,7 +27,7 @@ class CurrentQuestion extends Component {
     return (
       <div className={styles.questionContainer}>
         <span className={styles.questionHeader}>Your Question</span>
-        <span className={styles.questionText}>{this.props.questionData.question}</span>
+        <span className={styles.questionText}>{this.props.questionInfo.question}</span>
       </div>
     )
   }
@@ -41,13 +42,12 @@ class CurrentQuestion extends Component {
   }
 
   renderTAQuestionView() {
-    const { questionData: { userInfo: data, location, question } } = this.props
-    const { firstName: first, lastName: last } = data
+    const { questionInfo: { userInfo: { firstName, lastName }, location, question } } = this.props
     return (
       <div className={styles.questionContainer}>
-        <span className={styles.TAQuestionHeader}>{`${first} ${last}'s location`}</span>
+        <span className={styles.TAQuestionHeader}>{`${firstName} ${lastName}'s location`}</span>
         <span className={styles.questionText}>{location}</span>
-        <span className={styles.TAQuestionHeader}>{`${first} ${last}'s question`}</span>
+        <span className={styles.TAQuestionHeader}>{`${firstName} ${lastName}'s question`}</span>
         <span className={styles.questionText}>{question}</span>
         <div className={styles.TAHelpButton} onClick={this.removeFromQueue}>Help this student</div>
       </div>
@@ -64,13 +64,13 @@ class CurrentQuestion extends Component {
   }
 
   renderStudentView() {
-    return this.props.questionData
+    return this.props.questionInfo
     ? this.renderStudentQuestionView()
     : this.renderStudentEmptyState()
   }
 
   renderTAView() {
-    return this.props.questionData
+    return this.props.questionInfo
     ? this.renderTAQuestionView()
     : this.renderTAEmptyState()
   }

@@ -71,7 +71,7 @@ class ClassPageMiddleRow extends Component {
     return (
       <div className={this.getQuestionContainerClassName()}>
         <CurrentQuestion
-          questionData={this.props.currentQuestion}
+          questionInfo={this.props.currentQuestion}
           isUserTAForSelectedClass={this.props.isUserTAForSelectedClass}
           selectedClassId={this.props.selectedClassId}
         />

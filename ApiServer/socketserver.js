@@ -1,5 +1,6 @@
 const io = require('socket.io')
 const { pick } = require('lodash')
+const { UserInfo, QuestionInfo } = require('../shared')
 
 // TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
 // connect to our socket server.
@@ -140,11 +141,10 @@ module.exports = function(server) {
     //send the user information for every class they're subscribed to
     socket.emit('ALL_CLASS_DATA', pick(classQueues, classes))
 
-    socket.emit('USER_INFO_UPDATED', {
-      id: count,
-      firstName: currentName.split(' ')[0],
-      lastName: currentName.split(' ')[1],
-    })
+    socket.emit(
+      'USER_INFO_UPDATED',
+      new UserInfo(count, currentName.split(' ')[0], currentName.split(' ')[1])
+    )
 
     socket.on('disconnect', () => {
       const index = connections.indexOf(socket)
@@ -173,7 +173,7 @@ module.exports = function(server) {
       for (let i = 0; i < classQueues[classId].queue.length; i++) {
         if (classQueues[classId].queue[i].userInfo.id === userInfo.id) return
       }
-      classQueues[classId].queue.push({question, location, userInfo})
+      classQueues[classId].queue.push(new QuestionInfo(userInfo, location, question))
       socketServer.to(`${classId}`).emit('CLASS_QUEUE_JOINED', classQueues[classId])
     })
 

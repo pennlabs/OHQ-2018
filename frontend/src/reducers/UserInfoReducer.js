@@ -1,10 +1,7 @@
 import { USER_INFO_UPDATED } from './../sockets/socketActionTypes'
+import { UserInfo } from './../../../shared/'
 
-const defaultState = {
-  id: null,
-  firstName: null,
-  lastName: null,
-}
+const defaultState = new UserInfo(null, null, null)
 
 export default function(state = defaultState, action) {
   switch (action.type) {

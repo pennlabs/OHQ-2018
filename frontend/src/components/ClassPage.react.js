@@ -85,8 +85,7 @@ class ClassPage extends Component {
 
   isStudentInQueue() {
     const queue = this.getSelectedClassProperty('queue')
-    // using !! to cast the return value to a truthy value
-    return !!find(queue, item => item.userInfo.id === this.props.userInfo.id)
+    return find(queue, item => item.userInfo.id === this.props.userInfo.id) != null
   }
 
   renderTAConfirmCloseSessionModal = () => {

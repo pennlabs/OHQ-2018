@@ -4,6 +4,12 @@ import styles from './../../style/ClassInfoTitle.less'
 
 class ClassInfoTitle extends Component {
 
+  static propTypes = {
+    student: React.PropTypes.string,
+    classCode: React.PropTypes.string,
+    location: React.PropTypes.string,
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -13,12 +19,6 @@ class ClassInfoTitle extends Component {
       </div>
     )
   }
-}
-
-ClassInfoTitle.propTypes = {
-  student: React.PropTypes.string,
-  classCode: React.PropTypes.string,
-  location: React.PropTypes.string,
 }
 
 export default ClassInfoTitle
