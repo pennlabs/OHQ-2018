@@ -1,7 +1,7 @@
 import Socket from './initSocket.js'
 
 import { Store } from './../index.js'
-import * as SocketActions from './socketActionTypes'
+import { SocketActions } from './../../../shared'
 
 Socket.on(SocketActions.CLASS_UPDATED, classData => {
   console.log('class updated', classData)

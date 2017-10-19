@@ -1,5 +1,6 @@
-import { USER_INFO_UPDATED } from './../sockets/socketActionTypes'
+import { SocketActions } from './../../../shared'
 import { UserInfo } from './../../../shared/'
+const { USER_INFO_UPDATED } = SocketActions
 
 const defaultState = new UserInfo(null, null, null)
 

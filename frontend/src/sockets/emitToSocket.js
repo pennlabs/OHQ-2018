@@ -3,7 +3,7 @@
 // any corresponding events in receiveFromSocket
 
 import Socket from './initSocket'
-import * as SocketActions from './socketActionTypes'
+import { SocketActions } from './../../../shared'
 
 //updateClass takes an entire class as a parameter.
 export function updateClass(myClass) {

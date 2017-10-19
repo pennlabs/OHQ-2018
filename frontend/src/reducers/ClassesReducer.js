@@ -1,14 +1,16 @@
 //This file holds data for all classes relevant to the user in a single object.
 //the key for each class is the class’ ID.
 
-import {
+import { SocketActions } from './../../../shared'
+
+const {
   CLASS_QUEUE_JOINED,
   ALL_CLASS_DATA,
   CLASS_ACTIVATED,
   CLASS_DEACTIVATED,
   BROADCAST_UPDATED,
-  QUEUE_REMOVED_FROM,
-} from './../sockets/socketActionTypes'
+  QUEUE_REMOVED_FROM
+} = SocketActions
 
 //Classes is a an object made of class class objects,
 //where each class object is identied by a key identical to its id field.

@@ -3,7 +3,9 @@
 
 //Note that we have two kinds of actions.  Those that emit to a websocket
 //need to be handled differently than those that don't, so the action types that reducers handle
-//are split across two files: src/actions/ActionTypes.js, and src/sockets/socketActionTypes.js.
+//are split across two files: src/actions/ActionTypes.js for frontend actions
+// and SocketActions in the shared folder for websocket actions which
+// need to be handled by both the frontend and the backend
 
 import { combineReducers } from 'redux'
 

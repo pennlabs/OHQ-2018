@@ -1,6 +1,7 @@
 const io = require('socket.io')
 const { pick } = require('lodash')
 const { UserInfo, QuestionInfo } = require('../shared')
+const { SocketActions } = require('./../shared')
 
 // TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
 // connect to our socket server.
@@ -139,7 +140,7 @@ module.exports = function(server) {
     }
 
     //send the user information for every class they're subscribed to
-    socket.emit('ALL_CLASS_DATA', pick(classQueues, classes))
+    socket.emit(SocketActions.ALL_CLASS_DATA, pick(classQueues, classes))
 
     socket.emit(
       'USER_INFO_UPDATED',
@@ -155,10 +156,10 @@ module.exports = function(server) {
 
     //A general method to modify data is a bad idea; only specific properties should be able
     //to be modified.
-    socket.on('UPDATE_CLASS', data => {
+    socket.on(SocketActions.UPDATE_CLASS, data => {
       console.log('update class event logged:', data)
       classQueues[data.id] = data
-      socketServer.emit('CLASS_UPDATED', classQueues[data.id])
+      socketServer.emit(SocketActions.CLASS_UPDATED, classQueues[data.id])
     })
 
     //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
@@ -167,49 +168,49 @@ module.exports = function(server) {
     // question is a string containing the question the user is asking,
     // location is a string containing the asker's location,
     // classId is the ID of the class, and userInfo is the userInfo object.
-    socket.on('JOIN_CLASS_QUEUE', ({ question, location, userInfo, classId }) => {
+    socket.on(SocketActions.JOIN_CLASS_QUEUE, ({ question, location, userInfo, classId }) => {
       //check if the user is already in the queue, if so, do nothing.
       //using a for loop here for faster execution
       for (let i = 0; i < classQueues[classId].queue.length; i++) {
         if (classQueues[classId].queue[i].userInfo.id === userInfo.id) return
       }
       classQueues[classId].queue.push(new QuestionInfo(userInfo, location, question))
-      socketServer.to(`${classId}`).emit('CLASS_QUEUE_JOINED', classQueues[classId])
+      socketServer.to(`${classId}`).emit(SocketActions.CLASS_QUEUE_JOINED, classQueues[classId])
     })
 
     // classId the ID of the class, locationText is a string representing
     // the location of where the offices hours are being held, and
     // endTime is a number representing when the office hours will end.
-    socket.on('ACTIVATE_CLASS', ({ classId, locationText, endTime }) => {
+    socket.on(SocketActions.ACTIVATE_CLASS, ({ classId, locationText, endTime }) => {
       classQueues[classId].isActive = true
       classQueues[classId].locations.push(locationText)
-      socketServer.to(`${classId}`).emit('CLASS_ACTIVATED', classQueues[classId])
+      socketServer.to(`${classId}`).emit(SocketActions.CLASS_ACTIVATED, classQueues[classId])
     })
 
     // classId is the ID of the class
-    socket.on('DEACTIVATE_CLASS', classId => {
+    socket.on(SocketActions.DEACTIVATE_CLASS, classId => {
       classQueues[classId].isActive = false
       // empty working data
       classQueues[classId].queue = []
       classQueues[classId].locations = []
       classQueues[classId].broadcast = ''
       // TODO: here also empty the ta log and write it to the DB for analytics
-      socketServer.to(`${classId}`).emit('CLASS_DEACTIVATED', classQueues[classId])
+      socketServer.to(`${classId}`).emit(SocketActions.CLASS_DEACTIVATED, classQueues[classId])
     })
 
     // classId is the ID of the class, and broadcast is a string
     // that has the text of the TA broadcast announcement
-    socket.on('UPDATE_BROADCAST', ({ classId, broadcast }) => {
+    socket.on(SocketActions.UPDATE_BROADCAST, ({ classId, broadcast }) => {
       classQueues[classId].broadcast = broadcast
-      socketServer.to(`${classId}`).emit('BROADCAST_UPDATED', classQueues[classId])
+      socketServer.to(`${classId}`).emit(SocketActions.BROADCAST_UPDATED, classQueues[classId])
     })
 
     // TODO: will also need to handle the TA log.
     // TAInfo contains TA id, firstname, and lastname
-    socket.on('REMOVE_FROM_QUEUE', ({ classId, TAInfo }) => {
+    socket.on(SocketActions.REMOVE_FROM_QUEUE, ({ classId, TAInfo }) => {
       if (!classQueues[classId].queue.length) return
       // const { question, location, userInfo } = classQueues[classId].queue.shift()
-      socketServer.to(`${classId}`).emit('QUEUE_REMOVED_FROM', classQueues[classId])
+      socketServer.to(`${classId}`).emit(SocketActions.QUEUE_REMOVED_FROM, classQueues[classId])
     })
 
     socket.on('UPDATE_TA_ACTIVITY_LOG', ({ classId, TAInfo }) => {
