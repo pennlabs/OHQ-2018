@@ -1,4 +1,5 @@
 // This file contains constants and types shared between the frontend and backend
+// TODO: probably best to have a class for each kind of data that a socket sends
 
 /**
  * Represents a person.
@@ -74,7 +75,7 @@ exports.SocketActions = {
   USER_INFO_UPDATED: 'USER_INFO_UPDATED',
 
   // this is used to send all the relevant classes when a user first connects
-  ALL_CLASS_DATA: 'ALL_CLASS_DATA',
+  ALL_CLASS_INFO: 'ALL_CLASS_INFO',
 
   // this is used to activate and deactivate a class.
   ACTIVATE_CLASS: 'ACTIVATE_CLASS',

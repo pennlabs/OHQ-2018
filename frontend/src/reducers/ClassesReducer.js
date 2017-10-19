@@ -5,7 +5,7 @@ import { SocketActions } from './../../../shared'
 
 const {
   CLASS_QUEUE_JOINED,
-  ALL_CLASS_DATA,
+  ALL_CLASS_INFO,
   CLASS_ACTIVATED,
   CLASS_DEACTIVATED,
   BROADCAST_UPDATED,
@@ -29,7 +29,7 @@ export default function(state = defaultState, action) {
   switch (action.type) {
   case CLASS_QUEUE_JOINED:
     return {...state, [action.payload.id]: action.payload}
-  case ALL_CLASS_DATA:
+  case ALL_CLASS_INFO:
     return action.payload
   // this logic is a duplicate of the logic for class queue updates.
   // we separate it for clarity and ease of refactoring.

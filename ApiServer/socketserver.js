@@ -133,6 +133,8 @@ module.exports = function(server) {
 
     //connect the user to a channel for each class ID.
     //using a for loop for maximum performance server side
+    // TODO: we can use this to check if the user belongs to the class
+    // for which they're trying to send events.
     if (classes && classes.length) {
       for (let i = 0; i < classes.length; i++) {
         socket.join(`${classes[i]}`)
@@ -140,7 +142,7 @@ module.exports = function(server) {
     }
 
     //send the user information for every class they're subscribed to
-    socket.emit(SocketActions.ALL_CLASS_DATA, pick(classQueues, classes))
+    socket.emit(SocketActions.ALL_CLASS_INFO, pick(classQueues, classes))
 
     socket.emit(
       'USER_INFO_UPDATED',

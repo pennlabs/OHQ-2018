@@ -8,8 +8,11 @@ import styles from './../../style/CurrentQuestion.less'
 class CurrentQuestion extends Component {
 
   static propTypes = {
-    // See shared folder for description of questionInfo
+    // See shared folder for description of questionInfo and userInfo
     questionInfo: PropTypes.object,
+    // NOTE: if user is TA, questionInfo.userInfo and userInfo
+    // will be the student and ta information respectively
+    userInfo: PropTypes.object,
     isUserTAForSelectedClass: PropTypes.bool,
     isStudentInactiveState: PropTypes.bool,
     selectedClassId: PropTypes.number,
@@ -20,7 +23,11 @@ class CurrentQuestion extends Component {
     e.stopPropagation()
     if (this.props.selectedClassId == null) return
 
-    taUnqueueStudent({classId: this.props.selectedClassId})
+    taUnqueueStudent({
+      classId: this.props.selectedClassId,
+      // userInfo here is the TA's information
+      userInfo: this.props.userInfo
+    })
   }
 
   renderStudentQuestionView() {
