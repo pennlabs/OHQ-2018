@@ -2,12 +2,12 @@
 // is visiting.  This state is used to decide whether or not a modal should be shown to the student.
 
 import { SocketActions } from './../../../shared'
-const { QUEUE_REMOVED_FROM } = SocketActions
+const { STUDENT_UNQUEUED_BY_TA } = SocketActions
 
 const defaultState = false
 export default function(state = defaultState, action) {
   switch (action.type) {
-  case QUEUE_REMOVED_FROM:
+  case STUDENT_UNQUEUED_BY_TA:
     return action.payload
   default:
     return state

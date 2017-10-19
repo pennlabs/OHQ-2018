@@ -9,7 +9,7 @@ const {
   CLASS_ACTIVATED,
   CLASS_DEACTIVATED,
   BROADCAST_UPDATED,
-  QUEUE_REMOVED_FROM
+  STUDENT_UNQUEUED_BY_TA
 } = SocketActions
 
 //Classes is a an object made of class class objects,
@@ -38,7 +38,7 @@ export default function(state = defaultState, action) {
     return {...state, [action.payload.id]: action.payload}
   case BROADCAST_UPDATED:
     return {...state, [action.payload.id]: action.payload}
-  case QUEUE_REMOVED_FROM:
+  case STUDENT_UNQUEUED_BY_TA:
     return {...state, [action.payload.id]: action.payload}
   default:
     return state

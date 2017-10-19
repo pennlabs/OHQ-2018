@@ -83,8 +83,8 @@ exports.SocketActions = {
   CLASS_DEACTIVATED: 'CLASS_DEACTIVATED',
 
   //this is used for TAs to remove a student from the queue
-  REMOVE_FROM_QUEUE: 'REMOVE_FROM_QUEUE',
-  QUEUE_REMOVED_FROM: 'QUEUE_REMOVED_FROM',
+  TA_UNQUEUE_STUDENT: 'TA_UNQUEUE_STUDENT',
+  STUDENT_UNQUEUED_BY_TA: 'STUDENT_UNQUEUED_BY_TA',
 
   // this is used to update a class' broadcast
   UPDATE_BROADCAST: 'UPDATE_BROADCAST',

@@ -38,6 +38,6 @@ Socket.on(SocketActions.BROADCAST_UPDATED, classData => {
   Store.dispatch({type: SocketActions.BROADCAST_UPDATED, payload: classData})
 })
 
-Socket.on(SocketActions.QUEUE_REMOVED_FROM, classData => {
-  Store.dispatch({type: SocketActions.QUEUE_REMOVED_FROM, payload: classData})
+Socket.on(SocketActions.STUDENT_UNQUEUED_BY_TA, classData => {
+  Store.dispatch({type: SocketActions.STUDENT_UNQUEUED_BY_TA, payload: classData})
 })

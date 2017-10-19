@@ -34,8 +34,8 @@ export function updateBroadcast(data) {
 }
 
 // TODO: make sure this can also handle the TA activity log
-export function removeFromQueue(data) {
-  Socket.emit(SocketActions.REMOVE_FROM_QUEUE, data)
+export function taUnqueueStudent(data) {
+  Socket.emit(SocketActions.TA_UNQUEUE_STUDENT, data)
 }
 
 // NOTE: may not be necessary, updateClass could simply add a class.

@@ -207,10 +207,10 @@ module.exports = function(server) {
 
     // TODO: will also need to handle the TA log.
     // TAInfo contains TA id, firstname, and lastname
-    socket.on(SocketActions.REMOVE_FROM_QUEUE, ({ classId, TAInfo }) => {
+    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ classId, TAInfo }) => {
       if (!classQueues[classId].queue.length) return
       // const { question, location, userInfo } = classQueues[classId].queue.shift()
-      socketServer.to(`${classId}`).emit(SocketActions.QUEUE_REMOVED_FROM, classQueues[classId])
+      socketServer.to(`${classId}`).emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classQueues[classId])
     })
 
     socket.on('UPDATE_TA_ACTIVITY_LOG', ({ classId, TAInfo }) => {

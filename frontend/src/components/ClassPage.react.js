@@ -108,7 +108,11 @@ class ClassPage extends Component {
             </div>
             <div
               className={`${styles.closeSessionModalButton} ${styles.noButton}`}
-              onClick={this.preventDefaultWrapper(this.setState, {isTAConfirmCloseSessionModalOpen: false})}
+              onClick={
+                this.preventDefaultWrapper(
+                  this.setState, {isTAConfirmCloseSessionModalOpen: false}
+                )
+              }
             >
               No
             </div>
