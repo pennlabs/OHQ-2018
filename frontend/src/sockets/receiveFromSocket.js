@@ -48,3 +48,8 @@ Socket.on(SocketActions.STUDENT_UNQUEUED_BY_TA, classInfo => {
   console.log('student unqueued by ta')
   Store.dispatch({type: SocketActions.STUDENT_UNQUEUED_BY_TA, payload: classInfo})
 })
+
+// Will need to handle the user being disconnected: push them to a special screen
+Socket.on('disconnect', () => {
+  console.log('@@@@@@@@@@@@@disconnected!')
+})

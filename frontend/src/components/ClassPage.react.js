@@ -172,13 +172,14 @@ class ClassPage extends Component {
   }
 
   renderTACloseSessionButton() {
-    const onClick = this.preventDefaultWrapper(this.setState, {isTAConfirmCloseSessionModalOpen: true})
+    const onClick = this.preventDefaultWrapper(
+      this.setState, {isTAConfirmCloseSessionModalOpen: true}
+    )
     return (
       <div
         className={styles.closeSessionButton}
         onClick={onClick}
       >
-        {/*onClick={deactivateClass.bind(this, this.props.selectedClass)}*/}
         Close Session
       </div>
     )

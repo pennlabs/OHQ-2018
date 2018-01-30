@@ -1,6 +1,6 @@
 const io = require('socket.io')
 const { pick } = require('lodash')
-const { UserInfo, QuestionInfo } = require('../shared')
+const { UserInfo, QuestionInfo, TALogInfo } = require('../shared')
 const { SocketActions } = require('./../shared')
 
 // TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
@@ -78,27 +78,23 @@ const nameData = {
   ]
 }
 
-// TODO: we need to ensure that users only see updates to the classes they've added.
-// Right now every user sees the action for every class.
 module.exports = function(server) {
   const socketServer = io(server)
   const connections = []
 
-  //classQueues is an object consisting of keys which map to arrays, where each array consists of
-  //objects containing a user and a question.  TODO: the initial list of classQueues
+  //we use an object as a hashmap for faster retrieval
+  //TODO: the initial list of classQueues
   //will need to be retrieved from some kind of database
   const classQueues = {
     0: {
-      // queue is an array of objects, where each object has user, location, and question properties
       queue: [],
-      // TAs is a list of ids, where each id represents a TA's student id.
       TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
       TAActivityLog: [],
       isActive: false,
       id: 0,
       name: 'CIS 110',
       broadcast: '',
-      locations: [] // use an array here in case of multiple locations
+      locations: []
     },
     1: {
       queue: [],
@@ -158,7 +154,7 @@ module.exports = function(server) {
 
     /**
      * A brute force update of an entire class.  Shouldn't need to be used.
-     * @param {ClassInfo} myClass - all information about a class
+     * @param {ClassInfo} data - all information about a class
      */
     socket.on(SocketActions.UPDATE_CLASS, data => {
       console.log('update class event logged:', data)
@@ -223,21 +219,26 @@ module.exports = function(server) {
       socketServer.to(`${classId}`).emit(SocketActions.BROADCAST_UPDATED, classQueues[classId])
     })
 
-    // TODO: will also need to handle the TA log.
     /**
      * Used by TAs to unqueue students from the office hours queue
-     * when they go to help them.
+     * when they go to help them.  It's a bit of a hack, but this also
+     * updates the TA activity log.  If we wanted the TA log to be handled
+     * as a separate event, we could refactor this file so that rather than
+     * emitting all class data for every event, we emit only parts of the class
+     * object that are relevant.  Will probably end up doing that
+     * once OHQ is released; for now, sending the entire class is easier
+     * to dev with.
      * @param {Number} classId
      * @param {UserInfo} userInfo - information on the TA who unqueued the student
      */
-    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ classId, userInfo }) => {
+    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ classId, userInfo: TAInfo }) => {
       if (!classQueues[classId].queue.length) return
-      // const { question, location, userInfo } = classQueues[classId].queue.shift()
-      socketServer.to(`${classId}`).emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classQueues[classId])
-    })
-
-    socket.on('UPDATE_TA_ACTIVITY_LOG', ({ classId, TAInfo }) => {
+      const questionInfo = classQueues[classId].queue.shift()
+      const time = new Date()
+      // Update ta activity log
+      classQueues[classId].TAActivityLog.push(new TALogInfo(TAInfo, questionInfo, time))
       socketServer.to(`${classId}`)
+        .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classQueues[classId])
     })
   })
 }

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 
 import TAActivityLogRow from './TAActivityLogRow.react'
 
@@ -7,9 +8,7 @@ import styles from './../../style/TAActivityLog.less'
 class TAActivityLog extends Component {
 
   static propTypes = {
-    // log is an array of objects, where each object has the following properties:
-    // TAInfo (with name and id), time,
-    // and questionInfo (same as normal questionInfo, containing question, userInfo, location, & classId)
+    // log is an array of TALogInfo
     log: PropTypes.array
   }
 
@@ -20,10 +19,15 @@ class TAActivityLog extends Component {
   render() {
     return (
       <div className={styles.activityLogContainer}>
+        This is the TA Log
         {this.renderLog()}
       </div>
     )
   }
+}
+
+function mapStateToProps({ classes: { TAActivityLog: log } }) {
+  return { log }
 }
 
 export default TAActivityLog

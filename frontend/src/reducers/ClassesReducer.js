@@ -27,10 +27,10 @@ const defaultState = {
 
 export default function(state = defaultState, action) {
   switch (action.type) {
-  case CLASS_QUEUE_JOINED:
-    return {...state, [action.payload.id]: action.payload}
   case ALL_CLASS_INFO:
     return action.payload
+  case CLASS_QUEUE_JOINED:
+    return {...state, [action.payload.id]: action.payload}
   // this logic is a duplicate of the logic for class queue updates.
   // we separate it for clarity and ease of refactoring.
   case CLASS_ACTIVATED:
