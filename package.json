@@ -6,7 +6,7 @@
   "repository": "https://github.com/pennlabs/OHQ.git",
   "homepage": "https://github.com/pennlabs/OHQ",
   "engines": {
-    "node": "7.6.0"
+    "node": "8"
   },
   "bugs": {
     "url": "https://github.com/pennlabs/OHQ/issues"
