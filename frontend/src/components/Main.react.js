@@ -10,7 +10,7 @@ class Main extends Component {
   render() {
     return (
       <div className={styles.container}>
-				{/* <Sidebar isTAForCurrentClass/> */}
+				<Sidebar isTAForCurrentClass/>
         <ClassPage />
       </div>
     )
