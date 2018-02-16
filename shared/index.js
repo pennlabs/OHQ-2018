@@ -89,12 +89,12 @@ exports.ClassInfo = class ClassInfo {
 }
 
 exports.SocketActions = {
-// These are actions that use websockets.  They are grouped in pairs;
-// actions that emit to the server have a corresponding return action.
-// Note that reducers generally only need to handle the return action.
-// Singleton actions mean that the server sent in a way that is
-// not coupled to a corresponding action.  E.g. on connection the user
-// receives data for the classes they're subcribed to.
+  // These are actions that use websockets.  They are grouped in pairs;
+  // actions that emit to the server have a corresponding return action.
+  // Note that reducers generally only need to handle the return action.
+  // Singleton actions mean that the server sent in a way that is
+  // not coupled to a corresponding action.  E.g. on connection the user
+  // receives data for the classes they're subcribed to.
 
   // used for the user to update class status.
   UPDATE_CLASS: 'UPDATE_CLASS',

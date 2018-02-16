@@ -22,8 +22,8 @@ export function updateClass(myClass) {
  * @param {String} question - the text of the student's question
  * @param {UserInfo} userInfo - the student's information
  */
-export function joinClassQueue({question, location, userInfo, classId}) {
-  Socket.emit(SocketActions.JOIN_CLASS_QUEUE, {question, location, userInfo, classId})
+export function joinClassQueue({ question, location, userInfo, classId }) {
+  Socket.emit(SocketActions.JOIN_CLASS_QUEUE, { question, location, userInfo, classId })
 }
 
 /**
@@ -32,16 +32,16 @@ export function joinClassQueue({question, location, userInfo, classId}) {
  * @param {String} locationText - where the office hours are being held
  * @param {String} endTime - when the office hours finish
  */
-export function activateClass({classId, locationText, endTime}) {
-  Socket.emit(SocketActions.ACTIVATE_CLASS, {classId, locationText, endTime})
+export function activateClass({ classId, locationText, endTime }) {
+  Socket.emit(SocketActions.ACTIVATE_CLASS, { classId, locationText, endTime })
 }
 
 /**
  * Used by TAs to deactivate an active class
  * @param {Number} classId
  */
-export function deactivateClass({classId}) {
-  Socket.emit(SocketActions.DEACTIVATE_CLASS, {classId})
+export function deactivateClass({ classId }) {
+  Socket.emit(SocketActions.DEACTIVATE_CLASS, { classId })
 }
 
 /**
@@ -50,8 +50,8 @@ export function deactivateClass({classId}) {
  * @param {Number} classId
  * @param {String} broadcast - the message being broadcasted
  */
-export function updateBroadcast({classId, broadcast}) {
-  Socket.emit(SocketActions.UPDATE_BROADCAST, {classId, broadcast})
+export function updateBroadcast({ classId, broadcast }) {
+  Socket.emit(SocketActions.UPDATE_BROADCAST, { classId, broadcast })
 }
 
 // TODO: make sure this can also handle the TA activity log
@@ -61,8 +61,8 @@ export function updateBroadcast({classId, broadcast}) {
  * @param {Number} classId
  * @param {UserInfo} userInfo - information on the TA who unqueued the student
  */
-export function taUnqueueStudent({classId, userInfo}) {
-  Socket.emit(SocketActions.TA_UNQUEUE_STUDENT, {classId, userInfo})
+export function taUnqueueStudent({ classId, userInfo }) {
+  Socket.emit(SocketActions.TA_UNQUEUE_STUDENT, { classId, userInfo })
 }
 
 // NOTE: may not be necessary, updateClass could simply add a class.

@@ -27,6 +27,7 @@
     "no-unexpected-multiline": 2,
     "no-unused-vars": 1,
     "no-var": 2,
+    "operator-linebreak": ["error", "before"],
     "padded-blocks": 0,
     "prefer-const": 2,
     "react/jsx-uses-react": "error",

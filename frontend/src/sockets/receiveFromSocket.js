@@ -11,42 +11,42 @@ import { SocketActions } from './../../../shared'
 
 Socket.on(SocketActions.CLASS_UPDATED, classInfo => {
   console.log('class updated', classInfo)
-  Store.dispatch({type: SocketActions.CLASS_UPDATED, payload: classInfo})
+  Store.dispatch({ type: SocketActions.CLASS_UPDATED, payload: classInfo })
 })
 
 Socket.on(SocketActions.CLASS_QUEUE_JOINED, classInfo => {
   console.log('class queue updated', classInfo)
-  Store.dispatch({type: SocketActions.CLASS_QUEUE_JOINED, payload: classInfo})
+  Store.dispatch({ type: SocketActions.CLASS_QUEUE_JOINED, payload: classInfo })
 })
 
 Socket.on(SocketActions.USER_INFO_UPDATED, userInfo => {
   console.log('user info updated', userInfo)
-  Store.dispatch({type: SocketActions.USER_INFO_UPDATED, payload: userInfo})
+  Store.dispatch({ type: SocketActions.USER_INFO_UPDATED, payload: userInfo })
 })
 
 Socket.on(SocketActions.ALL_CLASS_INFO, allClassInfo => {
   console.log('inital class data received', allClassInfo)
-  Store.dispatch({type: SocketActions.ALL_CLASS_INFO, payload: allClassInfo})
+  Store.dispatch({ type: SocketActions.ALL_CLASS_INFO, payload: allClassInfo })
 })
 
 Socket.on(SocketActions.CLASS_ACTIVATED, classInfo => {
   console.log('class session created')
-  Store.dispatch({type: SocketActions.CLASS_ACTIVATED, payload: classInfo})
+  Store.dispatch({ type: SocketActions.CLASS_ACTIVATED, payload: classInfo })
 })
 
 Socket.on(SocketActions.CLASS_DEACTIVATED, classInfo => {
   console.log('class session removed', classInfo)
-  Store.dispatch({type: SocketActions.CLASS_DEACTIVATED, payload: classInfo})
+  Store.dispatch({ type: SocketActions.CLASS_DEACTIVATED, payload: classInfo })
 })
 
 Socket.on(SocketActions.BROADCAST_UPDATED, classInfo => {
   console.log('broadcast updated', classInfo)
-  Store.dispatch({type: SocketActions.BROADCAST_UPDATED, payload: classInfo})
+  Store.dispatch({ type: SocketActions.BROADCAST_UPDATED, payload: classInfo })
 })
 
 Socket.on(SocketActions.STUDENT_UNQUEUED_BY_TA, classInfo => {
   console.log('student unqueued by ta')
-  Store.dispatch({type: SocketActions.STUDENT_UNQUEUED_BY_TA, payload: classInfo})
+  Store.dispatch({ type: SocketActions.STUDENT_UNQUEUED_BY_TA, payload: classInfo })
 })
 
 // Will need to handle the user being disconnected: push them to a special screen

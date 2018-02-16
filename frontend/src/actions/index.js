@@ -24,7 +24,7 @@ export function updateSelectedClass(classId) {
   }
 }
 
-export function signinUser({email, password}) {
+export function signinUser({ email, password }) {
 
   //reduxThunk allows us to return a function instead of a raw object
   //allows us to decide when to dispatch our object, and perform logic prior to submit
@@ -32,21 +32,21 @@ export function signinUser({email, password}) {
   return function(dispatch) {
 
     //submit email/pass to server
-    axios.post(`${rootUrl}/signin`, {email, password})
-    .then(res => {
-      //if request is good, update state to indicate user is auth'd
-      dispatch({ type: Actions.AUTH_USER })
+    axios.post(`${rootUrl}/signin`, { email, password })
+      .then(res => {
+        //if request is good, update state to indicate user is auth'd
+        dispatch({ type: Actions.AUTH_USER })
 
-      //save JWT token in LocalStorage (available on window-scope)
-      localStorage.setItem('token', res.data.token)
+        //save JWT token in LocalStorage (available on window-scope)
+        localStorage.setItem('token', res.data.token)
 
-      //re-direct user from signin route to feature route
-      browserHistory.push('/feature')
-    })
-    .catch(err => {
-      //if request is bad
-      //show the user an error
-      dispatch(authError('Bad login info' + err))
-    })
+        //re-direct user from signin route to feature route
+        browserHistory.push('/feature')
+      })
+      .catch(err => {
+        //if request is bad
+        //show the user an error
+        dispatch(authError('Bad login info' + err))
+      })
   }
 }

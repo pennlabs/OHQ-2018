@@ -34,8 +34,8 @@ class ClassPage extends Component {
   }
 
   deactivateClass() {
-    this.setState({isTAConfirmCloseSessionModalOpen: false}, () => {
-      deactivateClass({classId: this.props.selectedClass})
+    this.setState({ isTAConfirmCloseSessionModalOpen: false }, () => {
+      deactivateClass({ classId: this.props.selectedClass })
     })
   }
 
@@ -48,7 +48,7 @@ class ClassPage extends Component {
   }
 
   toggleExpandingSidePanel = () => {
-    this.setState({isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen})
+    this.setState({ isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen })
   }
 
   joinSelectedClassQueue = (question, location) => {
@@ -110,7 +110,7 @@ class ClassPage extends Component {
               className={`${styles.closeSessionModalButton} ${styles.noButton}`}
               onClick={
                 this.preventDefaultWrapper(
-                  this.setState, {isTAConfirmCloseSessionModalOpen: false}
+                  this.setState, { isTAConfirmCloseSessionModalOpen: false }
                 )
               }
             >
@@ -124,9 +124,9 @@ class ClassPage extends Component {
 
   renderJoinQueueButton() {
     // Don't render the button if user is TA or class isn't active
-    if (this.isUserTAForSelectedClass() ||
-    !this.getSelectedClassProperty('isActive') ||
-    this.isStudentInQueue()) {
+    if (this.isUserTAForSelectedClass()
+      || !this.getSelectedClassProperty('isActive')
+      || this.isStudentInQueue()) {
       return null
     }
     return (
@@ -143,8 +143,8 @@ class ClassPage extends Component {
       student = `${student} (TA)`
     }
     const location = this.getSelectedClassProperty('locations')
-    ? this.getSelectedClassProperty('locations')[0]
-    : null
+      ? this.getSelectedClassProperty('locations')[0]
+      : null
 
     return (
       <div className={styles.topRow}>
@@ -173,7 +173,7 @@ class ClassPage extends Component {
 
   renderTACloseSessionButton() {
     const onClick = this.preventDefaultWrapper(
-      this.setState, {isTAConfirmCloseSessionModalOpen: true}
+      this.setState, { isTAConfirmCloseSessionModalOpen: true }
     )
     return (
       <div
@@ -222,7 +222,7 @@ class ClassPage extends Component {
   }
 }
 
-function mapStateToProps({userInfo, selectedClass, classes}) {
+function mapStateToProps({ userInfo, selectedClass, classes }) {
   return {
     userInfo,
     selectedClass,

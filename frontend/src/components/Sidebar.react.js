@@ -47,7 +47,7 @@ class Sidebar extends Component {
 
   renderLinks() {
     const sidebarLinks = this.props.classes
-    ? Object.values(this.props.classes).map(data =>
+      ? Object.values(this.props.classes).map(data =>
         <SidebarItem
           {...data}
           isTAForThisClass={this.isUserTAForThisClass(data.id)}
@@ -57,11 +57,11 @@ class Sidebar extends Component {
           onClick={this.props.updateSelectedClass}
         />
       )
-    : <p className={styles.noClassText}>No Classes</p>
+      : <p className={styles.noClassText}>No Classes</p>
 
     const className = this.props.classes
-    ? styles.sidebarLinks
-    : `${styles.sidebarLinks} ${styles.noLinks}`
+      ? styles.sidebarLinks
+      : `${styles.sidebarLinks} ${styles.noLinks}`
 
     return (
       <div className={className}>
@@ -78,7 +78,7 @@ class Sidebar extends Component {
         </div>
         {this.renderLinks()}
         <div className={styles.sidebarFooter}>
-          <CustomCross color='white' size='22px'/>
+          <CustomCross color='white' size='22px' />
           <div className={styles.footerSpace} />
           <p className={styles.footerText}>Add Courses</p>
         </div>
@@ -87,7 +87,7 @@ class Sidebar extends Component {
   }
 }
 
-function mapStateToProps({selectedClass, classes, userInfo}) {
+function mapStateToProps({ selectedClass, classes, userInfo }) {
   return {
     selectedClass,
     classes,

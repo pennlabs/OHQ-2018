@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Queue from './Queue.react'
 import CurrentQuestion from './CurrentQuestion.react'
-import { activateClass } from './../sockets/emitToSocket'
+import { activateClass as activateClassAux } from './../sockets/emitToSocket'
 import styles from './../../style/ClassPageMiddleRow.less'
 
 class ClassPageMiddleRow extends Component {
@@ -50,7 +50,7 @@ class ClassPageMiddleRow extends Component {
 
   // TODO: add warning messages if TA doesn't location/endtime
   activateClass = () => {
-    activateClass({
+    activateClassAux({
       classId: this.props.selectedClassId,
       locationText: this.state.locationText,
       endTime: this.state.endTimeInputText
@@ -161,20 +161,20 @@ class ClassPageMiddleRow extends Component {
     // if the class is not active, we render a panel for them to create a session.
     // else, we allow them to interact with the queue
     return this.props.isSelectedClassActive
-    ? this.renderTAActiveRow()
-    : this.renderTAInactiveRow()
+      ? this.renderTAActiveRow()
+      : this.renderTAInactiveRow()
   }
 
   renderStudentMiddleRow() {
     return this.props.isSelectedClassActive
-    ? this.renderStudentActiveRow()
-    : this.renderStudentInactiveRow()
+      ? this.renderStudentActiveRow()
+      : this.renderStudentInactiveRow()
   }
 
   render() {
     return this.props.isUserTAForSelectedClass
-    ? this.renderTAMiddleRow()
-    : this.renderStudentMiddleRow()
+      ? this.renderTAMiddleRow()
+      : this.renderStudentMiddleRow()
   }
 }
 
