@@ -20,12 +20,14 @@
     "server": "nodemon ./ApiServer/index.js",
     "lint": "eslint **/",
     "test": "npm run lint -- --quiet && mocha --compilers js:babel-core/register --require ignore-styles --require babel-polyfill --require ./frontend/test/test_helper.js --recursive ./frontend/test",
+    "flow":"flow",
     "test:watch": "npm run test -- --watch"
   },
   "author": "Penn Labs",
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^6.1.2",
+    "babel-preset-flow": "^6.23.0",
     "chai": "^3.5.0",
     "chai-jquery": "^2.0.0",
     "eslint": "^3.16.0",
@@ -33,6 +35,7 @@
     "eslint-plugin-promise": "^3.4.2",
     "eslint-plugin-react": "^5.2.2",
     "eslint-plugin-standard": "^2.0.1",
+    "flow-bin": "^0.57.3",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.11.0",
     "mocha": "^2.5.3",
