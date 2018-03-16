@@ -1,4 +1,4 @@
-(ns ring-app.core
+(ns ohq-server.core
   (:gen-class)
   (:require [ring.adapter.jetty :as jetty]
             [ring.util.response :refer [response]]

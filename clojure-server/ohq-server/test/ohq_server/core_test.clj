@@ -1,6 +1,6 @@
-(ns ring-app.core-test
+(ns ohq-server.core-test
   (:require [clojure.test :refer :all]
-            [ring-app.core :refer :all]))
+            [ohq-server.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
