@@ -1,9 +1,10 @@
 (ns ohq-server.core
   (:gen-class)
-  (:require [ring.adapter.jetty :as jetty]
+  (:require [ohq-server.websockets]
+            [ring.adapter.jetty :as jetty]
             [ring.util.response :refer [response]]
             [ring.middleware.file :as file]
-            [org.httpkit.server :refer [run-server]]
+            [org.httpkit.server :refer :all]
             [compojure.core :refer [defroutes GET context ANY]]
             [compojure.route :as route]
             [clojure.data.json :as json]
@@ -11,13 +12,13 @@
 
 (defn handler [request-map]
   (response
-    (str "<html><body> all data: "
+    (str "<html><body> all data1: "
          (:remote-addr request-map)
          "</body></html>")))
 
 (defn handler2 [request-map]
   (response
-    (str "<html><body> all dabbbaa: "
+    (str "<html><body> all data2: "
          (:remote-addr request-map)
          "</body></html>")))
 
@@ -27,7 +28,7 @@
 
 (defroutes routes
            (GET "/" [] handler)
-           (GET "/ws" [] handler2)
+           (GET "/ws"  request (ohq-server.websockets/ws-handler request))
            (GET "/:id" [] handler)
            (route/files "static")
            )
