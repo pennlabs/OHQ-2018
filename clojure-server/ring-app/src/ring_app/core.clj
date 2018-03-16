@@ -38,13 +38,3 @@
     ; to allow our handler to be dynamically redefined
     #'routes
     {:port (or (Integer/parseInt (environ/env :port)) 3000)}))
-
-
-(def counter (atom 0))
-
-(defn up-counter [n] (+ n 1))
-
-(defn tick [] (Thread/sleep 1000) (println (swap! counter up-counter)))
-
-(defn execute []
-  (future (dorun (repeatedly tick))))
