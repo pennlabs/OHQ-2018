@@ -9,6 +9,11 @@
             [clojure.data.json :as json]
             [environ.core :as environ]))
 
+(defonce class-ids-to-class-data (ref {}))
+(defonce student-links-to-class-ids (ref {}))
+(defonce ta-links-to-class-ids (ref {}))
+(defonce class-links-to-class-ids (ref {}))
+
 (defonce channels (atom #{}))
 
 (defn connect! [channel]
@@ -28,6 +33,13 @@
        "broadcast" broadcast)
       ch (get parsed "payload"))))
 
+(defn ws-handler2 [req]
+  (with-channel req channel
+  (println "got here" req)
+                (on-close channel (fn [status]
+                                    (println "channel closed")))
+                (on-receive channel (fn [data]
+                                      (send! channel data)))))
 (defn ws-handler [request]
   (println request)
   (with-channel request channel
