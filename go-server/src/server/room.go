@@ -30,6 +30,7 @@ func (r *room) run() {
 		case client := <-r.join:
 			// joining
 			r.clients[client] = struct{}{}
+		// TODO: leaving will need to be automated rather than explicit
 		case client := <-r.leave:
 			// leaving
 			delete(r.clients, client)
@@ -44,8 +45,8 @@ func (r *room) run() {
 }
 
 var upgrader = &websocket.Upgrader{
-	// ReadBufferSize:  socketBufferSize,
-	// WriteBufferSize: socketBufferSize,
+	ReadBufferSize:  socketBufferSize,
+	WriteBufferSize: socketBufferSize,
 }
 
 func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
