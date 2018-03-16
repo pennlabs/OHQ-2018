@@ -3,10 +3,8 @@ const { UserInfo, QuestionInfo, ClassInfo } = require('../shared')
 const { SocketActions } = require('./../shared')
 const genUniqueData = require('./services/idAndLinkGenerator')
 
-// TODO: handle type checking/input validation
-// to prevent malformed data from crashing server
+// TODO: handle type checking/input validation to prevent malformed data from crashing server
 // TODO: close classes after X time
-// TODO: may be able to replace most of these return actions with CLASS_UPDATED
 module.exports = function(server) {
   const socketServer = io(server)
   let connections = 0
@@ -57,9 +55,10 @@ module.exports = function(server) {
       classIdsToClassData[classId] = new ClassInfo(classId, name, location)
       socket.join(`${classId}`)
       // when the class is joined push the creator into the class' page
-      socket.emit(
-        SocketActions.CLASS_JOINED_TA, classIdsToClassData[classId], classIdsToLinks[classId]
-      )
+      socket.emit(SocketActions.CLASS_JOINED_TA, {
+        classInfo: classIdsToClassData[classId],
+        links: classIdsToLinks[classId]
+      })
     })
 
     /**
@@ -71,14 +70,15 @@ module.exports = function(server) {
       if (studentLinksToClassIds.hasOwnProperty(link)) {
         const classId = studentLinksToClassIds[link]
         socket.join(`${classId}`)
-        socket.emit(SocketActions.CLASS_JOINED_STUDENT, classIdsToClassData[classId])
+        socket.emit(SocketActions.CLASS_JOINED_STUDENT, { classInfo: classIdsToClassData[classId] })
       } else if (TALinksToClassIds.hasOwnProperty(link)) {
         const classId = TALinksToClassIds[link]
         socket.join(`${classId}`)
         // only send link info to TAs
-        socket.emit(
-          SocketActions.CLASS_JOINED_TA, classIdsToClassData[classId], classIdsToLinks[classId]
-        )
+        socket.emit(SocketActions.CLASS_JOINED_TA, {
+          classInfo: classIdsToClassData[classId],
+          links: classIdsToLinks[classId]
+        })
       } else {
         socket.emit(SocketActions.CLASS_JOINED_FAILURE)
       }
@@ -101,7 +101,7 @@ module.exports = function(server) {
         classIdsToClassData[classId].queue.push(new QuestionInfo(userInfo, location, question))
         socketServer
           .to(`${classId}`)
-          .emit(SocketActions.CLASS_QUEUE_JOINED, classIdsToClassData[classId])
+          .emit(SocketActions.CLASS_QUEUE_JOINED, { classInfo: classIdsToClassData[classId] })
       }
     })
 
@@ -134,7 +134,7 @@ module.exports = function(server) {
         classIdsToClassData[classId].broadcast = broadcast
         socketServer
           .to(`${classId}`)
-          .emit(SocketActions.BROADCAST_UPDATED, classIdsToClassData[classId])
+          .emit(SocketActions.BROADCAST_UPDATED, { classInfo: classIdsToClassData[classId] })
       }
     })
 
@@ -150,7 +150,7 @@ module.exports = function(server) {
         const questionInfo = classIdsToClassData[classId].queue.shift()
         socketServer
           .to(`${classId}`)
-          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classIdsToClassData[classId])
+          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, { classInfo: classIdsToClassData[classId] })
       }
     })
 
@@ -159,11 +159,13 @@ module.exports = function(server) {
      * @param {String} link
      */
     socket.on(SocketActions.STUDENT_UNQUEUE_SELF, ({ link }) => {
-      const classId = studentLinksToClassIds[link]
-      const questionInfo = classIdsToClassData[classId].queue.shift()
-      socketServer
-        .to(`${classId}`)
-        .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classIdsToClassData[classId])
+      if (studentLinksToClassIds.hasOwnProperty(link)) {
+        const classId = studentLinksToClassIds[link]
+        const questionInfo = classIdsToClassData[classId].queue.shift()
+        socketServer
+          .to(`${classId}`)
+          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, { classInfo: classIdsToClassData[classId] })
+      }
     })
   })
 }
