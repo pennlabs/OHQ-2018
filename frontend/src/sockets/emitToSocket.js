@@ -1,8 +1,5 @@
-// This file contains actions that are sent via websocket to the server.
-// It is not necessary to use mapDispatchToProps; instead, reducers should just handle
-// any corresponding events in receiveFromSocket
-// NOTE: the annotations are not full jsdoc annotations due to each function
-// taking a sole parameter. This was done on purpose for simplicity.
+// This file contains all methods used for sending data from the client
+// to the server via websockets
 
 import Socket from './initSocket'
 import { SocketActions } from './../../../shared'
@@ -16,14 +13,22 @@ export function updateClass(myClass) {
 }
 
 /**
+ * Used to attempt to join a class
+ * @param {Number} link - the current uri path
+ */
+export function joinClass({ link }) {
+  Socket.emit(SocketActions.JOIN_CLASS, { link })
+}
+
+/**
  * Used by students to join the office hours queue for a given class
- * @param {Number} classId - the class whose office hours are being joined
  * @param {String} location - where the student is located
  * @param {String} question - the text of the student's question
  * @param {UserInfo} userInfo - the student's information
+ * @param {Number} link - the current uri path
  */
-export function joinClassQueue({ question, location, userInfo, classId }) {
-  Socket.emit(SocketActions.JOIN_CLASS_QUEUE, { question, location, userInfo, classId })
+export function joinClassQueue({ question, location, userInfo, link }) {
+  Socket.emit(SocketActions.JOIN_CLASS_QUEUE, { question, location, userInfo, link })
 }
 
 /**
@@ -40,8 +45,8 @@ export function activateClass({ classId, locationText, endTime }) {
  * Used by TAs to deactivate an active class
  * @param {Number} classId
  */
-export function deactivateClass({ classId }) {
-  Socket.emit(SocketActions.DEACTIVATE_CLASS, { classId })
+export function deactivateClass({ link }) {
+  Socket.emit(SocketActions.DESTROY_CLASS, { link })
 }
 
 /**
