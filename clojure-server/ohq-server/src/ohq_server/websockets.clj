@@ -1,5 +1,4 @@
 (ns ohq-server.websockets
-  (:gen-class)
   (:require [ring.adapter.jetty :as jetty]
             [ring.util.response :refer [response]]
             [ring.middleware.file :as file]
@@ -9,38 +8,59 @@
             [clojure.data.json :as json]
             [environ.core :as environ]))
 
-(defonce class-ids-to-class-data (ref {}))
-(defonce student-links-to-class-ids (ref {}))
-(defonce ta-links-to-class-ids (ref {}))
-(defonce class-links-to-class-ids (ref {}))
+(defonce ^:private class-ids->class-data (ref {}))
+(defonce ^:private student-links->class-ids (ref {}))
+(defonce ^:private ta-links->class-ids (ref {}))
+(defonce ^:private class-links->class-ids (ref {}))
+; rooms is a map of class ids to sets of channels
+(defonce ^:private rooms (ref {}))
 
-(defonce channels (atom #{}))
+(defonce ^:private channels (atom #{}))
 
-(defn connect! [channel]
+(defn- connect! [channel]
   (swap! channels conj channel))
 
-(defn disconnect! [channel status]
+(defn- disconnect! [channel status]
   (swap! channels disj channel))
 
-(defn broadcast [ch payload]
+(defn- broadcast [ch payload]
   (let [msg (json/write-str {:type "broadcast" :payload payload})]
     (run! #(send! % msg) @channels))
   (send! ch (json/write-str {:type "broadcastResult" :payload payload})))
 
-(defn dispatch [ch msg]
+(defn- dispatch [ch msg]
   (let [parsed (json/read-str msg)]
     ((case (get parsed "type")
        "broadcast" broadcast)
       ch (get parsed "payload"))))
 
-(defn ws-handler2 [req]
+(defn- on-create-class [{:strs [name location]}]
+
+  )
+
+(defn- on-websocket-join [channel data]
+  (let [data (json/read-str data)]
+    ((case (get data "type")
+       "CREATE_CLASS" #(on-create-class (get data "payload"))
+       "JOIN_CLASS" #()
+       "JOIN_CLASS_QUEUE" #()
+       "DESTROY_CLASS" #()
+       "UPDATE_CLASS" #()
+       "TA_UNQUEUE_STUDENT" #()
+       "STUDENT_UNQUEUE_SELF" #()
+       #()))
+    (send! channel data)
+
+    )
+  )
+
+(defn ws-handler [req]
   (with-channel req channel
-  (println "got here" req)
                 (on-close channel (fn [status]
                                     (println "channel closed")))
-                (on-receive channel (fn [data]
-                                      (send! channel data)))))
-(defn ws-handler [request]
+                (on-receive channel #(on-websocket-join channel %))))
+
+(defn ws-handler2 [request]
   (println request)
   (with-channel request channel
                 (println channel)

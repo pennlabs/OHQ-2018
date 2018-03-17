@@ -1,6 +1,6 @@
 (ns ohq-server.core
   (:gen-class)
-  (:require [ohq-server.websockets]
+  (:require [ohq-server.websockets :refer [ws-handler]]
             [ring.adapter.jetty :as jetty]
             [ring.util.response :refer [response]]
             [ring.middleware.file :as file]
@@ -11,17 +11,13 @@
             [environ.core :as environ]
             [ring.util.response :as response]))
 
-(defn handler [request-map]
+(defn serve-static [request-map]
   (response/resource-response "index.html" {:root "public"}))
 
-(defn file-handler [request-map]
-
-  )
-
 (defroutes routes
-           (GET "/" [] handler)
-           (GET "/ws"  request (ohq-server.websockets/ws-handler2 request))
-           (GET "/:id" [])
+           (GET "/" [] serve-static)
+           (GET "/ws" request (ws-handler request))
+           (GET "/:id" [] serve-static)
            (route/resources "/"))
 
 (defn -main []
@@ -29,5 +25,17 @@
     ; due to implementation details we pass a var here
     ; to allow our handler to be dynamically redefined
     #'routes
-    {:port (or (Integer/parseInt (environ/env :port)) 3000)
+    {:port    (Integer/parseInt (or (environ/env :port) "3000"))
      :threads 8}))
+
+(defn mark [] (println (json/write-str {:foo {"bar" 123}})))
+
+(defn mark1 []
+  (println
+    (json/read-str
+
+      "{\n  \"extends\": [\"eslint:recommended\", \"standard\"],\n  \"parser\": \"babel-eslint\",\n  \"plugins\": [\n    \"react\"\n  ],}"
+      )
+    )
+
+  )
