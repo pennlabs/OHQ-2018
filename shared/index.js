@@ -76,11 +76,9 @@ exports.ClassInfo = class ClassInfo {
   /**
    * @param {Number} id - the unique id of the course
    * @param {String} name - the name of the course
-   * @param {String} [location='' - the location where the class is being held
+   * @param {String} [location=''] - the location where the class is being held
    * @param {QuestionInfo[]} [queue=[]] - a queue representing the students in office hours
    * @param {String} [broadcast=''] - an optional announcement when class is active
-   * @param {String} [studentLink=''] - the student link for the class
-   * @param {String} [TALink=''] - the TA link for the class
    */
   constructor(id, name, location = '', queue = [], broadcast = '', studentLink = '', TALink = '') {
     this.id = id
@@ -88,8 +86,6 @@ exports.ClassInfo = class ClassInfo {
     this.location = location
     this.queue = queue
     this.broadcast = broadcast
-    this.studentLink = studentLink
-    this.TALink = TALink
   }
 }
 
