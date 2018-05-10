@@ -25,17 +25,5 @@
     ; due to implementation details we pass a var here
     ; to allow our handler to be dynamically redefined
     #'routes
-    {:port    (Integer/parseInt (or (environ/env :port) "3000"))
-     :threads 8}))
-
-(defn mark [] (println (json/write-str {:foo {"bar" 123}})))
-
-(defn mark1 []
-  (println
-    (json/read-str
-
-      "{\n  \"extends\": [\"eslint:recommended\", \"standard\"],\n  \"parser\": \"babel-eslint\",\n  \"plugins\": [\n    \"react\"\n  ],}"
-      )
-    )
-
-  )
+    {:port   (Integer/parseInt (or (environ/env :port) "3000"))
+     :thread 8}))
