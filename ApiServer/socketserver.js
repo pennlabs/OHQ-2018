@@ -49,6 +49,15 @@ module.exports = function(server) {
     socket.on(SocketActions.CREATE_CLASS, ({ name, location }) => {
       const studentLink = genLength4String()
       const TALink = genLength4String()
+      // if we have a repeat, there is a possibility that all available options have been exhausted
+      // in which case we are unable to continue to operate, so we crash the server.  Note that this
+      // should never happen with the expected usage - as currently written, the server should fail
+      // before handling that many concurrent connections.
+      if (studentLinksToClassIds.hasOwnProperty(studentLink)
+        || TALinksToClassIds.hasOwnProperty(TALink)) {
+        throw new Error()
+      }
+      // however, we can assume that uuids will never repeat
       const classId = uuid()
       classIdsToLinks[classId] = { studentLink, TALink }
       studentLinksToClassIds[studentLink] = classId
@@ -68,6 +77,7 @@ module.exports = function(server) {
      * @param {String} link - the uri path (e.g. protocol://server.domain/path)
      */
     socket.on(SocketActions.JOIN_CLASS, ({ link }) => {
+      link = link.toLowerCase()
       if (studentLinksToClassIds.hasOwnProperty(link)) {
         const classId = studentLinksToClassIds[link]
         socket.join(`${classId}`)
@@ -93,6 +103,7 @@ module.exports = function(server) {
      * @param {UserInfo} userInfo - the student's information
      */
     socket.on(SocketActions.JOIN_CLASS_QUEUE, ({ link, userInfo, location, question }) => {
+      link = link.toLowerCase()
       if (studentLinksToClassIds.hasOwnProperty(link)) {
         const classId = studentLinksToClassIds[link]
         // if the user is already in the queue do nothing
@@ -112,6 +123,7 @@ module.exports = function(server) {
      * @param {String} link
      */
     socket.on(SocketActions.DESTROY_CLASS, ({ link }) => {
+      link = link.toLowerCase()
       if (TALinksToClassIds.hasOwnProperty(link)) {
         const classId = TALinksToClassIds[link]
         const { studentLink } = classIdsToLinks[classId]
@@ -130,6 +142,7 @@ module.exports = function(server) {
      * @param {String} broadcast - the message being broadcasted
      */
     socket.on(SocketActions.UPDATE_BROADCAST, ({ link, broadcast }) => {
+      link = link.toLowerCase()
       if (TALinksToClassIds.hasOwnProperty(link)) {
         const classId = TALinksToClassIds[link]
         classIdsToClassData[classId].broadcast = broadcast
@@ -146,6 +159,7 @@ module.exports = function(server) {
      * @param {String} link
      */
     socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ link }) => {
+      link = link.toLowerCase()
       if (TALinksToClassIds.hasOwnProperty(link)) {
         const classId = TALinksToClassIds[link]
         const questionInfo = classIdsToClassData[classId].queue.shift()
@@ -160,6 +174,7 @@ module.exports = function(server) {
      * @param {String} link
      */
     socket.on(SocketActions.STUDENT_UNQUEUE_SELF, ({ link }) => {
+      link = link.toLowerCase()
       if (studentLinksToClassIds.hasOwnProperty(link)) {
         const classId = studentLinksToClassIds[link]
         const questionInfo = classIdsToClassData[classId].queue.shift()
