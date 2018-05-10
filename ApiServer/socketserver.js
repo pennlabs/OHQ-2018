@@ -1,7 +1,8 @@
 const io = require('socket.io')
+const uuid = require('uuid/v4')
 const { UserInfo, QuestionInfo, ClassInfo } = require('../shared')
 const { SocketActions } = require('./../shared')
-const genUniqueData = require('./services/idAndLinkGenerator')
+const genLength4String = require('./services/randomStringGenerator')
 
 // TODO: handle type checking/input validation to prevent malformed data from crashing server
 // TODO: close classes after X time
@@ -46,9 +47,9 @@ module.exports = function(server) {
     // the names of the TAs on duty because we'll need to allow
     // TAs to persist their sessions after refreshing.
     socket.on(SocketActions.CREATE_CLASS, ({ name, location }) => {
-      const { studentLink, TALink, classId } = genUniqueData(
-        { ...studentLinksToClassIds, ...TALinksToClassIds }
-      )
+      const studentLink = genLength4String()
+      const TALink = genLength4String()
+      const classId = uuid()
       classIdsToLinks[classId] = { studentLink, TALink }
       studentLinksToClassIds[studentLink] = classId
       TALinksToClassIds[TALink] = classId
