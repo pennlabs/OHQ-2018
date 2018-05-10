@@ -41,10 +41,10 @@ function convertNumber(n) {
 
 // i represents our iteration number. We set it to -1 so it is zero for the first value.
 let i = -1
-// This is the first prime number before 20 ^ 4.  By making the length prime, we ensure
+// This is the first prime number before 20 ^ 4 - 1.  By making the length prime, we ensure
 // we can pick any offset we want and we will not produce a cycle less than the
 // length of the entire output space. The tradeoff is that we lose some possible values
-// (in this case, 21 possible values)
+// (in this case, 20 possible values)
 const length = 159979
 // we pick a random starting point
 const startingPos = Math.floor(Math.random() * length)
