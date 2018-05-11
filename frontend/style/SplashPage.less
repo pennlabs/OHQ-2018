@@ -12,6 +12,36 @@
   background-image: radial-gradient(circle at 50% 50%, #c0e28a, #8cc152);
 }
 
+:local .buttonRow {
+  margin-top: 20px;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+:local .helperText {
+  font-size: 24px;
+  color: white;
+}
+
+:local .buttonUnit {
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 200%;
+}
+
+:local .inputBox {
+  font-size: 16px;
+  text-align: center;
+  width: 20%;
+  border-radius: 1px;
+  border: none;
+}
+
 :local .logo {
   width: 40%;
   max-width: 1000px;
@@ -19,6 +49,8 @@
 }
 
 :local .button {
+  user-select: none;
+  cursor: pointer;
   margin-top: 20px;
   width: 230px;
   height: 45px;
@@ -32,10 +64,16 @@
   text-decoration: none;
   border-radius: 1px;
   box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
-  transition: background-color 100ms;
+  transition: background-color 300ms linear;
 
   &:hover {
     background-color: @dark-gray;
+  }
+
+  &.disabled {
+    box-shadow: none;
+    background-color: inherit;
+    cursor: default;
   }
 }
 
@@ -58,6 +96,24 @@
 
 @media (max-width: 500px) {
   :local .logo {
-    width: 100%;
+    min-width: 300px;
+    height: auto;
+  }
+  :local .labs {
+    display: none;
+  }
+  :local .buttonRow {
+    flex-direction: column;
+    margin-top: 0px;
+  }
+  :local .buttonUnit {
+    width: auto;
+    flex-direction: column;
+    margin: 10px 0;
+  }
+  :local .inputBox {
+    margin-top: 5px;
+    width: auto;
+    min-height: 30px;
   }
 }
