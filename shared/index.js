@@ -80,7 +80,7 @@ exports.ClassInfo = class ClassInfo {
    * @param {QuestionInfo[]} [queue=[]] - a queue representing the students in office hours
    * @param {String} [broadcast=''] - an optional announcement when class is active
    */
-  constructor(id, name, location = '', queue = [], broadcast = '', studentLink = '', TALink = '') {
+  constructor(id, name, location = '', queue = [], broadcast = '') {
     this.id = id
     this.name = name
     this.location = location
