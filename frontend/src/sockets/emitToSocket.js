@@ -59,7 +59,6 @@ export function updateBroadcast({ classId, broadcast }) {
   Socket.emit(SocketActions.UPDATE_BROADCAST, { classId, broadcast })
 }
 
-// TODO: make sure this can also handle the TA activity log
 /**
  * Used by TAs to unqueue students from the office hours queue
  * when they go to help them.
@@ -70,8 +69,12 @@ export function taUnqueueStudent({ classId, userInfo }) {
   Socket.emit(SocketActions.TA_UNQUEUE_STUDENT, { classId, userInfo })
 }
 
-// NOTE: may not be necessary, updateClass could simply add a class.
-// updateClass takes an entire class as an object.
-// export function addClass(myClass) {
-//   Socket.emit(SocketActions.UPDATE_CLASS, myClass)
-// }
+/**
+ * Used by TAs to unqueue students from the office hours queue
+ * when they go to help them.
+ * @param {Number} classId
+ * @param {UserInfo} userInfo - information on the TA who unqueued the student
+ */
+export function studentUnqueueSelf({ classId, userInfo }) {
+  Socket.emit(SocketActions.STUDENT_UNQUEUE_SELF, { classId, userInfo })
+}

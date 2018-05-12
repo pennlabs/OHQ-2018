@@ -49,9 +49,9 @@ Socket.on(SocketActions.STUDENT_UNQUEUED_BY_TA, ({ classInfo }) => {
   Store.dispatch({ type: SocketActions.STUDENT_UNQUEUED_BY_TA, payload: classInfo })
 })
 
-Socket.on(SocketActions.STUDENT_UNQUEUE_SELF, ({ classInfo }) => {
+Socket.on(SocketActions.STUDENT_UNQUEUED_BY_SELF, ({ classInfo }) => {
   console.log('student unqueued self')
-  Store.dispatch({ type: SocketActions.STUDENT_UNQUEUE_SELF, payload: classInfo })
+  Store.dispatch({ type: SocketActions.STUDENT_UNQUEUED_BY_SELF, payload: classInfo })
 })
 
 // Will need to handle the user being disconnected: push them to a special screen

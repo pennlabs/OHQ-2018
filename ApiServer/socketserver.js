@@ -1,17 +1,21 @@
 const io = require('socket.io')
 const uuid = require('uuid/v4')
+const { omit } = require('lodash')
 const { UserInfo, QuestionInfo, ClassInfo } = require('../shared')
-const { SocketActions } = require('./../shared')
+const { SocketActions, matches } = require('./../shared')
 const genLength4String = require('./services/randomStringGenerator')
 
 // TODO: handle type checking/input validation to prevent malformed data from crashing server
 // TODO: close classes after X time
+// TODO: don't expose userid info in queue users - modify when implementing rejoin queue on refresh
+
 module.exports = function(server) {
   const socketServer = io(server)
   let connections = 0
 
   // these objects serve as maps
   const classIdsToClassData = {}
+  const classIdsToStrippedQueues = {} // a class' queue without id information
   const studentLinksToClassIds = {}
   const TALinksToClassIds = {}
   // this data should only be sent to TAs
@@ -107,6 +111,10 @@ module.exports = function(server) {
       if (studentLinksToClassIds.hasOwnProperty(link)) {
         const classId = studentLinksToClassIds[link]
         // if the user is already in the queue do nothing
+        // TODO: here we could emit an event like queue_already_joined to let the student know
+        // where they should be in the queue in the event of refreshing the page.  That way we can
+        // solve the refresh problem by just having students emit join_class_queue.
+        // alternatively have a separate attempt_to_rejoin event
         for (let i = 0; i < classIdsToClassData[classId].queue.length; i++) {
           if (classIdsToClassData[classId].queue[i].userInfo.id === userInfo.id) return
         }
@@ -157,30 +165,39 @@ module.exports = function(server) {
      * when they go to help them.
      * TODO: may need to send back the latest question; wait for feedback
      * @param {String} link
+     * @param {UserInfo} userInfo - the TA's information
      */
-    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ link }) => {
+    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ link, userInfo: taInfo }) => {
       link = link.toLowerCase()
+      console.log(taInfo)
       if (TALinksToClassIds.hasOwnProperty(link)) {
         const classId = TALinksToClassIds[link]
         const questionInfo = classIdsToClassData[classId].queue.shift()
         socketServer
           .to(`${classId}`)
-          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, { classInfo: classIdsToClassData[classId] })
+          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, {
+            classInfo: classIdsToClassData[classId]
+          })
       }
     })
 
     /**
      * Used by students to remove themselves from the office hours queue.
      * @param {String} link
+     * @param {UserInfo} userInfo - the student's information
      */
-    socket.on(SocketActions.STUDENT_UNQUEUE_SELF, ({ link }) => {
+    // TODO: to prevent students from unqueueing other students, we can't put their ids
+    // into the queue that we send out to all students.
+    socket.on(SocketActions.STUDENT_UNQUEUE_SELF, ({ link, userInfo: studentInfo }) => {
       link = link.toLowerCase()
       if (studentLinksToClassIds.hasOwnProperty(link)) {
         const classId = studentLinksToClassIds[link]
         const questionInfo = classIdsToClassData[classId].queue.shift()
         socketServer
           .to(`${classId}`)
-          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, { classInfo: classIdsToClassData[classId] })
+          .emit(SocketActions.STUDENT_UNQUEUED_BY_SELF, {
+            classInfo: classIdsToClassData[classId]
+          })
       }
     })
   })

@@ -13,12 +13,14 @@ import userInfoReducer from './UserInfoReducer'
 import classReducer from './ClassReducer'
 import removedFromQueueReducer from './RemovedFromQueueReducer'
 import linksReducer from './LinksReducer'
+import joinedClassReducer from './JoinedClassReducer'
 
 const rootReducer = combineReducers({
   userInfo: userInfoReducer,
   classInfo: classReducer,
   classLinks: linksReducer,
   userJustRemovedFromQueue: removedFromQueueReducer,
+  joinedClassStatus: joinedClassReducer,
 })
 
 export default rootReducer
