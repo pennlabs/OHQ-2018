@@ -1,4 +1,6 @@
 import React, { PropTypes, Component } from 'react'
+import { connect } from 'react-redux'
+
 import Queue from './Queue.react'
 import CurrentQuestion from './CurrentQuestion.react'
 import { activateClass as activateClassAux } from './../sockets/emitToSocket'
@@ -12,18 +14,20 @@ class ClassPageMiddleRow extends Component {
   }
 
   static propTypes = {
-    selectedClassQueue: PropTypes.array,
+    currentClassQueue: PropTypes.array,
     userInfo: PropTypes.object,
-    isSelectedClassActive: PropTypes.bool,
+    // isSelectedClassActive: PropTypes.bool,
     isUserTAForSelectedClass: PropTypes.bool,
     currentQuestion: PropTypes.object,
     selectedClassId: PropTypes.number,
+
+    // from redux
   }
 
   getQuestionContainerClassName() {
     let className = styles.currentQuestionContainer
     const hasQuestion = this.props.currentQuestion
-    const hasQueue = this.props.selectedClassQueue.length
+    const hasQueue = this.props.currentClassQueue.length
     if (!hasQuestion && hasQueue) {
       className = `${className} ${styles.isEmptyAndQueue}`
     } else if (!hasQuestion && !hasQueue) {
@@ -126,7 +130,7 @@ class ClassPageMiddleRow extends Component {
       <div className={styles.middleRow}>
         <Queue
           userInfo={this.props.userInfo}
-          line={this.props.selectedClassQueue}
+          line={this.props.currentClassQueue}
           isTAForCurrentClass
         />
         {this.renderCurrentQuestion()}
@@ -150,7 +154,7 @@ class ClassPageMiddleRow extends Component {
       <div className={styles.middleRow}>
         <Queue
           userInfo={this.props.userInfo}
-          line={this.props.selectedClassQueue}
+          line={this.props.currentClassQueue}
         />
         {this.renderCurrentQuestion()}
       </div>
@@ -160,15 +164,11 @@ class ClassPageMiddleRow extends Component {
   renderTAMiddleRow() {
     // if the class is not active, we render a panel for them to create a session.
     // else, we allow them to interact with the queue
-    return this.props.isSelectedClassActive
-      ? this.renderTAActiveRow()
-      : this.renderTAInactiveRow()
+    return this.renderTAActiveRow()
   }
 
   renderStudentMiddleRow() {
-    return this.props.isSelectedClassActive
-      ? this.renderStudentActiveRow()
-      : this.renderStudentInactiveRow()
+    return this.renderStudentActiveRow()
   }
 
   render() {
@@ -178,4 +178,13 @@ class ClassPageMiddleRow extends Component {
   }
 }
 
-export default ClassPageMiddleRow
+function mapStateToProps({ userInfo, classInfo, classLinks }) {
+  return {
+    userInfo,
+    classInfo,
+    classLinks
+  }
+}
+
+
+export default connect(mapStateToProps)(ClassPageMiddleRow)

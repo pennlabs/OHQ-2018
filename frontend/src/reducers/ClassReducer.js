@@ -5,30 +5,31 @@ import { SocketActions } from './../../../shared'
 
 const {
   CLASS_QUEUE_JOINED,
-  CLASS_ACTIVATED,
-  CLASS_DEACTIVATED,
   BROADCAST_UPDATED,
-  STUDENT_UNQUEUED_BY_TA
+  STUDENT_UNQUEUED_BY_TA,
+  CLASS_DESTROYED,
+  CLASS_JOINED_STUDENT,
+  CLASS_JOINED_TA,
 } = SocketActions
 
-// Classes is a an object made of class class objects,
-// where each class object is identied by a key identical to its id field.
+// this reducer holds the current class info data
 const defaultState = null
 
 export default function(state = defaultState, action) {
   switch (action.type) {
     case CLASS_QUEUE_JOINED:
       return action.payload
-    // this logic is a duplicate of the logic for class queue updates.
-    // we separate it for clarity and ease of refactoring.
-    // TODO: handle activation as well as people joining/leaving a class
-    case CLASS_ACTIVATED:
-    case CLASS_DEACTIVATED:
-      return { ...state, [action.payload.id]: action.payload }
+    // TODO: this case needs to be able to trigger action on the frontend (e.g. signalling class closed)
+    case CLASS_DESTROYED:
+      return null
     case BROADCAST_UPDATED:
       return action.payload
     case STUDENT_UNQUEUED_BY_TA:
       return action.payload
+    case CLASS_JOINED_STUDENT:
+      return action.payload
+    case CLASS_JOINED_TA:
+      return action.payload.classInfo
     default:
       return state
   }
