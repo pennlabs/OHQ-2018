@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import styles from './../../style/Main.less'
 // import ClassPage from './ClassPage.react'
-import { joinClass } from './../sockets/emitToSocket'
+import { joinClass as emitJoinClass } from './../sockets/emitToSocket'
 
 // This component acts as a controller.  When a potential path is provided, this component
 // waits to see if a the path is valid, and renders the app according to the three possible states
@@ -21,7 +21,7 @@ class VerifyClass extends Component {
   }
 
   componentDidMount() {
-    joinClass(this.props.location.pathname.slice(1))
+    emitJoinClass({ link: this.props.location.pathname.slice(1) })
   }
 
   render() {
