@@ -32,13 +32,12 @@ export function joinClassQueue({ question, location, userInfo, link }) {
 }
 
 /**
- * Used by TAs to activate an inactive class
- * @param {Number} classId
- * @param {String} locationText - where the office hours are being held
+ * Used by TAs to create an OHQ session
+ * @param {String} location - where the office hours are being held
  * @param {String} endTime - when the office hours finish
  */
-export function activateClass({ classId, locationText, endTime }) {
-  Socket.emit(SocketActions.ACTIVATE_CLASS, { classId, locationText, endTime })
+export function createClass({ location, className }) {
+  Socket.emit(SocketActions.CREATE_CLASS, { location, className })
 }
 
 /**
