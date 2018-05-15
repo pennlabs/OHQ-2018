@@ -120,10 +120,12 @@ exports.SocketActions = {
   DESTROY_CLASS: 'DESTROY_CLASS',
   CLASS_DESTROYED: 'CLASS_DESTROYED',
 
-  // used for TAs to remove students from the queue
+  // used for unqueuing students from the queue.
+  // different cases allow different notifications on the frontend
   TA_UNQUEUE_STUDENT: 'TA_UNQUEUE_STUDENT',
   STUDENT_UNQUEUE_SELF: 'STUDENT_UNQUEUE_SELF',
-  STUDENT_UNQUEUED: 'STUDENT_UNQUEUED',
+  STUDENT_UNQUEUED_BY_SELF: 'STUDENT_UNQUEUED_BY_SELF',
+  STUDENT_UNQUEUED_BY_TA: 'STUDENT_UNQUEUED_BY_TA',
 
   // used to update a class' broadcast
   UPDATE_BROADCAST: 'UPDATE_BROADCAST',
