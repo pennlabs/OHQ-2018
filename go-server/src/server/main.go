@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -11,9 +12,12 @@ import (
 func main() {
 	r := mux.NewRouter()
 	fmt.Println(r)
+	var env string
+	if env = os.Getenv("port"); env == "" {
+		env = "3090"
+	}
 	http.Handle("/", http.FileServer(http.Dir("/Users/aaronmichaels/Developer/Pennlabs/OHQ/ApiServer")))
-	// TODO: dynamically set this port
-	if err := http.ListenAndServe(":3090", nil); err != nil {
+	if err := http.ListenAndServe(":"+env, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
