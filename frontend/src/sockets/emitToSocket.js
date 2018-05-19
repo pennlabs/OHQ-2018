@@ -54,8 +54,8 @@ export function deactivateClass({ link }) {
  * @param {Number} classId
  * @param {String} broadcast - the message being broadcasted
  */
-export function updateBroadcast({ classId, broadcast }) {
-  Socket.emit(SocketActions.UPDATE_BROADCAST, { classId, broadcast })
+export function updateBroadcast({ link, broadcast }) {
+  Socket.emit(SocketActions.UPDATE_BROADCAST, { link, broadcast })
 }
 
 /**
@@ -64,8 +64,8 @@ export function updateBroadcast({ classId, broadcast }) {
  * @param {Number} classId
  * @param {UserInfo} userInfo - information on the TA who unqueued the student
  */
-export function taUnqueueStudent({ classId, userInfo }) {
-  Socket.emit(SocketActions.TA_UNQUEUE_STUDENT, { classId, userInfo })
+export function taUnqueueStudent({ link, userInfo }) {
+  Socket.emit(SocketActions.TA_UNQUEUE_STUDENT, { link, userInfo })
 }
 
 /**
@@ -74,6 +74,6 @@ export function taUnqueueStudent({ classId, userInfo }) {
  * @param {Number} classId
  * @param {UserInfo} userInfo - information on the TA who unqueued the student
  */
-export function studentUnqueueSelf({ classId, userInfo }) {
-  Socket.emit(SocketActions.STUDENT_UNQUEUE_SELF, { classId, userInfo })
+export function studentUnqueueSelf({ link, userInfo }) {
+  Socket.emit(SocketActions.STUDENT_UNQUEUE_SELF, { link, userInfo })
 }
