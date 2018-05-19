@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import styles from './../../style/Main.less'
 import ClassPage from './ClassPage.react'
 import { joinClass as emitJoinClass } from './../sockets/emitToSocket'
 import { SocketActions } from './../../../shared'
+import styles from './../../style/VerifyClass'
 
 // This component acts as a controller.  When a potential path is provided, this component
 // waits to see if a the path is valid, and renders the app according to the three possible states
@@ -35,13 +35,13 @@ class VerifyClass extends Component {
   }
 
   renderClassPage() {
-    return <ClassPage />
+    return <ClassPage path={this.props.location.pathname} />
   }
 
   render() {
     // loading state
     if (this.props.joinedClassStatus == null) {
-      return <div></div>
+      return <div />
     }
     if (this.props.joinedClassStatus === SocketActions.CLASS_JOINED_STUDENT
       || this.props.joinedClassStatus === SocketActions.CLASS_JOINED_TA) {
