@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import Queue from './Queue.react'
 import CurrentQuestion from './CurrentQuestion.react'
-import { activateClass as activateClassAux } from './../sockets/emitToSocket'
+import { activateClass as emitActivateClass } from './../sockets/emitToSocket'
 import styles from './../../style/ClassPageMiddleRow.less'
 
 class ClassPageMiddleRow extends Component {
@@ -16,7 +16,6 @@ class ClassPageMiddleRow extends Component {
   static propTypes = {
     currentClassQueue: PropTypes.array,
     userInfo: PropTypes.object,
-    // isSelectedClassActive: PropTypes.bool,
     isUserTAForSelectedClass: PropTypes.bool,
     currentQuestion: PropTypes.object,
     selectedClassId: PropTypes.number,
@@ -54,7 +53,7 @@ class ClassPageMiddleRow extends Component {
 
   // TODO: add warning messages if TA doesn't location/endtime
   activateClass = () => {
-    activateClassAux({
+    emitActivateClass({
       classId: this.props.selectedClassId,
       locationText: this.state.locationText,
       endTime: this.state.endTimeInputText
