@@ -1,3 +1,6 @@
+// NOTE: this file is still at it is before the major changes -
+// it needs significant modifications to work
+
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
