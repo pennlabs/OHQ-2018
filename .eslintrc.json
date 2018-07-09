@@ -33,9 +33,6 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "space-before-function-paren": ["error", "never"],
-    "indent": ["error", 2, {
-      "SwitchCase": 0
-    }],
     "spaced-comment": 0
   }
 }

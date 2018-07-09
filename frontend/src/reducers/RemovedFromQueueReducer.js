@@ -7,9 +7,9 @@ const { STUDENT_UNQUEUED_BY_TA } = SocketActions
 const defaultState = false
 export default function(state = defaultState, action) {
   switch (action.type) {
-  case STUDENT_UNQUEUED_BY_TA:
-    return action.payload
-  default:
-    return state
+    case STUDENT_UNQUEUED_BY_TA:
+      return action.payload
+    default:
+      return state
   }
 }

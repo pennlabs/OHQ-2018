@@ -25,6 +25,7 @@ function enableReduxDevTools() {
   }
 }
 
+// TODO: ensure a student already in a queue gets there upon refresh
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />

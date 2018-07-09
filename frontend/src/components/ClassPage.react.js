@@ -2,7 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { get, find } from 'lodash'
 
-import { joinClassQueue, deactivateClass } from './../sockets/emitToSocket'
+import {
+  joinClassQueue as emitJoinClassQueue,
+  deactivateClass as emitDeactivateClass
+} from './../sockets/emitToSocket'
 import ClassInfoTitle from './ClassInfoTitle.react'
 import JoinQueueButton from './JoinQueueButton.react'
 import ExpandingSidePanel from './ExpandingSidePanel.react'
@@ -11,6 +14,9 @@ import ClassPageMiddleRow from './ClassPageMiddleRow.react'
 import Broadcast from './Broadcast.react'
 import styles from './../../style/ClassPage.less'
 
+
+// TODO: isolate redux connections as close to the leaves as possible
+// TODO: currently classPage cares about too many things
 class ClassPage extends Component {
 
   state = {
@@ -21,8 +27,8 @@ class ClassPage extends Component {
   static propTypes = {
     //from redux
     userInfo: PropTypes.object,
-    selectedClass: PropTypes.number,
-    classes: PropTypes.object
+    classInfo: PropTypes.object,
+    classLinks: PropTypes.object // only sent if user joined as a TA
   }
 
   preventDefaultWrapper = (func, ...args) => {
@@ -35,63 +41,50 @@ class ClassPage extends Component {
 
   deactivateClass() {
     this.setState({ isTAConfirmCloseSessionModalOpen: false }, () => {
-      deactivateClass({ classId: this.props.selectedClass })
+      emitDeactivateClass({ link: this.props.classLinks.TALink })
     })
   }
 
-  // NOTE: may want to memoize or refactor this later, as it's being called
-  // multiple times on each render
-  isUserTAForSelectedClass() {
-    const { classes, selectedClass, userInfo } = this.props
-    if (classes == null || selectedClass == null || userInfo == null) return null
-    return classes[selectedClass].TAs.includes(userInfo.id)
+  isUserTAForCurrentClass() {
+    return this.props.classLinks != null
   }
 
   toggleExpandingSidePanel = () => {
     this.setState({ isExpandingSidePanelOpen: !this.state.isExpandingSidePanelOpen })
   }
 
-  joinSelectedClassQueue = (question, location) => {
-    const { selectedClass, userInfo } = this.props
-    if (selectedClass == null || userInfo == null) return null
-    const queueData = {
-      question,
-      location,
-      userInfo: this.props.userInfo,
-      classId: this.props.selectedClass
-    }
-    joinClassQueue(queueData)
+  joinCurrentClassQueue = (question, location) => {
+    // TODO: make user info optional?
+    const { userInfo } = this.props
+    const link = null // TODO: set link
+    const queueData = { question, location, link, userInfo }
+    emitJoinClassQueue(queueData)
   }
 
   getTACurrentQuestion() {
-    return this.props.classes[this.props.selectedClass].queue[0]
+    return this.props.classInfo.queue[0]
   }
 
   getCurrentQuestion() {
-    const { classes, selectedClass, userInfo } = this.props
-    if (classes == null || selectedClass == null || userInfo == null) return null
-
-    if (this.isUserTAForSelectedClass()) {
+    if (this.props.classInfo == null) {
+      return null
+    }
+    if (this.isUserTAForCurrentClass()) {
       return this.getTACurrentQuestion()
     }
-    return this.props.classes[this.props.selectedClass].queue.find(data => {
-      return data.userInfo.id === this.props.userInfo.id
+    return this.props.classInfo.queue.find(question => {
+      return question.userInfo.id === this.props.userInfo.id
     })
   }
 
-  getSelectedClassProperty(property) {
-    return get(this.props.classes, `[${this.props.selectedClass}[${property}]`)
-  }
-
   isStudentInQueue() {
-    const queue = this.getSelectedClassProperty('queue')
-    return find(queue, item => item.userInfo.id === this.props.userInfo.id) != null
+    return find(
+      this.props.classInfo.queue,
+      question => question.userInfo.id === this.props.userInfo.id
+    ) != null
   }
 
   renderTAConfirmCloseSessionModal = () => {
-    if (!(this.isUserTAForSelectedClass() && this.getSelectedClassProperty('isActive'))) {
-      return null
-    }
     if (!this.state.isTAConfirmCloseSessionModalOpen) {
       return null
     }
@@ -124,8 +117,8 @@ class ClassPage extends Component {
 
   renderJoinQueueButton() {
     // Don't render the button if user is TA or class isn't active
-    if (this.isUserTAForSelectedClass()
-      || !this.getSelectedClassProperty('isActive')
+    if (this.isUserTAForCurrentClass()
+      || this.props.classInfo == null
       || this.isStudentInQueue()) {
       return null
     }
@@ -139,19 +132,17 @@ class ClassPage extends Component {
 
   renderTopRow() {
     let student = `${get(this.props.userInfo, 'firstName')} ${get(this.props.userInfo, 'lastName')}`
-    if (this.isUserTAForSelectedClass()) {
+    if (this.isUserTAForCurrentClass()) {
       student = `${student} (TA)`
     }
-    const location = this.getSelectedClassProperty('locations')
-      ? this.getSelectedClassProperty('locations')[0]
-      : null
+    console.warn('@@@@@', this.props.classInfo)
 
     return (
       <div className={styles.topRow}>
         <ClassInfoTitle
           student={student}
-          classCode={this.getSelectedClassProperty('name')}
-          location={location}
+          classCode={this.props.classInfo.name}
+          location={this.props.classInfo.location}
         />
         {this.renderJoinQueueButton()}
       </div>
@@ -159,12 +150,14 @@ class ClassPage extends Component {
   }
 
   renderMiddleRow() {
+    // TODO: come back to me
+    const queue = this.props.classInfo == null ? [] : this.props.classInfo.queue
     return (
       <ClassPageMiddleRow
-        selectedClassQueue={this.getSelectedClassProperty('queue')}
+        currentClassQueue={queue}
         userInfo={this.props.userInfo}
         isSelectedClassActive={this.getSelectedClassProperty('isActive')}
-        isUserTAForSelectedClass={this.isUserTAForSelectedClass()}
+        isUserTAForCurrentClass={this.isUserTAForCurrentClass()}
         currentQuestion={this.getCurrentQuestion()}
         selectedClassId={this.props.selectedClass}
       />
@@ -186,12 +179,14 @@ class ClassPage extends Component {
   }
 
   renderBottomRow() {
-    if (!this.getSelectedClassProperty('isActive')) return null
+    if (this.props.classInfo == null) {
+      return null
+    }
     return (
       <div className={styles.bottomRow}>
-        {this.isUserTAForSelectedClass() ? this.renderTACloseSessionButton() : null}
+        {this.isUserTAForCurrentClass() ? this.renderTACloseSessionButton() : null}
         <Broadcast
-          isUserTAForSelectedClass={this.isUserTAForSelectedClass()}
+          isUserTAForCurrentClass={this.isUserTAForCurrentClass()}
           selectedClassId={this.props.selectedClass}
           broadcastMessage={this.getSelectedClassProperty('broadcast')}
         />
@@ -204,7 +199,7 @@ class ClassPage extends Component {
       <ExpandingSidePanel
         toggleExpandingSidePanel={this.toggleExpandingSidePanel}
         isOpen={this.state.isExpandingSidePanelOpen}
-        submitQuestion={this.joinSelectedClassQueue}
+        submitQuestion={this.joinCurrentClassQueue}
       />
     )
   }
@@ -222,11 +217,12 @@ class ClassPage extends Component {
   }
 }
 
-function mapStateToProps({ userInfo, selectedClass, classes }) {
+function mapStateToProps({ userInfo, classInfo, classLinks }) {
+  console.warn(classInfo)
   return {
     userInfo,
-    selectedClass,
-    classes
+    classInfo,
+    classLinks
   }
 }
 

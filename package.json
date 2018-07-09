@@ -80,6 +80,7 @@
     "rimraf": "^2.5.4",
     "socket.io": "^1.7.3",
     "style-loader": "^0.13.1",
+    "uuid": "^3.2.1",
     "webpack": "^1.14.0"
   }
 }

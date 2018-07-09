@@ -1,5 +1,9 @@
 // This file contains constants and types shared between the frontend and backend
+
 // TODO: probably best to have a class for each kind of data that a socket sends
+// TODO: this should be decoupled as much as possible - since the backend
+// is very simple, we may want to consider rewriting to go/clojure
+// for improved server performance. See https://hashrocket.com/blog/posts/websocket-shootout
 
 // checks if an object is an instance of CandidateClass via duck typing
 exports.matches = function(object, CandidateClass) {
@@ -17,6 +21,7 @@ exports.matches = function(object, CandidateClass) {
 
 /**
  * Represents a person.
+ * TODO: ensure that students stay in the queue upon refresh
  */
 exports.UserInfo = class UserInfo {
   /**
@@ -50,40 +55,36 @@ exports.QuestionInfo = class QuestionInfo {
 // TODO: also update the log for events like class creation,
 // broadcast updates, class closing, etc.
 // Will need to refactor into a one-of/union type.
-exports.TALogInfo = class TALogInfo {
-  /**
-   * @param {UserInfo} TAInfo - info of the TA who updated the actoin
-   * @param {QuestionInfo} questionInfo - the data about the student's question.
-   * @param {Date} time - the time that the TA helped the student
-   */
-  constructor(TAInfo, questionInfo, time) {
-    this.TAInfo = TAInfo
-    this.questionInfo = questionInfo
-    this.time = time
-  }
-}
+// exports.TALogInfo = class TALogInfo {
+//   /**
+//    * @param {UserInfo} TAInfo - info of the TA who updated the actoin
+//    * @param {QuestionInfo} questionInfo - the data about the student's question.
+//    * @param {Date} time - the time that the TA helped the student
+//    */
+//   constructor(TAInfo, questionInfo, time) {
+//     this.TAInfo = TAInfo
+//     this.questionInfo = questionInfo
+//     this.time = time
+//   }
+// }
 
 /**
  * The information needed to represent a full class
- * TODO: taactivitylog
  */
 exports.ClassInfo = class ClassInfo {
+  // TODO: we don't want to send TALink info to students; handle this somehow
   /**
-   * @param {QuestionInfo[]} [queue=[]] - a queue representing the students in office hours
-   * @param {Number[]} TAs - a list of the ids of the TAs in the course
-   * @param {Boolean} [isActive=false] - whether or not the class is active
    * @param {Number} id - the unique id of the course
    * @param {String} name - the name of the course
-   * @param {String[]} [locations=[]] - a list of locations where the class is being held
+   * @param {String} [location=''] - the location where the class is being held
+   * @param {QuestionInfo[]} [queue=[]] - a queue representing the students in office hours
    * @param {String} [broadcast=''] - an optional announcement when class is active
    */
-  constructor(id, name, TAs, queue = [], isActive = false, locations = [], broadcast = '') {
-    this.queue = queue
-    this.TAs = TAs
-    this.isActive = isActive
+  constructor(id, name, location = '', queue = [], broadcast = '') {
     this.id = id
     this.name = name
-    this.locations = locations
+    this.location = location
+    this.queue = queue
     this.broadcast = broadcast
   }
 }
@@ -96,36 +97,37 @@ exports.SocketActions = {
   // not coupled to a corresponding action.  E.g. on connection the user
   // receives data for the classes they're subcribed to.
 
-  // used for the user to update class status.
-  UPDATE_CLASS: 'UPDATE_CLASS',
+  // generic info updating
   CLASS_UPDATED: 'CLASS_UPDATED',
 
-  // used for students to join the class queue
+  // used by students and TAs to join a created class
+  // either joined or joined_failure is returned depending on whether a valid
+  // link is used
+  JOIN_CLASS: 'JOIN_CLASS',
+  CLASS_JOINED_TA: 'CLASS_JOINED_TA',
+  CLASS_JOINED_STUDENT: 'CLASS_JOINED_STUDENT',
+  CLASS_JOINED_FAILURE: 'CLASS_JOINED_FAILURE',
+
+  // used by students to join the class queue
   JOIN_CLASS_QUEUE: 'JOIN_CLASS_QUEUE',
   CLASS_QUEUE_JOINED: 'CLASS_QUEUE_JOINED',
 
-  // used to update user info, and to send the initial info to the user.
-  USER_INFO_UPDATED: 'USER_INFO_UPDATED',
-
-  // used to send all the relevant classes when a user first connects
-  ALL_CLASS_INFO: 'ALL_CLASS_INFO',
-
   // used to activate a class
-  ACTIVATE_CLASS: 'ACTIVATE_CLASS',
-  CLASS_ACTIVATED: 'CLASS_ACTIVATED',
+  CREATE_CLASS: 'CREATE_CLASS',
+  CLASS_CREATED: 'CLASS_CREATED',
 
   // used to deactivate a class.
-  DEACTIVATE_CLASS: 'DEACTIVATE_CLASS',
-  CLASS_DEACTIVATED: 'CLASS_DEACTIVATED',
+  DESTROY_CLASS: 'DESTROY_CLASS',
+  CLASS_DESTROYED: 'CLASS_DESTROYED',
 
-  // used for TAs to remove a student from the queue
+  // used for unqueuing students from the queue.
+  // different cases allow different notifications on the frontend
   TA_UNQUEUE_STUDENT: 'TA_UNQUEUE_STUDENT',
+  STUDENT_UNQUEUE_SELF: 'STUDENT_UNQUEUE_SELF',
+  STUDENT_UNQUEUED_BY_SELF: 'STUDENT_UNQUEUED_BY_SELF',
   STUDENT_UNQUEUED_BY_TA: 'STUDENT_UNQUEUED_BY_TA',
 
   // used to update a class' broadcast
   UPDATE_BROADCAST: 'UPDATE_BROADCAST',
   BROADCAST_UPDATED: 'BROADCAST_UPDATED',
-
-  // used to keep up the TA activity log
-  TA_ACTIVITY_LOG_UPDATED: 'TA_ACTIVITY_LOG_UPDATED'
 }

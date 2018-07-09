@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { updateBroadcast } from './../sockets/emitToSocket'
+import { connect } from 'react-redux'
+
+import { updateBroadcast as emitUpdateBroadcast } from './../sockets/emitToSocket'
 
 class Broadcast extends Component {
 
@@ -29,11 +31,11 @@ class Broadcast extends Component {
   onChange = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    this.setState({broadcastMessage: e.target.value})
+    this.setState({ broadcastMessage: e.target.value })
   }
 
   updateBroadcastMessage = () => {
-    updateBroadcast({
+    emitUpdateBroadcast({
       classId: this.props.selectedClassId,
       broadcast: this.state.broadcastMessage
     })
@@ -66,9 +68,13 @@ class Broadcast extends Component {
 
   render() {
     return this.props.isUserTAForSelectedClass
-    ? this.renderTABroadcast()
-    : this.renderStudentBroadcast()
+      ? this.renderTABroadcast()
+      : this.renderStudentBroadcast()
   }
 }
 
-export default Broadcast
+function mapStateToProps({ classInfo, classLinks }) {
+  return { classInfo, classLinks }
+}
+
+export default connect(mapStateToProps)(Broadcast)

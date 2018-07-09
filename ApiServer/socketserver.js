@@ -1,244 +1,204 @@
 const io = require('socket.io')
-const { pick } = require('lodash')
-const { UserInfo, QuestionInfo, TALogInfo } = require('../shared')
-const { SocketActions } = require('./../shared')
+const uuid = require('uuid/v4')
+const { omit } = require('lodash')
+const { UserInfo, QuestionInfo, ClassInfo } = require('../shared')
+const { SocketActions, matches } = require('./../shared')
+const genLength4String = require('./services/randomStringGenerator')
 
-// TODO: once we figure out authentication, we need to prevent non-auth'd users from being able to
-// connect to our socket server.
-
-// TODO: handle type checking to prevent someone sending wrong types and crashing server
-
-// temporary obj to hold user data
-// TODO: each user will also need to store the classes subscribed to,
-// so that they only receive socket events relevant to those classes
-const nameData = {
-  count: 0,
-  getNameAndCount() {
-    if (this.count >= this.list.length) {
-      this.count = 1
-      return { name: this.list[0], count: 0, classes: this.list[0].classIDList }
-    }
-    const str = this.list[this.count].name
-    const classes = this.list[this.count].classIDList
-    const currentCount = this.count
-    this.count++
-    return { name: str, count: currentCount, classes }
-  },
-  list: [
-    { name: 'Bilbo Baggins', classIDList: [0, 1, 2] },
-    { name: 'Frodo Baggins', classIDList: [0, 1, 2] },
-    { name: 'Samwise Gamgee', classIDList: [0, 1, 2] },
-    { name: 'Merry Brandybuck', classIDList: [0, 1, 2] },
-    { name: 'Pippin Took', classIDList: [0, 1, 2] },
-    { name: 'Tom Bombadil', classIDList: [0, 1, 2] },
-    { name: 'Xuan Fronk', classIDList: [0, 1, 2] },
-    { name: 'Victoria Mebane', classIDList: [0, 1, 2] },
-    { name: 'Tiffaney Wile', classIDList: [0, 1, 2] },
-    { name: 'Troy Gervais', classIDList: [0, 1, 2] },
-    { name: 'Valda Carriere', classIDList: [0, 1, 2] },
-    { name: 'Deborah Loder', classIDList: [0, 1, 2] },
-    { name: 'Karl Giddens', classIDList: [0, 1, 2] },
-    { name: 'Marguerite Brookes', classIDList: [0, 1, 2] },
-    { name: 'Cameron Rushford', classIDList: [0, 1, 2] },
-    { name: 'Charlesetta Lundstrom', classIDList: [0, 1, 2] },
-    { name: 'Klara Gallman', classIDList: [0, 1, 2] },
-    { name: 'Angele Harry', classIDList: [0, 1, 2] },
-    { name: 'Norah Pears', classIDList: [0, 1, 2] },
-    { name: 'Debora Waymire', classIDList: [0, 1, 2] },
-    { name: 'Norine Messerly', classIDList: [0, 1, 2] },
-    { name: 'Mark Weingart', classIDList: [0, 1, 2] },
-    { name: 'Stephanie Mcginnis', classIDList: [0, 1, 2] },
-    { name: 'Roscoe Birdsell', classIDList: [0, 1, 2] },
-    { name: 'Santa Staudt', classIDList: [0, 1, 2] },
-    { name: 'Jonathon Abram', classIDList: [0, 1, 2] },
-    { name: 'Tomas Lagarde', classIDList: [0, 1, 2] },
-    { name: 'Renda Strauch', classIDList: [0, 1, 2] },
-    { name: 'Carolynn Mullikin', classIDList: [0, 1, 2] },
-    { name: 'Elias Scogin', classIDList: [0, 1, 2] },
-    { name: 'Edward Elric', classIDList: [0, 1, 2] },
-    { name: 'Ty Gaeth', classIDList: [0, 1, 2] },
-    { name: 'Imelda Melnick', classIDList: [0, 1, 2] },
-    { name: 'Jackie Kuiper', classIDList: [0, 1, 2] },
-    { name: 'Stacey Mone', classIDList: [0, 1, 2] },
-    { name: 'Elfreda Antonelli', classIDList: [0, 1, 2] },
-    { name: 'Elizabeth Soriano', classIDList: [0, 1, 2] },
-    { name: 'Kristyn Hultman', classIDList: [0, 1, 2] },
-    { name: 'Miles Andre', classIDList: [0, 1, 2] },
-    { name: 'Tammera Phaneuf', classIDList: [0, 1, 2] },
-    { name: 'Roxane Wirtz', classIDList: [0, 1, 2] },
-    { name: 'Vergie Level', classIDList: [0, 1, 2] },
-    { name: 'Verna Einhorn', classIDList: [0, 1, 2] },
-    { name: 'Nereida Romanowski', classIDList: [0, 1, 2] },
-    { name: 'Dorathy Cafferty', classIDList: [0, 1, 2] },
-    { name: 'Sean Fadden', classIDList: [0, 1, 2] },
-    { name: 'Garrett Bossard', classIDList: [0, 1, 2] },
-    { name: 'Alla Montijo', classIDList: [0, 1, 2] },
-    { name: 'Randall Reddington', classIDList: [0, 1, 2] },
-    { name: 'Arlinda Rent', classIDList: [0, 1, 2] },
-  ]
-}
+// TODO: handle type checking/input validation to prevent malformed data from crashing server
+// TODO: close classes after X time
+// TODO: don't expose userid info in queue users - modify when implementing rejoin queue on refresh
 
 module.exports = function(server) {
   const socketServer = io(server)
-  const connections = []
+  let connections = 0
 
-  //we use an object as a hashmap for faster retrieval
-  //TODO: the initial list of classQueues
-  //will need to be retrieved from some kind of database
-  const classQueues = {
-    0: {
-      queue: [],
-      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
-      TAActivityLog: [],
-      isActive: false,
-      id: 0,
-      name: 'CIS 110',
-      broadcast: '',
-      locations: []
-    },
-    1: {
-      queue: [],
-      TAs: [],
-      TAActivityLog: [],
-      isActive: true,
-      id: 1,
-      name: 'CIS 120',
-      broadcast: '',
-      locations: ['Towne 100']
-    },
-    2: {
-      queue: [],
-      TAs: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30].map(x => x + 1),
-      TAActivityLog: [],
-      isActive: false,
-      id: 2,
-      name: 'CIS 160',
-      broadcast: '',
-      locations: []
-    }
-  }
+  // these objects serve as maps
+  const classIdsToClassData = {}
+  const classIdsToStrippedQueues = {} // a class' queue without id information
+  const studentLinksToClassIds = {}
+  const TALinksToClassIds = {}
+  // this data should only be sent to TAs
+  const classIdsToLinks = {}
 
   socketServer.on('connection', socket => {
-    connections.push(socket)
+    connections += 1
     console.log('A user connected!')
-    console.log(`new length: ${connections.length}`)
-
-    //TODO: we will need to query information from our database here
-    //Get the connected user's information
-    const { name: currentName, count, classes } = nameData.getNameAndCount()
-
-    //connect the user to a channel for each class ID.
-    //using a for loop for maximum performance server side
-    // TODO: we can use this to check if the user belongs to the class
-    // for which they're trying to send events.
-    if (classes != null && classes.length != null) {
-      for (let i = 0; i < classes.length; i++) {
-        socket.join(`${classes[i]}`)
-      }
-    }
-
-    //send the user information for every class they're subscribed to
-    socket.emit(SocketActions.ALL_CLASS_INFO, pick(classQueues, classes))
-
-    socket.emit(
-      'USER_INFO_UPDATED',
-      new UserInfo(count, currentName.split(' ')[0], currentName.split(' ')[1])
-    )
+    console.log(`total connected: ${connections}`)
 
     socket.on('disconnect', () => {
-      const index = connections.indexOf(socket)
-      connections.splice(index, 1)
+      connections -= 1
       console.log('a user disconnected!')
-      console.log(`new length: ${connections.length}`)
+    })
+
+    // NOTE: We have multiple kinds of events, even if logic is redundant,
+    // because it allows the frontend to behave differently depending
+    // on the kind of event.
+
+    /**
+      * Used by TAs to start a class
+      * @param {Number} classId
+      * @param {String} locationText - where the office hours are being held
+      * @param {String} endTime - when the office hours finish
+      */
+    // NOTE: two possible options here.  The first is that TAs
+    // use their gen code as a unique url to join as a TA and that's
+    // the only way we identify them.  The second way is that
+    // after they use their gen code, they are registered in the class's
+    // info with their id as being a TA, which means they could even be
+    // redirected to a different url (potentially to prevent spying)
+    // this second way will be necessary only if we want to show the students
+    // the names of the TAs on duty because we'll need to allow
+    // TAs to persist their sessions after refreshing.
+    socket.on(SocketActions.CREATE_CLASS, ({ name, location }) => {
+      const studentLink = genLength4String()
+      const TALink = genLength4String()
+      // if we have a repeat, there is a possibility that all available options have been exhausted
+      // in which case we are unable to continue to operate, so we crash the server.  Note that this
+      // should never happen with the expected usage - as currently written, the server should fail
+      // before handling that many concurrent connections.
+      if (studentLinksToClassIds.hasOwnProperty(studentLink)
+        || TALinksToClassIds.hasOwnProperty(TALink)) {
+        throw new Error()
+      }
+      // however, we can assume that uuids will never repeat
+      const classId = uuid()
+      classIdsToLinks[classId] = { studentLink, TALink }
+      studentLinksToClassIds[studentLink] = classId
+      TALinksToClassIds[TALink] = classId
+      classIdsToClassData[classId] = new ClassInfo(classId, name, location)
+      socket.join(`${classId}`)
+      // when the class is joined push the creator into the class' page
+      socket.emit(SocketActions.CLASS_JOINED_TA, {
+        classInfo: classIdsToClassData[classId],
+        links: classIdsToLinks[classId]
+      })
     })
 
     /**
-     * A brute force update of an entire class.  Shouldn't need to be used.
-     * @param {ClassInfo} data - all information about a class
+     * Used when trying to access a specific uri path.  Either joins a class
+     * as a student, a TA, or emits an error state if the path doesn't exist
+     * @param {String} link - the uri path (e.g. protocol://server.domain/path)
      */
-    socket.on(SocketActions.UPDATE_CLASS, data => {
-      console.log('update class event logged:', data)
-      classQueues[data.id] = data
-      socketServer.emit(SocketActions.CLASS_UPDATED, classQueues[data.id])
+    socket.on(SocketActions.JOIN_CLASS, ({ link }) => {
+      link = link.toLowerCase()
+      if (studentLinksToClassIds.hasOwnProperty(link)) {
+        const classId = studentLinksToClassIds[link]
+        socket.join(`${classId}`)
+        socket.emit(SocketActions.CLASS_JOINED_STUDENT, { classInfo: classIdsToClassData[classId] })
+      } else if (TALinksToClassIds.hasOwnProperty(link)) {
+        const classId = TALinksToClassIds[link]
+        socket.join(`${classId}`)
+        // only send link info to TAs
+        socket.emit(SocketActions.CLASS_JOINED_TA, {
+          classInfo: classIdsToClassData[classId],
+          links: classIdsToLinks[classId]
+        })
+      } else {
+        socket.emit(SocketActions.CLASS_JOINED_FAILURE)
+      }
     })
 
-    //TODO: in future, we probably don't want to allow any user to modify any property of the classQueue.
-    //Logic should be restricted based on TA/user status.  Simply requiring the userId isn't secure;
-    //we will need to also use whatever auth mechanism we end up using
     /**
      * Used by students to join the office hours queue for a given class
-     * @param {Number} classId - the class whose office hours are being joined
+     * @param {String} link - the uri path (e.g. protocol://server.domain/path)
      * @param {String} location - where the student is located
      * @param {String} question - the text of the student's question
      * @param {UserInfo} userInfo - the student's information
      */
-    socket.on(SocketActions.JOIN_CLASS_QUEUE, ({ question, location, userInfo, classId }) => {
-      //check if the user is already in the queue, if so, do nothing.
-      //using a for loop here for faster execution
-      for (let i = 0; i < classQueues[classId].queue.length; i++) {
-        if (classQueues[classId].queue[i].userInfo.id === userInfo.id) return
+    socket.on(SocketActions.JOIN_CLASS_QUEUE, ({ link, userInfo, location, question }) => {
+      link = link.toLowerCase()
+      if (studentLinksToClassIds.hasOwnProperty(link)) {
+        const classId = studentLinksToClassIds[link]
+        // if the user is already in the queue do nothing
+        // TODO: here we could emit an event like queue_already_joined to let the student know
+        // where they should be in the queue in the event of refreshing the page.  That way we can
+        // solve the refresh problem by just having students emit join_class_queue.
+        // alternatively have a separate attempt_to_rejoin event
+        for (let i = 0; i < classIdsToClassData[classId].queue.length; i++) {
+          if (classIdsToClassData[classId].queue[i].userInfo.id === userInfo.id) return
+        }
+        classIdsToClassData[classId].queue.push(new QuestionInfo(userInfo, location, question))
+        socketServer
+          .to(`${classId}`)
+          .emit(SocketActions.CLASS_QUEUE_JOINED, { classInfo: classIdsToClassData[classId] })
       }
-      classQueues[classId].queue.push(new QuestionInfo(userInfo, location, question))
-      socketServer.to(`${classId}`).emit(SocketActions.CLASS_QUEUE_JOINED, classQueues[classId])
     })
 
     /**
-     * Used by TAs to activate an inactive class
-     * @param {Number} classId
-     * @param {String} locationText - where the office hours are being held
-     * @param {String} endTime - when the office hours finish
+     * Used by TAs to shut down a class
+     * TODO: should be called on its own at some point to avoid space leaks
+     * @param {String} link
      */
-    socket.on(SocketActions.ACTIVATE_CLASS, ({ classId, locationText, endTime }) => {
-      classQueues[classId].isActive = true
-      classQueues[classId].locations.push(locationText)
-      socketServer.to(`${classId}`).emit(SocketActions.CLASS_ACTIVATED, classQueues[classId])
+    socket.on(SocketActions.DESTROY_CLASS, ({ link }) => {
+      link = link.toLowerCase()
+      if (TALinksToClassIds.hasOwnProperty(link)) {
+        const classId = TALinksToClassIds[link]
+        const { studentLink } = classIdsToLinks[classId]
+        delete classIdsToClassData[classId]
+        delete classIdsToLinks[classId]
+        delete TALinksToClassIds[link]
+        delete studentLinksToClassIds[studentLink]
+        socketServer.to(`${classId}`).emit(SocketActions.CLASS_DESTROYED)
+      }
     })
 
     /**
-     * Used by TAs to deactivate an active class
-     * @param {Number} classId
-     */
-    socket.on(SocketActions.DEACTIVATE_CLASS, ({ classId }) => {
-      classQueues[classId].isActive = false
-      // empty working data
-      classQueues[classId].queue = []
-      classQueues[classId].locations = []
-      classQueues[classId].broadcast = ''
-      // TODO: here also empty the ta log and write it to the DB for analytics
-      socketServer.to(`${classId}`).emit(SocketActions.CLASS_DEACTIVATED, classQueues[classId])
-    })
-
-    /**
-     * Used by TAs topdate the broadcast section of an active class, which
+     * Used by TAs to update the broadcast section of an active class, which
      * all students in that class see.
-     * @param {Number} classId
+     * @param {String} link
      * @param {String} broadcast - the message being broadcasted
      */
-    socket.on(SocketActions.UPDATE_BROADCAST, ({ classId, broadcast }) => {
-      classQueues[classId].broadcast = broadcast
-      socketServer.to(`${classId}`).emit(SocketActions.BROADCAST_UPDATED, classQueues[classId])
+    socket.on(SocketActions.UPDATE_BROADCAST, ({ link, broadcast }) => {
+      link = link.toLowerCase()
+      if (TALinksToClassIds.hasOwnProperty(link)) {
+        const classId = TALinksToClassIds[link]
+        classIdsToClassData[classId].broadcast = broadcast
+        socketServer
+          .to(`${classId}`)
+          .emit(SocketActions.BROADCAST_UPDATED, { classInfo: classIdsToClassData[classId] })
+      }
     })
 
     /**
      * Used by TAs to unqueue students from the office hours queue
-     * when they go to help them.  It's a bit of a hack, but this also
-     * updates the TA activity log.  If we wanted the TA log to be handled
-     * as a separate event, we could refactor this file so that rather than
-     * emitting all class data for every event, we emit only parts of the class
-     * object that are relevant.  Will probably end up doing that
-     * once OHQ is released; for now, sending the entire class is easier
-     * to dev with.
-     * @param {Number} classId
-     * @param {UserInfo} userInfo - information on the TA who unqueued the student
+     * when they go to help them.
+     * TODO: may need to send back the latest question; wait for feedback
+     * @param {String} link
+     * @param {UserInfo} userInfo - the TA's information
      */
-    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ classId, userInfo: TAInfo }) => {
-      if (!classQueues[classId].queue.length) return
-      const questionInfo = classQueues[classId].queue.shift()
-      const time = new Date()
-      // Update ta activity log
-      classQueues[classId].TAActivityLog.push(new TALogInfo(TAInfo, questionInfo, time))
-      socketServer.to(`${classId}`)
-        .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, classQueues[classId])
+    socket.on(SocketActions.TA_UNQUEUE_STUDENT, ({ link, userInfo: taInfo }) => {
+      link = link.toLowerCase()
+      console.log(taInfo)
+      if (TALinksToClassIds.hasOwnProperty(link)) {
+        const classId = TALinksToClassIds[link]
+        const questionInfo = classIdsToClassData[classId].queue.shift()
+        socketServer
+          .to(`${classId}`)
+          .emit(SocketActions.STUDENT_UNQUEUED_BY_TA, {
+            classInfo: classIdsToClassData[classId]
+          })
+      }
+    })
+
+    /**
+     * Used by students to remove themselves from the office hours queue.
+     * @param {String} link
+     * @param {UserInfo} userInfo - the student's information
+     */
+    // TODO: to prevent students from unqueueing other students, we can't put their ids
+    // into the queue that we send out to all students.
+    socket.on(SocketActions.STUDENT_UNQUEUE_SELF, ({ link, userInfo: studentInfo }) => {
+      link = link.toLowerCase()
+      if (studentLinksToClassIds.hasOwnProperty(link)) {
+        const classId = studentLinksToClassIds[link]
+        const questionInfo = classIdsToClassData[classId].queue.shift()
+        socketServer
+          .to(`${classId}`)
+          .emit(SocketActions.STUDENT_UNQUEUED_BY_SELF, {
+            classInfo: classIdsToClassData[classId]
+          })
+      }
     })
   })
 }
